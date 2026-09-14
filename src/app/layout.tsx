@@ -7,7 +7,11 @@ const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"]
 
 export const metadata: Metadata = {
   title: "Scoop — See it. Scoop it.",
-  description: "Identify and find products seen in video with Scoop.",
+  description: "See something you want in a video? Scoop helps you identify it and find where to get it.",
+  icons: {
+    icon: "https://assets.scoop.article6.org/brand/scoop-favicon-32.png",
+    apple: "https://assets.scoop.article6.org/brand/scoop-apple-touch-180.png",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
