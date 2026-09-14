@@ -9,7 +9,18 @@ export const metadata: Metadata = {
   title: "Scoop — See it. Scoop it.",
   description: "See something you want in a video? Scoop helps you identify it and find where to get it.",
   icons: {
-    icon: "https://assets.scoop.article6.org/brand/scoop-favicon-32.png",
+    icon: [
+      {
+        url: "https://assets.scoop.article6.org/brand/scoop-favicon-48.png",
+        sizes: "48x48",
+        type: "image/png",
+      },
+      {
+        url: "https://assets.scoop.article6.org/brand/scoop-favicon-32.png",
+        sizes: "32x32",
+        type: "image/png",
+      },
+    ],
     apple: "https://assets.scoop.article6.org/brand/scoop-apple-touch-180.png",
   },
 };
