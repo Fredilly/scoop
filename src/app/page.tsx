@@ -1,10 +1,8 @@
-const logo = "https://assets.scoop.article6.org/brand/scoop-logo.png";
-
-export default function Home() {
-  return (
-    <main className="min-h-screen bg-white text-black">
-      <img src={logo} alt="Scoop" className="h-10 w-auto" />
-      <h1 className="text-6xl font-black">SEE IT. SCOOP IT.</h1>
-    </main>
-  );
-}
+const logo="https://assets.scoop.article6.org/brand/scoop-logo.png";
+export default function Home(){return <main className="min-h-screen bg-white text-[#111318]">
+<nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-8"><img src={logo} alt="Scoop" className="h-9"/><div className="flex gap-6 text-sm"><a href="/privacy">Privacy</a><a href="/providers">Providers</a></div></nav>
+<section className="mx-auto max-w-7xl px-6 py-24 md:py-36"><p className="mb-6 text-xs font-bold uppercase tracking-[.25em] text-[#1769FF]">Private alpha</p><h1 className="text-[clamp(4rem,11vw,10rem)] font-black leading-[.8] tracking-[-.07em]">SEE IT.<br/><span className="text-[#1769FF]">SCOOP IT.</span></h1><p className="mt-10 max-w-xl text-xl leading-8 text-zinc-600">See something you want in a video? Point at it. Scoop helps identify the product and where to get it.</p></section>
+<section className="mx-auto max-w-7xl px-6 py-28"><p className="text-[clamp(3rem,7vw,7rem)] font-black leading-[.9] tracking-[-.06em]">Don&apos;t screenshot it.<br/>Don&apos;t hunt through comments.<br/><span className="text-[#1769FF]">Scoop it.</span></p></section>
+<section className="mx-auto max-w-7xl px-6 py-28"><div className="border-y border-zinc-200 py-14"><h2 className="text-5xl font-black tracking-[-.05em]">Similar isn&apos;t exact.</h2><p className="mt-6 max-w-2xl text-xl leading-8 text-zinc-600">Scoop separates Exact, Likely and Similar results. Sponsored never means exact.</p></div></section>
+<footer className="mx-auto max-w-7xl px-6 py-12 text-xs leading-5 text-zinc-500">The term &apos;Etsy&apos; is a trademark of Etsy, Inc. This application uses the Etsy API but is not endorsed or certified by Etsy, Inc.</footer>
+</main>}
