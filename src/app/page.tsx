@@ -19,7 +19,7 @@ export default function Home() {
         <div className="flex items-center gap-4 text-xs font-medium sm:gap-5 sm:text-sm md:gap-8">
           <a className="nav-link hidden sm:inline" href="#how">How it works</a>
           <a className="nav-link" href="/privacy">Privacy</a>
-          <a className="nav-link hidden xs:inline" href="/providers">Providers</a>
+          <a className="nav-link hidden sm:inline" href="/providers">Providers</a>
         </div>
       </nav>
 
