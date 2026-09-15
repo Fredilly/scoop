@@ -3,48 +3,51 @@ const mark = 'https://assets.scoop.article6.org/extension/scoop-extension-128.pn
 
 const principles = [
   {
-    title: 'You start it.',
-    body: 'Scoop analyzes video only when you explicitly call it. Watching a video, opening a page or leaving a tab open does not start analysis.',
+    title: 'Only when you Scoop.',
+    body: 'Scoop analyzes video only when you explicitly invoke it. Watching a video, opening a page or leaving a tab open does not start analysis.',
   },
   {
-    title: 'Then it stops.',
-    body: 'Scoop is not a background watcher. There is no continuous frame collection and no always-on analysis loop running behind the page.',
+    title: 'Only what you choose.',
+    body: 'Scoop focuses on the visual area needed for the product search. When a server or provider is required, the default is to send the minimum useful crop or structured product query, not your whole viewing session.',
   },
   {
-    title: 'No browsing-history profile.',
-    body: 'Scoop is not designed to build a record of what you watch, where you browse or what you looked at over time.',
+    title: 'Temporary by default.',
+    body: 'The default frame flow is capture, crop, process, discard. Scoop does not keep full videos or build a screenshot archive of what you watch.',
   },
   {
-    title: 'Frames are temporary.',
-    body: 'The default flow is capture, crop, process, discard. Scoop does not keep full videos or build a screenshot archive of what you watch.',
-  },
-  {
-    title: 'No sensitive visual logging by default.',
-    body: 'Operational telemetry may include request IDs, timing and provider errors. Sensitive frame content is not logged by default.',
-  },
-  {
-    title: 'Objects, not people.',
+    title: 'Products, not people.',
     body: 'Scoop is built to identify products and visible objects. It is not designed to infer sensitive personal attributes from people in video.',
   },
+] as const;
+
+const details = [
   {
-    title: 'Only what is needed.',
-    body: 'When a server or provider is needed, Scoop sends the minimum useful crop or structured product query rather than the whole viewing session.',
+    title: 'What Scoop processes',
+    body: 'When you ask Scoop to identify something, it may process the selected visual region, nearby permitted frames when they materially help identification, and product-search information derived from that selection.',
   },
   {
-    title: 'Minimum permissions.',
-    body: 'The extension should request only the browser permissions needed for the action you asked it to perform, with capture permission explained when required.',
+    title: 'What Scoop does not collect by default',
+    body: 'Scoop is not designed to continuously inspect playback, build a browsing-history profile, keep full videos, or maintain a persistent archive of frames from what you watch.',
   },
   {
-    title: 'Protected means protected.',
+    title: 'Operational data',
+    body: 'Operational telemetry may include request IDs, timing, provider status and errors needed to keep the service reliable. Sensitive frame content is not logged by default.',
+  },
+  {
+    title: 'Browser permissions',
+    body: 'The extension should request only the permissions needed for the action you asked it to perform. When explicit capture permission is required, Scoop should explain why at the moment it is needed.',
+  },
+  {
+    title: 'Protected content',
     body: 'Scoop does not bypass DRM, decrypt protected streams or defeat browser and platform access controls. If a permitted capture path is unavailable, Scoop stops.',
   },
   {
-    title: 'No hidden shopping behavior.',
+    title: 'Shopping actions',
     body: 'Scoop does not silently open merchant pages, manufacture clicks or turn a match into a purchase action without you choosing to continue.',
   },
   {
-    title: 'Sponsored stays labeled.',
-    body: 'Paid placement never gets to masquerade as an Exact match. Commercial relationships do not override match truth.',
+    title: 'Sponsored results',
+    body: 'Paid placement stays clearly labeled and never gets to masquerade as an Exact match. Commercial relationships do not override match truth.',
   },
 ] as const;
 
@@ -67,25 +70,45 @@ export default function Privacy() {
             </div>
             <div>
               <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#1769FF]">Privacy by design</p>
-              <p className="mt-1 text-sm font-semibold text-[#747983]">Private by default. Active only when called.</p>
+              <p className="mt-1 text-sm font-semibold text-[#747983]">Clear by default. Active only when you ask.</p>
             </div>
           </div>
 
           <h1 className="mt-10 max-w-3xl text-[clamp(2.4rem,5vw,4.5rem)] font-extrabold leading-[0.98] tracking-[-0.045em]">
-            You point. Scoop looks. Then it stops.
+            Your video stays yours.
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-[#62666f]">
-            A visual search should be a deliberate action, not an excuse to watch everything around it.
+            Scoop looks only when you ask it to, processes what it needs for that search, and then stops.
           </p>
+
+          <div className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm font-semibold text-[#565b64]">
+            <span>You Scoop</span><span className="text-[#1769FF]">→</span><span>selected area is processed</span><span className="text-[#1769FF]">→</span><span>products are identified</span><span className="text-[#1769FF]">→</span><span>frame data is discarded by default</span>
+          </div>
         </div>
 
-        <div className="grid gap-x-14 md:grid-cols-2">
-          {principles.map((item) => (
-            <article key={item.title} className="border-b border-[#e3e5e9] py-8 md:py-9">
-              <h2 className="text-[1.05rem] font-bold tracking-[-0.018em] text-[#111318]">{item.title}</h2>
-              <p className="mt-3 max-w-xl text-[15px] leading-7 text-[#666b74]">{item.body}</p>
-            </article>
-          ))}
+        <div className="py-12 md:py-14">
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#1769FF]">The short version</p>
+          <div className="mt-3 grid gap-x-14 md:grid-cols-2">
+            {principles.map((item) => (
+              <article key={item.title} className="border-b border-[#e3e5e9] py-8 md:py-9">
+                <h2 className="text-[1.05rem] font-bold tracking-[-0.018em] text-[#111318]">{item.title}</h2>
+                <p className="mt-3 max-w-xl text-[15px] leading-7 text-[#666b74]">{item.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <div className="border-t border-[#e3e5e9] pt-12 md:pt-14">
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#1769FF]">The details</p>
+          <p className="mt-4 max-w-2xl text-base leading-7 text-[#62666f]">What Scoop processes, what it avoids, and what happens when you use the product.</p>
+          <div className="mt-3 grid gap-x-14 md:grid-cols-2">
+            {details.map((item) => (
+              <article key={item.title} className="border-b border-[#e3e5e9] py-8 md:py-9">
+                <h2 className="text-[1.05rem] font-bold tracking-[-0.018em] text-[#111318]">{item.title}</h2>
+                <p className="mt-3 max-w-xl text-[15px] leading-7 text-[#666b74]">{item.body}</p>
+              </article>
+            ))}
+          </div>
         </div>
 
         <div className="mt-14 grid gap-7 border-y border-[#dfe3ea] bg-[#f8faff] px-6 py-7 sm:px-8 md:grid-cols-[0.8fr_1.2fr] md:px-9 md:py-8">
