@@ -10,7 +10,7 @@ const heroPanelJacket = 'https://assets.scoop.article6.org/website/hero/hero-res
 const heroSelectedPants = 'https://assets.scoop.article6.org/website/hero/hero-pants-selected-tv.png';
 const heroPanelPants = 'https://assets.scoop.article6.org/website/hero/hero-pants-results-panel.png';
 const heroSelectedVase = 'https://assets.scoop.article6.org/website/hero/hero-vase-selected-tv.png';
-const heroPanelVase = 'https://assets.scoop.article6.org/website/hero/hero-vase-results-panel.png';
+const heroPanelVase = 'https://assets.scoop.article6.org/website/hero/hero-vase-results-panel.png?v=3';
 
 const steps = [
   ['01', 'SEE', 'Spot something you actually want in the video.'],
