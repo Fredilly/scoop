@@ -214,6 +214,71 @@ a {
     inset 0 1px 0 rgba(255, 255, 255, 0.72);
 }
 
+@media (max-width: 767px) {
+  /* Keep the mobile demo visible in the same viewport as the TV. */
+  #top .relative.isolate > img:nth-of-type(2) {
+    animation: scoop-mobile-selection 420ms ease 500ms forwards;
+  }
+
+  #top .relative.isolate > img:nth-of-type(3) {
+    top: 8% !important;
+    right: 2% !important;
+    bottom: auto !important;
+    left: auto !important;
+    width: 58% !important;
+    max-width: none !important;
+    transform: translateY(10px) !important;
+    animation: scoop-mobile-panel 520ms ease 1050ms forwards;
+  }
+
+  #top + section,
+  #waitlist > div > div:first-child,
+  #how,
+  #how + section > div,
+  #how + section + section > div {
+    text-align: center;
+  }
+
+  #top + section p,
+  #waitlist > div > div:first-child h2,
+  #waitlist > div > div:first-child p,
+  #how + section p,
+  #how + section + section h2,
+  #how + section + section p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #waitlist > div > div:first-child > div:last-child,
+  #how + section + section > div > div:last-child > div:last-child {
+    justify-content: center;
+  }
+
+  #how > div:first-child {
+    justify-content: center;
+  }
+
+  #how > div:last-child > div {
+    text-align: center;
+  }
+
+  #how > div:last-child p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@keyframes scoop-mobile-selection {
+  to { opacity: 1; }
+}
+
+@keyframes scoop-mobile-panel {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
