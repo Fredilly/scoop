@@ -9,6 +9,8 @@ const heroSelectedJacket = 'https://assets.scoop.article6.org/website/hero/hero-
 const heroPanelJacket = 'https://assets.scoop.article6.org/website/hero/hero-results-panel.png';
 const heroSelectedPants = 'https://assets.scoop.article6.org/website/hero/hero-pants-selected-tv.png';
 const heroPanelPants = 'https://assets.scoop.article6.org/website/hero/hero-pants-results-panel.png';
+const heroSelectedVase = 'https://assets.scoop.article6.org/website/hero/hero-vase-selected-tv.png';
+const heroPanelVase = 'https://assets.scoop.article6.org/website/hero/hero-vase-results-panel.png';
 
 const steps = [
   ['01', 'SEE', 'Spot something you actually want in the video.'],
@@ -18,7 +20,7 @@ const steps = [
 ] as const;
 
 type DemoPhase = 'idle' | 'selected' | 'resolved';
-type HeroItem = 'jacket' | 'pants';
+type HeroItem = 'jacket' | 'pants' | 'vase';
 
 export default function Home() {
   const [demoPhase, setDemoPhase] = useState<DemoPhase>('idle');
@@ -54,8 +56,10 @@ export default function Home() {
 
   const showSelection = demoPhase === 'selected' || demoPhase === 'resolved';
   const showPanel = demoPhase === 'resolved';
-  const selectedHero = activeItem === 'jacket' ? heroSelectedJacket : heroSelectedPants;
-  const selectedPanel = activeItem === 'jacket' ? heroPanelJacket : heroPanelPants;
+  const selectedHero =
+    activeItem === 'jacket' ? heroSelectedJacket : activeItem === 'pants' ? heroSelectedPants : heroSelectedVase;
+  const selectedPanel =
+    activeItem === 'jacket' ? heroPanelJacket : activeItem === 'pants' ? heroPanelPants : heroPanelVase;
 
   const handleItemActivate = (item: HeroItem) => {
     playDemo(item);
@@ -68,36 +72,98 @@ export default function Home() {
           <img src={logo} alt="Scoop" className="h-8 w-auto md:h-10" />
         </a>
         <div className="flex items-center gap-4 text-xs font-medium sm:gap-5 sm:text-sm md:gap-8">
-          <a className="nav-link hidden sm:inline" href="#how">How it works</a>
-          <a className="nav-link" href="/privacy">Privacy</a>
-          <a className="nav-link hidden sm:inline" href="/providers">Providers</a>
+          <a className="nav-link hidden sm:inline" href="#how">
+            How it works
+          </a>
+          <a className="nav-link" href="/privacy">
+            Privacy
+          </a>
+          <a className="nav-link hidden sm:inline" href="/providers">
+            Providers
+          </a>
         </div>
       </nav>
 
-      <section id="top" className="mx-auto w-full max-w-[1500px] px-5 pb-24 pt-10 sm:px-6 sm:pb-28 sm:pt-12 md:px-10 lg:min-h-[92vh] lg:px-16 lg:pb-32 lg:pt-14">
+      <section
+        id="top"
+        className="mx-auto w-full max-w-[1500px] px-5 pb-24 pt-10 sm:px-6 sm:pb-28 sm:pt-12 md:px-10 lg:min-h-[92vh] lg:px-16 lg:pb-32 lg:pt-14"
+      >
         <div className="mx-auto max-w-[1260px] text-center">
           <h1 className="mt-4 text-[clamp(2.6rem,7vw,5.75rem)] font-black leading-[0.9] tracking-[-0.065em] text-[#111318]">
             SEE IT.{' '}
-            <span className={`transition-colors duration-500 ${showPanel ? 'text-[#1769FF]' : 'text-[#111318]'}`}>SCOOP IT.</span>
+            <span className={`transition-colors duration-500 ${showPanel ? 'text-[#1769FF]' : 'text-[#111318]'}`}>
+              SCOOP IT.
+            </span>
           </h1>
 
           <p className="mx-auto mt-5 max-w-3xl text-base leading-7 text-[#686d76] sm:text-lg">
-            Hover or tap the jacket or pants to see item-specific results.
+            Hover or tap the jacket, pants, or vase to see item-specific results.
           </p>
 
           <div className="mt-10">
             <div className="mx-auto w-full max-w-[1180px]">
               <div className="relative isolate">
-                <img src={heroClean} alt="TV showing a woman in a denim jacket and cream pants inside a living room" className="mx-auto block h-auto w-full drop-shadow-[0_28px_90px_rgba(17,19,24,0.08)]" loading="eager" fetchPriority="high" />
-                <img src={selectedHero} alt="" aria-hidden="true" className={`pointer-events-none absolute inset-0 block h-full w-full transition-opacity duration-500 ${showSelection ? 'opacity-100' : 'opacity-0'}`} />
-                <img src={selectedPanel} alt="" aria-hidden="true" className={`pointer-events-none absolute right-[-1%] top-[14%] hidden h-auto w-[37%] max-w-[430px] transition-all duration-500 md:block ${showPanel ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0'}`} />
+                <img
+                  src={heroClean}
+                  alt="TV showing a woman in a denim jacket and cream pants inside a living room"
+                  className="mx-auto block h-auto w-full drop-shadow-[0_28px_90px_rgba(17,19,24,0.08)]"
+                  loading="eager"
+                  fetchPriority="high"
+                />
+                <img
+                  src={selectedHero}
+                  alt=""
+                  aria-hidden="true"
+                  className={`pointer-events-none absolute inset-0 block h-full w-full transition-opacity duration-500 ${
+                    showSelection ? 'opacity-100' : 'opacity-0'
+                  }`}
+                />
+                <img
+                  src={selectedPanel}
+                  alt=""
+                  aria-hidden="true"
+                  className={`pointer-events-none absolute right-[-1%] top-[14%] hidden h-auto w-[37%] max-w-[430px] transition-all duration-500 md:block ${
+                    showPanel ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0'
+                  }`}
+                />
 
-                <button type="button" aria-label="Show jacket results" onMouseEnter={() => handleItemActivate('jacket')} onFocus={() => handleItemActivate('jacket')} onClick={() => handleItemActivate('jacket')} className="absolute left-[37%] top-[31%] h-[37%] w-[35%] rounded-[2rem] bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1769FF] focus-visible:ring-offset-2" />
-                <button type="button" aria-label="Show pants results" onMouseEnter={() => handleItemActivate('pants')} onFocus={() => handleItemActivate('pants')} onClick={() => handleItemActivate('pants')} className="absolute left-[34%] top-[56%] h-[27%] w-[50%] rounded-[2rem] bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1769FF] focus-visible:ring-offset-2" />
+                <button
+                  type="button"
+                  aria-label="Show jacket results"
+                  onMouseEnter={() => handleItemActivate('jacket')}
+                  onFocus={() => handleItemActivate('jacket')}
+                  onClick={() => handleItemActivate('jacket')}
+                  className="absolute left-[37%] top-[31%] h-[37%] w-[35%] rounded-[2rem] bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1769FF] focus-visible:ring-offset-2"
+                />
+
+                <button
+                  type="button"
+                  aria-label="Show pants results"
+                  onMouseEnter={() => handleItemActivate('pants')}
+                  onFocus={() => handleItemActivate('pants')}
+                  onClick={() => handleItemActivate('pants')}
+                  className="absolute left-[34%] top-[56%] h-[27%] w-[50%] rounded-[2rem] bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1769FF] focus-visible:ring-offset-2"
+                />
+
+                <button
+                  type="button"
+                  aria-label="Show vase results"
+                  onMouseEnter={() => handleItemActivate('vase')}
+                  onFocus={() => handleItemActivate('vase')}
+                  onClick={() => handleItemActivate('vase')}
+                  className="absolute left-[6%] top-[31%] h-[24%] w-[14%] rounded-[1.5rem] bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1769FF] focus-visible:ring-offset-2"
+                />
               </div>
 
               <div className="md:hidden">
-                <img src={selectedPanel} alt="" aria-hidden="true" className={`mx-auto mt-4 h-auto w-[84%] max-w-[420px] transition-all duration-500 ${showPanel ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`} />
+                <img
+                  src={selectedPanel}
+                  alt=""
+                  aria-hidden="true"
+                  className={`mx-auto mt-4 h-auto w-[84%] max-w-[420px] transition-all duration-500 ${
+                    showPanel ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+                  }`}
+                />
               </div>
             </div>
           </div>
@@ -107,8 +173,15 @@ export default function Home() {
           </p>
 
           <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:mt-10 sm:flex-row sm:flex-wrap sm:gap-5">
-            <a href="mailto:contact@article6.org?subject=Scoop%20alpha" className="inline-flex w-full items-center justify-center bg-[#111318] px-6 py-4 text-sm font-semibold text-white transition hover:bg-[#1769FF] sm:w-auto sm:px-7">Join the alpha</a>
-            <a href="#how" className="nav-link text-sm font-semibold">See how it works ↓</a>
+            <a
+              href="mailto:contact@article6.org?subject=Scoop%20alpha"
+              className="inline-flex w-full items-center justify-center bg-[#111318] px-6 py-4 text-sm font-semibold text-white transition hover:bg-[#1769FF] sm:w-auto sm:px-7"
+            >
+              Join the alpha
+            </a>
+            <a href="#how" className="nav-link text-sm font-semibold">
+              See how it works ↓
+            </a>
           </div>
         </div>
       </section>
@@ -128,7 +201,10 @@ export default function Home() {
         </div>
         <div>
           {steps.map(([n, title, body]) => (
-            <div key={n} className="grid gap-4 border-b border-[#dfe1e5] py-8 sm:gap-5 md:grid-cols-[120px_1fr_1fr] md:items-baseline lg:py-12">
+            <div
+              key={n}
+              className="grid gap-4 border-b border-[#dfe1e5] py-8 sm:gap-5 md:grid-cols-[120px_1fr_1fr] md:items-baseline lg:py-12"
+            >
               <span className="text-sm font-semibold text-[#1769FF]">{n}</span>
               <h3 className="text-4xl font-black tracking-[-0.04em] md:text-6xl">{title}</h3>
               <p className="max-w-md text-lg leading-7 text-[#62666f]">{body}</p>
@@ -153,7 +229,9 @@ export default function Home() {
           <h2 className="max-w-3xl text-5xl font-black leading-[0.96] tracking-[-0.05em] md:text-7xl">A screenshot sees one frame.</h2>
           <div className="max-w-xl self-end text-lg leading-8 text-[#62666f]">
             <p>Scoop can use the moment around it when nearby frames are permitted and materially improve identification.</p>
-            <p className="mt-6">Supported YouTube and ordinary non-protected HTML5 video come first. Protected or DRM-restricted playback is not currently supported.</p>
+            <p className="mt-6">
+              Supported YouTube and ordinary non-protected HTML5 video come first. Protected or DRM-restricted playback is not currently supported.
+            </p>
           </div>
         </div>
       </section>
@@ -165,8 +243,15 @@ export default function Home() {
             <h2 className="mt-5 max-w-3xl text-5xl font-black leading-[0.92] tracking-[-0.055em] md:text-7xl">Want to Scoop something?</h2>
           </div>
           <div className="self-end">
-            <p className="max-w-lg text-lg leading-8 text-white/85">Scoop is still being built. Early testers will help us find what works, what misses, and what deserves to exist.</p>
-            <a href="mailto:contact@article6.org?subject=Scoop%20alpha" className="mt-8 inline-flex w-full items-center justify-center bg-white px-6 py-4 text-sm font-bold text-[#111318] transition hover:bg-[#111318] hover:text-white sm:w-auto sm:py-3.5">Join the alpha</a>
+            <p className="max-w-lg text-lg leading-8 text-white/85">
+              Scoop is still being built. Early testers will help us find what works, what misses, and what deserves to exist.
+            </p>
+            <a
+              href="mailto:contact@article6.org?subject=Scoop%20alpha"
+              className="mt-8 inline-flex w-full items-center justify-center bg-white px-6 py-4 text-sm font-bold text-[#111318] transition hover:bg-[#111318] hover:text-white sm:w-auto sm:py-3.5"
+            >
+              Join the alpha
+            </a>
           </div>
         </div>
       </section>
@@ -175,13 +260,21 @@ export default function Home() {
         <div className="grid gap-10 border-t border-[#dfe1e5] pt-8 md:grid-cols-[1fr_auto] md:items-start">
           <div>
             <img src={mark} alt="" className="mb-5 h-10 w-10" />
-            <p className="max-w-3xl text-xs leading-5 text-[#737780]">The term &apos;Etsy&apos; is a trademark of Etsy, Inc. This application uses the Etsy API but is not endorsed or certified by Etsy, Inc.</p>
+            <p className="max-w-3xl text-xs leading-5 text-[#737780]">
+              The term &apos;Etsy&apos; is a trademark of Etsy, Inc. This application uses the Etsy API but is not endorsed or certified by Etsy, Inc.
+            </p>
             <p className="mt-4 text-xs text-[#9a9da4]">Scoop is a product of Article6.</p>
           </div>
           <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm font-medium">
-            <a className="nav-link" href="/privacy">Privacy</a>
-            <a className="nav-link" href="/providers">Providers</a>
-            <a className="nav-link" href="https://article6.org">Article6</a>
+            <a className="nav-link" href="/privacy">
+              Privacy
+            </a>
+            <a className="nav-link" href="/providers">
+              Providers
+            </a>
+            <a className="nav-link" href="https://article6.org">
+              Article6
+            </a>
           </div>
         </div>
       </footer>
