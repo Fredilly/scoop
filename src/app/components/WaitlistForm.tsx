@@ -56,10 +56,10 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
   }
 
   const glassField =
-    'h-12 rounded-2xl border border-white/45 bg-white/10 px-4 font-normal text-[#111318] outline-none shadow-[inset_0_1px_0_rgba(255,255,255,0.55),0_10px_30px_rgba(43,69,112,0.04)] backdrop-blur-2xl backdrop-saturate-150 transition focus:border-[#1769FF]/55 focus:bg-white/18 focus:ring-4 focus:ring-[#1769FF]/10';
+    'h-12 w-full rounded-2xl border border-white/45 bg-white/10 px-4 font-normal text-[#111318] outline-none shadow-[inset_0_1px_0_rgba(255,255,255,0.55),0_10px_30px_rgba(43,69,112,0.04)] backdrop-blur-2xl backdrop-saturate-150 transition focus:border-[#1769FF]/55 focus:bg-white/18 focus:ring-4 focus:ring-[#1769FF]/10';
 
   return (
-    <form onSubmit={handleSubmit} className="grid gap-4" noValidate>
+    <form onSubmit={handleSubmit} className="mx-auto grid w-full max-w-md gap-4 sm:max-w-none" noValidate>
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="grid gap-2 text-left text-sm font-semibold">
           Name
@@ -128,18 +128,18 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
       <button
         type="submit"
         disabled={status === 'submitting' || status === 'success'}
-        className="mt-2 inline-flex h-12 items-center justify-center rounded-2xl bg-[#1769FF] px-6 text-sm font-bold text-white shadow-[0_12px_34px_rgba(23,105,255,0.28)] transition hover:bg-[#111318] disabled:cursor-default disabled:opacity-60"
+        className="mt-2 inline-flex h-12 w-full items-center justify-center rounded-2xl bg-[#1769FF] px-6 text-sm font-bold text-white shadow-[0_12px_34px_rgba(23,105,255,0.28)] transition hover:bg-[#111318] disabled:cursor-default disabled:opacity-60 sm:w-auto sm:justify-self-start"
       >
         {status === 'submitting' ? 'Joining…' : status === 'success' ? 'Joined' : 'Join the waitlist'}
       </button>
 
       {message && (
-        <p className={`text-sm ${status === 'error' ? 'text-red-600' : 'text-[#1769FF]'}`} role="status">
+        <p className={`text-center text-sm sm:text-left ${status === 'error' ? 'text-red-600' : 'text-[#1769FF]'}`} role="status">
           {message}
         </p>
       )}
 
-      <p className="text-xs leading-5 text-[#737780]">
+      <p className="text-center text-xs leading-5 text-[#737780] sm:text-left">
         We&apos;ll only use this to contact you about Scoop testing and launch access.
       </p>
     </form>

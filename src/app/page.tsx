@@ -45,9 +45,21 @@ export default function Home() {
   };
 
   useEffect(() => {
+    const items: HeroItem[] = ['jacket', 'pants', 'vase'];
+    const isMobile = window.matchMedia('(max-width: 767px)').matches;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let nextItem = 1;
     const starter = window.setTimeout(() => playDemo('jacket'), 450);
+    const cycle = isMobile && !reduceMotion
+      ? window.setInterval(() => {
+          playDemo(items[nextItem]);
+          nextItem = (nextItem + 1) % items.length;
+        }, 3800)
+      : undefined;
+
     return () => {
       window.clearTimeout(starter);
+      if (cycle !== undefined) window.clearInterval(cycle);
       clearDemoTimers();
     };
   }, []);
@@ -78,14 +90,14 @@ export default function Home() {
           <h1 className="mt-4 text-[clamp(2.6rem,7vw,5.75rem)] font-black leading-[0.9] tracking-[-0.065em] text-[#111318]">
             SEE IT. <span className={`transition-colors duration-500 ${showPanel ? 'text-[#1769FF]' : 'text-[#111318]'}`}>SCOOP IT.</span>
           </h1>
-          <p className="mx-auto mt-5 max-w-3xl text-base leading-7 text-[#686d76] sm:text-lg"><span className="sm:hidden">Tap the jacket, pants, or vase to see item-specific results.</span><span className="hidden sm:inline">Hover or tap the jacket, pants, or vase to see item-specific results.</span></p>
+          <p className="mx-auto mt-5 max-w-3xl text-base leading-7 text-[#686d76] sm:text-lg"><span className="sm:hidden">Watch Scoop identify the jacket, pants, and vase automatically.</span><span className="hidden sm:inline">Hover or tap the jacket, pants, or vase to see item-specific results.</span></p>
 
           <div className="mt-10">
             <div className="mx-auto w-full max-w-[1180px]">
-              <div className="relative isolate">
+              <div className="relative isolate mx-auto w-full">
                 <img src={heroClean} alt="TV showing a woman in a denim jacket and cream pants inside a living room" className="mx-auto block h-auto w-full drop-shadow-[0_28px_90px_rgba(17,19,24,0.08)]" loading="eager" fetchPriority="high" />
                 <img src={selectedHero} alt="" aria-hidden="true" className={`pointer-events-none absolute inset-0 block h-full w-full transition-opacity duration-500 ${showSelection ? 'opacity-100' : 'opacity-0'}`} />
-                <img src={selectedPanel} alt="" aria-hidden="true" className={`pointer-events-none absolute bottom-[2%] left-1/2 block h-auto w-[78%] max-w-[360px] -translate-x-1/2 transition-all duration-500 md:bottom-auto md:left-auto md:right-[-1%] md:top-[14%] md:w-[37%] md:max-w-[430px] ${showPanel ? 'translate-y-0 opacity-100 md:translate-x-0' : 'translate-y-4 opacity-0 md:translate-x-8 md:translate-y-0'}`} />
+                <img src={selectedPanel} alt="" aria-hidden="true" className={`pointer-events-none absolute right-[3%] top-[8%] block h-auto w-[48%] max-w-[240px] transition-all duration-500 sm:right-[1%] sm:top-[10%] sm:w-[42%] md:right-[-1%] md:top-[14%] md:w-[37%] md:max-w-[430px] ${showPanel ? 'translate-x-0 translate-y-0 opacity-100' : 'translate-x-3 translate-y-2 opacity-0 md:translate-x-8 md:translate-y-0'}`} />
                 <button type="button" aria-label="Show jacket results" onMouseEnter={() => playDemo('jacket')} onFocus={() => playDemo('jacket')} onClick={() => playDemo('jacket')} className="absolute left-[37%] top-[31%] h-[37%] w-[35%] rounded-[2rem] bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1769FF] focus-visible:ring-offset-2" />
                 <button type="button" aria-label="Show pants results" onMouseEnter={() => playDemo('pants')} onFocus={() => playDemo('pants')} onClick={() => playDemo('pants')} className="absolute left-[34%] top-[56%] h-[27%] w-[50%] rounded-[2rem] bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1769FF] focus-visible:ring-offset-2" />
                 <button type="button" aria-label="Show vase results" onMouseEnter={() => playDemo('vase')} onFocus={() => playDemo('vase')} onClick={() => playDemo('vase')} className="absolute left-[6%] top-[31%] h-[24%] w-[14%] rounded-[1.5rem] bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1769FF] focus-visible:ring-offset-2" />
@@ -94,7 +106,7 @@ export default function Home() {
           </div>
 
           <p className="mx-auto mt-8 max-w-[40rem] text-base leading-7 text-[#62666f] sm:mt-10 sm:text-lg md:text-xl md:leading-8">See something you want in a video? Point at it. Scoop helps identify the product and where to get it.</p>
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:mt-10 sm:flex-row sm:flex-wrap sm:gap-4">
+          <div className="mx-auto mt-8 flex w-full max-w-sm flex-col items-center justify-center gap-3 sm:mt-10 sm:max-w-none sm:flex-row sm:flex-wrap sm:gap-4">
             <button type="button" onClick={() => goToWaitlist('SHOPPER')} className="inline-flex w-full items-center justify-center rounded-xl bg-[#1769FF] px-7 py-4 text-sm font-bold text-white transition hover:bg-[#111318] sm:w-auto">Join the waitlist</button>
             <button type="button" onClick={() => goToWaitlist('CREATOR')} className="inline-flex w-full items-center justify-center rounded-xl border border-[#dfe1e5] bg-white px-7 py-4 text-sm font-bold text-[#111318] transition hover:border-[#1769FF] hover:text-[#1769FF] sm:w-auto">I&apos;m a creator</button>
             <a href="#how" className="nav-link px-3 py-4 text-sm font-semibold">See how it works ↓</a>
@@ -102,45 +114,45 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-[1500px] px-5 py-24 sm:px-6 md:px-10 lg:px-16 lg:py-36">
-        <p className="max-w-[1050px] text-[clamp(2.8rem,7vw,6.25rem)] font-extrabold leading-[0.94] tracking-[-0.052em]"><span className="block">Don&apos;t screenshot it.</span><span className="block">Don&apos;t hunt through comments.</span><span className="mt-2 block text-[#1769FF]">Scoop it.</span></p>
+      <section className="mx-auto w-full max-w-[1500px] px-5 py-24 text-center sm:px-6 md:px-10 md:text-left lg:px-16 lg:py-36">
+        <p className="mx-auto max-w-[1050px] text-[clamp(2.8rem,7vw,6.25rem)] font-extrabold leading-[0.94] tracking-[-0.052em] md:mx-0"><span className="block">Don&apos;t screenshot it.</span><span className="block">Don&apos;t hunt through comments.</span><span className="mt-2 block text-[#1769FF]">Scoop it.</span></p>
       </section>
 
       <section id="waitlist" className="scroll-mt-8 border-y border-[#e6e8ec] bg-[#f7f8fa]">
         <div className="mx-auto grid w-full max-w-[1280px] gap-10 px-5 py-20 sm:px-6 md:px-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20 lg:px-16 lg:py-28">
-          <div className="self-start lg:sticky lg:top-12">
+          <div className="mx-auto w-full max-w-xl self-start text-center lg:sticky lg:top-12 lg:mx-0 lg:text-left">
             <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#1769FF]">Private waitlist</div>
-            <h2 className="mt-5 max-w-xl text-4xl font-extrabold leading-[0.98] tracking-[-0.045em] sm:text-5xl md:text-6xl">Get Scoop before everyone else.</h2>
-            <p className="mt-6 max-w-lg text-base leading-7 text-[#62666f] sm:text-lg">Join for early access. Creators and influencers get their own testing lane so we can learn how Scoop works in real content.</p>
-            <div className="mt-8 flex flex-wrap gap-2 text-xs font-semibold text-[#5f646d]"><span className="rounded-full border border-[#dfe1e5] bg-white px-3 py-2">Creators</span><span className="rounded-full border border-[#dfe1e5] bg-white px-3 py-2">Shoppers</span><span className="rounded-full border border-[#dfe1e5] bg-white px-3 py-2">Brands</span><span className="rounded-full border border-[#dfe1e5] bg-white px-3 py-2">Retailers</span></div>
+            <h2 className="mx-auto mt-5 max-w-xl text-4xl font-extrabold leading-[0.98] tracking-[-0.045em] sm:text-5xl md:text-6xl lg:mx-0">Get Scoop before everyone else.</h2>
+            <p className="mx-auto mt-6 max-w-lg text-base leading-7 text-[#62666f] sm:text-lg lg:mx-0">Join for early access. Creators and influencers get their own testing lane so we can learn how Scoop works in real content.</p>
+            <div className="mt-8 flex flex-wrap justify-center gap-2 text-xs font-semibold text-[#5f646d] lg:justify-start"><span className="rounded-full border border-[#dfe1e5] bg-white px-3 py-2">Creators</span><span className="rounded-full border border-[#dfe1e5] bg-white px-3 py-2">Shoppers</span><span className="rounded-full border border-[#dfe1e5] bg-white px-3 py-2">Brands</span><span className="rounded-full border border-[#dfe1e5] bg-white px-3 py-2">Retailers</span></div>
           </div>
-          <div className="rounded-[1.75rem] border border-[#e1e4e8] bg-white p-5 shadow-[0_22px_70px_rgba(17,19,24,0.07)] sm:p-8 md:p-10"><WaitlistForm persona={waitlistPersona} onPersonaChange={setWaitlistPersona} /></div>
+          <div className="mx-auto w-full max-w-xl rounded-[1.75rem] border border-[#e1e4e8] bg-white p-5 shadow-[0_22px_70px_rgba(17,19,24,0.07)] sm:p-8 md:p-10 lg:max-w-none"><WaitlistForm persona={waitlistPersona} onPersonaChange={setWaitlistPersona} /></div>
         </div>
       </section>
 
       <section id="how" className="mx-auto w-full max-w-[1500px] px-5 py-24 sm:px-6 md:px-10 lg:px-16 lg:py-40">
-        <div className="mb-12 flex items-end justify-between gap-8 border-b border-[#dfe1e5] pb-7 sm:mb-16"><h2 className="text-4xl font-black tracking-[-0.045em] md:text-6xl">How it works</h2><span className="hidden text-xs uppercase tracking-[0.22em] text-[#7a7e87] md:block">See → Point → Scoop → Go</span></div>
-        <div>{steps.map(([n, title, body]) => <div key={n} className="grid gap-4 border-b border-[#dfe1e5] py-8 sm:gap-5 md:grid-cols-[120px_1fr_1fr] md:items-baseline lg:py-12"><span className="text-sm font-semibold text-[#1769FF]">{n}</span><h3 className="text-4xl font-black tracking-[-0.04em] md:text-6xl">{title}</h3><p className="max-w-md text-lg leading-7 text-[#62666f]">{body}</p></div>)}</div>
+        <div className="mb-12 flex items-end justify-center gap-8 border-b border-[#dfe1e5] pb-7 text-center sm:mb-16 md:justify-between md:text-left"><h2 className="text-4xl font-black tracking-[-0.045em] md:text-6xl">How it works</h2><span className="hidden text-xs uppercase tracking-[0.22em] text-[#7a7e87] md:block">See → Point → Scoop → Go</span></div>
+        <div>{steps.map(([n, title, body]) => <div key={n} className="grid justify-items-center gap-4 border-b border-[#dfe1e5] py-8 text-center sm:gap-5 md:grid-cols-[120px_1fr_1fr] md:items-baseline md:justify-items-stretch md:text-left lg:py-12"><span className="text-sm font-semibold text-[#1769FF]">{n}</span><h3 className="text-4xl font-black tracking-[-0.04em] md:text-6xl">{title}</h3><p className="mx-auto max-w-md text-lg leading-7 text-[#62666f] md:mx-0">{body}</p></div>)}</div>
       </section>
 
       <section className="mx-auto w-full max-w-[1500px] px-5 py-14 sm:px-6 md:px-10 lg:px-16 lg:py-20">
-        <div className="grid gap-8 border-y border-[#dfe1e5] py-10 md:grid-cols-[0.8fr_1.2fr] md:items-center lg:py-14">
+        <div className="grid justify-items-center gap-8 border-y border-[#dfe1e5] py-10 text-center md:grid-cols-[0.8fr_1.2fr] md:items-center md:justify-items-stretch md:text-left lg:py-14">
           <div><div className="text-xs font-semibold uppercase tracking-[0.22em] text-[#1769FF]">Trust the match</div><h2 className="mt-3 text-3xl font-extrabold tracking-[-0.035em] md:text-4xl">Exact means exact.</h2></div>
-          <p className="max-w-3xl text-base leading-7 text-[#62666f] sm:text-lg">Scoop separates Exact, Likely and Similar results, and can use nearby permitted frames when they materially improve identification. Sponsored never means exact.</p>
+          <p className="mx-auto max-w-3xl text-base leading-7 text-[#62666f] sm:text-lg md:mx-0">Scoop separates Exact, Likely and Similar results, and can use nearby permitted frames when they materially improve identification. Sponsored never means exact.</p>
         </div>
       </section>
 
       <section className="mx-auto w-full max-w-[1500px] px-5 pb-10 pt-24 sm:px-6 md:px-10 lg:px-16 lg:pt-32">
-        <div className="grid gap-10 bg-[#1769FF] px-6 py-10 text-white sm:px-7 sm:py-12 md:px-12 md:py-16 lg:grid-cols-[1.2fr_.8fr] lg:px-16 lg:py-20">
-          <div><div className="text-xs font-semibold uppercase tracking-[0.22em] text-white/70">Private alpha</div><h2 className="mt-5 max-w-3xl text-5xl font-black leading-[0.92] tracking-[-0.055em] md:text-7xl">Want to Scoop something?</h2></div>
-          <div className="self-end"><p className="max-w-lg text-lg leading-8 text-white/85">Scoop is still being built. Early testers will help us find what works, what misses, and what deserves to exist.</p><div className="mt-8 flex flex-col gap-3 sm:flex-row"><button type="button" onClick={() => goToWaitlist('SHOPPER')} className="inline-flex w-full items-center justify-center rounded-xl bg-white px-6 py-4 text-sm font-bold text-[#111318] transition hover:bg-[#111318] hover:text-white sm:w-auto sm:py-3.5">Join the waitlist</button><button type="button" onClick={() => goToWaitlist('CREATOR')} className="inline-flex w-full items-center justify-center rounded-xl border border-white/35 px-6 py-4 text-sm font-bold text-white transition hover:bg-white hover:text-[#111318] sm:w-auto sm:py-3.5">Creator access</button></div></div>
+        <div className="grid justify-items-center gap-10 bg-[#1769FF] px-6 py-10 text-center text-white sm:px-7 sm:py-12 md:px-12 md:py-16 lg:grid-cols-[1.2fr_.8fr] lg:justify-items-stretch lg:px-16 lg:py-20 lg:text-left">
+          <div><div className="text-xs font-semibold uppercase tracking-[0.22em] text-white/70">Private alpha</div><h2 className="mx-auto mt-5 max-w-3xl text-5xl font-black leading-[0.92] tracking-[-0.055em] md:text-7xl lg:mx-0">Want to Scoop something?</h2></div>
+          <div className="w-full max-w-lg self-end"><p className="mx-auto max-w-lg text-lg leading-8 text-white/85 lg:mx-0">Scoop is still being built. Early testers will help us find what works, what misses, and what deserves to exist.</p><div className="mx-auto mt-8 flex w-full max-w-sm flex-col gap-3 sm:flex-row lg:mx-0 lg:max-w-none"><button type="button" onClick={() => goToWaitlist('SHOPPER')} className="inline-flex w-full items-center justify-center rounded-xl bg-white px-6 py-4 text-sm font-bold text-[#111318] transition hover:bg-[#111318] hover:text-white sm:w-auto sm:py-3.5">Join the waitlist</button><button type="button" onClick={() => goToWaitlist('CREATOR')} className="inline-flex w-full items-center justify-center rounded-xl border border-white/35 px-6 py-4 text-sm font-bold text-white transition hover:bg-white hover:text-[#111318] sm:w-auto sm:py-3.5">Creator access</button></div></div>
         </div>
       </section>
 
       <footer className="mx-auto w-full max-w-[1500px] px-5 pb-12 pt-14 sm:px-6 md:px-10 lg:px-16">
-        <div className="grid gap-10 border-t border-[#dfe1e5] pt-8 md:grid-cols-[1fr_auto] md:items-start">
-          <div><img src={mark} alt="" className="mb-5 h-10 w-10" /><p className="max-w-3xl text-xs leading-5 text-[#737780]">The term &apos;Etsy&apos; is a trademark of Etsy, Inc. This application uses the Etsy API but is not endorsed or certified by Etsy, Inc.</p><p className="mt-4 text-xs text-[#9a9da4]">Scoop is a product of Article6.</p></div>
-          <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm font-medium"><a className="nav-link" href="/privacy">Privacy</a><a className="nav-link" href="/providers">Providers</a><a className="nav-link" href="https://article6.org">Article6</a></div>
+        <div className="grid gap-10 border-t border-[#dfe1e5] pt-8 text-center md:grid-cols-[1fr_auto] md:items-start md:text-left">
+          <div><img src={mark} alt="" className="mx-auto mb-5 h-10 w-10 md:mx-0" /><p className="mx-auto max-w-3xl text-xs leading-5 text-[#737780] md:mx-0">The term &apos;Etsy&apos; is a trademark of Etsy, Inc. This application uses the Etsy API but is not endorsed or certified by Etsy, Inc.</p><p className="mt-4 text-xs text-[#9a9da4]">Scoop is a product of Article6.</p></div>
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 text-sm font-medium md:justify-start"><a className="nav-link" href="/privacy">Privacy</a><a className="nav-link" href="/providers">Providers</a><a className="nav-link" href="https://article6.org">Article6</a></div>
         </div>
       </footer>
     </main>
