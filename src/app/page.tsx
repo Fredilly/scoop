@@ -5,20 +5,26 @@ import { useEffect, useRef, useState } from 'react';
 const logo = 'https://assets.scoop.article6.org/brand/scoop-logo.png';
 const mark = 'https://assets.scoop.article6.org/extension/scoop-extension-128.png';
 const heroClean = 'https://assets.scoop.article6.org/website/hero/hero-clean-tv.png';
-const heroSelected = 'https://assets.scoop.article6.org/website/hero/hero-selected-tv.png';
-const heroPanel = 'https://assets.scoop.article6.org/website/hero/hero-results-panel.png';
+const heroSelectedJacket = 'https://assets.scoop.article6.org/website/hero/hero-selected-tv.png';
+const heroPanelJacket = 'https://assets.scoop.article6.org/website/hero/hero-results-panel.png';
+const heroSelectedPants = 'https://assets.scoop.article6.org/website/hero/hero-pants-selected-tv.png';
+const heroPanelPants = 'https://assets.scoop.article6.org/website/hero/hero-pants-results-panel.png';
+const heroSelectedVase = 'https://assets.scoop.article6.org/website/hero/hero-vase-selected-tv.png';
+const heroPanelVase = 'https://assets.scoop.article6.org/website/hero/hero-vase-results-panel.png';
 
 const steps = [
   ['01', 'SEE', 'Spot something you actually want in the video.'],
-  ['02', 'POINT', 'Click the item itself, not a vague category.'],
+  ['02', 'POINT', 'Click the specific item, not the whole scene.'],
   ['03', 'SCOOP', 'Get Exact, Likely, and Similar results clearly separated.'],
   ['04', 'GO', 'Choose where you want to buy it.'],
 ] as const;
 
 type DemoPhase = 'idle' | 'selected' | 'resolved';
+type HeroItem = 'jacket' | 'pants' | 'vase';
 
 export default function Home() {
   const [demoPhase, setDemoPhase] = useState<DemoPhase>('idle');
+  const [activeItem, setActiveItem] = useState<HeroItem>('jacket');
   const timeouts = useRef<number[]>([]);
 
   const clearDemoTimers = () => {
@@ -26,19 +32,20 @@ export default function Home() {
     timeouts.current = [];
   };
 
-  const playDemo = () => {
+  const playDemo = (item: HeroItem) => {
     clearDemoTimers();
+    setActiveItem(item);
     setDemoPhase('idle');
 
     timeouts.current.push(
-      window.setTimeout(() => setDemoPhase('selected'), 650),
-      window.setTimeout(() => setDemoPhase('resolved'), 1450)
+      window.setTimeout(() => setDemoPhase('selected'), 140),
+      window.setTimeout(() => setDemoPhase('resolved'), 920)
     );
   };
 
   useEffect(() => {
     const starter = window.setTimeout(() => {
-      playDemo();
+      playDemo('jacket');
     }, 450);
 
     return () => {
@@ -49,6 +56,14 @@ export default function Home() {
 
   const showSelection = demoPhase === 'selected' || demoPhase === 'resolved';
   const showPanel = demoPhase === 'resolved';
+  const selectedHero =
+    activeItem === 'jacket' ? heroSelectedJacket : activeItem === 'pants' ? heroSelectedPants : heroSelectedVase;
+  const selectedPanel =
+    activeItem === 'jacket' ? heroPanelJacket : activeItem === 'pants' ? heroPanelPants : heroPanelVase;
+
+  const handleItemActivate = (item: HeroItem) => {
+    playDemo(item);
+  };
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-white text-[#111318]">
@@ -71,10 +86,10 @@ export default function Home() {
 
       <section
         id="top"
-        className="mx-auto w-full max-w-[1500px] px-5 pb-24 pt-6 sm:px-6 sm:pb-28 sm:pt-8 md:px-10 lg:min-h-[92vh] lg:px-16 lg:pb-32 lg:pt-10"
+        className="mx-auto w-full max-w-[1500px] px-5 pb-24 pt-10 sm:px-6 sm:pb-28 sm:pt-12 md:px-10 lg:min-h-[92vh] lg:px-16 lg:pb-32 lg:pt-14"
       >
         <div className="mx-auto max-w-[1260px] text-center">
-          <h1 className="text-[clamp(2.6rem,7vw,5.75rem)] font-black leading-[0.9] tracking-[-0.065em] text-[#111318]">
+          <h1 className="mt-4 text-[clamp(2.6rem,7vw,5.75rem)] font-black leading-[0.9] tracking-[-0.065em] text-[#111318]">
             SEE IT.{' '}
             <span className={`transition-colors duration-500 ${showPanel ? 'text-[#1769FF]' : 'text-[#111318]'}`}>
               SCOOP IT.
@@ -82,54 +97,76 @@ export default function Home() {
           </h1>
 
           <p className="mx-auto mt-5 max-w-3xl text-base leading-7 text-[#686d76] sm:text-lg">
-            A tiny demo. Watch the jacket get selected, then the results appear. Tap the hero to replay.
+            Hover or tap the jacket, pants, or vase to see item-specific results.
           </p>
 
-          <button
-            type="button"
-            aria-label="Replay Scoop hero demo"
-            onClick={playDemo}
-            className="mt-10 block w-full cursor-pointer rounded-[2rem] bg-transparent text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1769FF] focus-visible:ring-offset-4"
-          >
+          <div className="mt-10">
             <div className="mx-auto w-full max-w-[1180px]">
               <div className="relative isolate">
                 <img
                   src={heroClean}
-                  alt="TV showing a woman in a denim jacket inside a living room"
+                  alt="TV showing a woman in a denim jacket and cream pants inside a living room"
                   className="mx-auto block h-auto w-full drop-shadow-[0_28px_90px_rgba(17,19,24,0.08)]"
                   loading="eager"
                   fetchPriority="high"
                 />
                 <img
-                  src={heroSelected}
+                  src={selectedHero}
                   alt=""
                   aria-hidden="true"
-                  className={`pointer-events-none absolute inset-0 block h-full w-full transition-opacity duration-700 ${
+                  className={`pointer-events-none absolute inset-0 block h-full w-full transition-opacity duration-500 ${
                     showSelection ? 'opacity-100' : 'opacity-0'
                   }`}
                 />
                 <img
-                  src={heroPanel}
+                  src={selectedPanel}
                   alt=""
                   aria-hidden="true"
-                  className={`pointer-events-none absolute right-[-1%] top-[14%] hidden h-auto w-[37%] max-w-[430px] transition-all duration-700 md:block ${
+                  className={`pointer-events-none absolute right-[-1%] top-[14%] hidden h-auto w-[37%] max-w-[430px] transition-all duration-500 md:block ${
                     showPanel ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0'
                   }`}
+                />
+
+                <button
+                  type="button"
+                  aria-label="Show jacket results"
+                  onMouseEnter={() => handleItemActivate('jacket')}
+                  onFocus={() => handleItemActivate('jacket')}
+                  onClick={() => handleItemActivate('jacket')}
+                  className="absolute left-[37%] top-[31%] h-[37%] w-[35%] rounded-[2rem] bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1769FF] focus-visible:ring-offset-2"
+                />
+
+                <button
+                  type="button"
+                  aria-label="Show pants results"
+                  onMouseEnter={() => handleItemActivate('pants')}
+                  onFocus={() => handleItemActivate('pants')}
+                  onClick={() => handleItemActivate('pants')}
+                  className="absolute left-[34%] top-[56%] h-[27%] w-[50%] rounded-[2rem] bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1769FF] focus-visible:ring-offset-2"
+                />
+
+                <button
+                  type="button"
+                  aria-label="Show vase results"
+                  onMouseEnter={() => handleItemActivate('vase')}
+                  onFocus={() => handleItemActivate('vase')}
+                  onClick={() => handleItemActivate('vase')}
+                  className="absolute left-[6%] top-[31%] h-[24%] w-[14%] rounded-[1.5rem] bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1769FF] focus-visible:ring-offset-2"
                 />
               </div>
 
               <div className="md:hidden">
                 <img
-                  src={heroPanel}
+                  src={selectedPanel}
                   alt=""
                   aria-hidden="true"
-                  className={`mx-auto mt-4 h-auto w-[84%] max-w-[420px] transition-all duration-700 ${
+                  className={`mx-auto mt-4 h-auto w-[84%] max-w-[420px] transition-all duration-500 ${
                     showPanel ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
                   }`}
                 />
               </div>
             </div>
-          </button>
+          </div>
 
           <p className="mx-auto mt-8 max-w-[46rem] text-lg leading-[1.6] text-[#565a63] sm:mt-10 sm:text-xl md:text-[1.45rem] md:leading-[1.6]">
             See something you want in a video? Point at it. Scoop helps identify the product and where to get it.
