@@ -78,19 +78,18 @@ export default function Home() {
           <h1 className="mt-4 text-[clamp(2.6rem,7vw,5.75rem)] font-black leading-[0.9] tracking-[-0.065em] text-[#111318]">
             SEE IT. <span className={`transition-colors duration-500 ${showPanel ? 'text-[#1769FF]' : 'text-[#111318]'}`}>SCOOP IT.</span>
           </h1>
-          <p className="mx-auto mt-5 max-w-3xl text-base leading-7 text-[#686d76] sm:text-lg">Hover or tap the jacket, pants, or vase to see item-specific results.</p>
+          <p className="mx-auto mt-5 max-w-3xl text-base leading-7 text-[#686d76] sm:text-lg"><span className="sm:hidden">Tap the jacket, pants, or vase to see item-specific results.</span><span className="hidden sm:inline">Hover or tap the jacket, pants, or vase to see item-specific results.</span></p>
 
           <div className="mt-10">
             <div className="mx-auto w-full max-w-[1180px]">
               <div className="relative isolate">
                 <img src={heroClean} alt="TV showing a woman in a denim jacket and cream pants inside a living room" className="mx-auto block h-auto w-full drop-shadow-[0_28px_90px_rgba(17,19,24,0.08)]" loading="eager" fetchPriority="high" />
                 <img src={selectedHero} alt="" aria-hidden="true" className={`pointer-events-none absolute inset-0 block h-full w-full transition-opacity duration-500 ${showSelection ? 'opacity-100' : 'opacity-0'}`} />
-                <img src={selectedPanel} alt="" aria-hidden="true" className={`pointer-events-none absolute right-[-1%] top-[14%] hidden h-auto w-[37%] max-w-[430px] transition-all duration-500 md:block ${showPanel ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0'}`} />
+                <img src={selectedPanel} alt="" aria-hidden="true" className={`pointer-events-none absolute bottom-[2%] left-1/2 block h-auto w-[78%] max-w-[360px] -translate-x-1/2 transition-all duration-500 md:bottom-auto md:left-auto md:right-[-1%] md:top-[14%] md:w-[37%] md:max-w-[430px] ${showPanel ? 'translate-y-0 opacity-100 md:translate-x-0' : 'translate-y-4 opacity-0 md:translate-x-8 md:translate-y-0'}`} />
                 <button type="button" aria-label="Show jacket results" onMouseEnter={() => playDemo('jacket')} onFocus={() => playDemo('jacket')} onClick={() => playDemo('jacket')} className="absolute left-[37%] top-[31%] h-[37%] w-[35%] rounded-[2rem] bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1769FF] focus-visible:ring-offset-2" />
                 <button type="button" aria-label="Show pants results" onMouseEnter={() => playDemo('pants')} onFocus={() => playDemo('pants')} onClick={() => playDemo('pants')} className="absolute left-[34%] top-[56%] h-[27%] w-[50%] rounded-[2rem] bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1769FF] focus-visible:ring-offset-2" />
                 <button type="button" aria-label="Show vase results" onMouseEnter={() => playDemo('vase')} onFocus={() => playDemo('vase')} onClick={() => playDemo('vase')} className="absolute left-[6%] top-[31%] h-[24%] w-[14%] rounded-[1.5rem] bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1769FF] focus-visible:ring-offset-2" />
               </div>
-              <div className="md:hidden"><img src={selectedPanel} alt="" aria-hidden="true" className={`mx-auto mt-4 h-auto w-[84%] max-w-[420px] transition-all duration-500 ${showPanel ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`} /></div>
             </div>
           </div>
 
