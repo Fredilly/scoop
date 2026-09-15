@@ -46,22 +46,22 @@ export default function Home() {
 
   useEffect(() => {
     const isMobile = window.matchMedia('(max-width: 767px)').matches;
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const items: HeroItem[] = ['jacket', 'pants', 'vase'];
     let index = 0;
     let cycleTimer: number | undefined;
+    let stopped = false;
 
     const runNext = () => {
+      if (stopped) return;
       playDemo(items[index]);
       index = (index + 1) % items.length;
-      if (isMobile && !reduceMotion) {
-        cycleTimer = window.setTimeout(runNext, 4200);
-      }
+      if (isMobile) cycleTimer = window.setTimeout(runNext, 3400);
     };
 
-    const starter = window.setTimeout(runNext, 450);
+    const starter = window.setTimeout(runNext, 350);
 
     return () => {
+      stopped = true;
       window.clearTimeout(starter);
       if (cycleTimer !== undefined) window.clearTimeout(cycleTimer);
       clearDemoTimers();
@@ -73,10 +73,10 @@ export default function Home() {
   const selectedHero = activeItem === 'jacket' ? heroSelectedJacket : activeItem === 'pants' ? heroSelectedPants : heroSelectedVase;
   const selectedPanel = activeItem === 'jacket' ? heroPanelJacket : activeItem === 'pants' ? heroPanelPants : heroPanelVase;
   const mobilePanelStyle = activeItem === 'pants'
-    ? { top: '4%', right: '2%', width: '40%', maxWidth: '210px' }
+    ? { top: '3%', right: '2%', width: '34%', maxWidth: '180px' }
     : activeItem === 'jacket'
-      ? { bottom: '3%', right: '2%', width: '40%', maxWidth: '210px' }
-      : { top: '12%', right: '2%', width: '40%', maxWidth: '210px' };
+      ? { bottom: '2%', right: '2%', width: '34%', maxWidth: '180px' }
+      : { top: '18%', right: '2%', width: '34%', maxWidth: '180px' };
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-white text-[#111318]">
@@ -147,10 +147,10 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-[1500px] px-5 pb-10 pt-24 sm:px-6 md:px-10 lg:px-16 lg:pt-32">
-        <div className="mx-auto grid w-full max-w-[1320px] justify-items-center gap-10 bg-[#1769FF] px-6 py-10 text-center text-white sm:px-7 sm:py-12 md:px-12 md:py-16 lg:grid-cols-[1.2fr_.8fr] lg:justify-items-stretch lg:px-16 lg:py-20 lg:text-left">
-          <div className="mx-auto w-full max-w-xl lg:mx-0 lg:max-w-none"><div className="text-xs font-semibold uppercase tracking-[0.22em] text-white/70">Private alpha</div><h2 className="mx-auto mt-5 max-w-lg text-[clamp(3rem,13vw,4.5rem)] font-black leading-[0.92] tracking-[-0.055em] lg:mx-0 lg:max-w-3xl lg:text-7xl">Want to Scoop something?</h2></div>
-          <div className="mx-auto w-full max-w-sm self-end justify-self-center lg:mx-0 lg:max-w-lg lg:justify-self-stretch"><p className="mx-auto max-w-lg text-lg leading-8 text-white/85 lg:mx-0">Scoop is still being built. Early testers will help us find what works, what misses, and what deserves to exist.</p><div className="mt-8 flex w-full flex-col items-stretch justify-center gap-3"><a href="#waitlist" onClick={() => setWaitlistPersona('SHOPPER')} style={{ color: '#111318' }} className="mx-auto inline-flex w-full max-w-sm items-center justify-center rounded-xl bg-white px-6 py-4 text-center text-sm font-bold sm:py-3.5">Join the waitlist</a><a href="#waitlist" onClick={() => setWaitlistPersona('CREATOR')} style={{ color: '#ffffff' }} className="mx-auto inline-flex w-full max-w-sm items-center justify-center rounded-xl border border-white/35 px-6 py-4 text-center text-sm font-bold sm:py-3.5">Creator access</a></div></div>
+      <section className="w-full px-0 pb-10 pt-24 sm:px-6 md:px-10 lg:mx-auto lg:max-w-[1500px] lg:px-16 lg:pt-32">
+        <div className="mx-auto flex w-[calc(100%-2rem)] max-w-[1320px] flex-col items-center gap-10 bg-[#1769FF] px-6 py-10 text-center text-white sm:w-full sm:px-7 sm:py-12 md:px-12 md:py-16 lg:grid lg:grid-cols-[1.2fr_.8fr] lg:items-end lg:justify-items-stretch lg:px-16 lg:py-20 lg:text-left">
+          <div className="mx-auto flex w-full max-w-xl flex-col items-center lg:mx-0 lg:max-w-none lg:items-start"><div className="text-xs font-semibold uppercase tracking-[0.22em] text-white/70">Private alpha</div><h2 className="mx-auto mt-5 max-w-[8ch] text-[clamp(3rem,13vw,4.5rem)] font-black leading-[0.92] tracking-[-0.055em] lg:mx-0 lg:max-w-3xl lg:text-7xl">Want to Scoop something?</h2></div>
+          <div className="mx-auto flex w-full max-w-sm flex-col items-center lg:mx-0 lg:max-w-lg lg:items-start"><p className="mx-auto max-w-lg text-lg leading-8 text-white/85 lg:mx-0">Scoop is still being built. Early testers will help us find what works, what misses, and what deserves to exist.</p><div className="mt-8 flex w-full flex-col items-center justify-center gap-3"><a href="#waitlist" onClick={() => setWaitlistPersona('SHOPPER')} style={{ color: '#111318' }} className="inline-flex w-full max-w-sm items-center justify-center rounded-xl bg-white px-6 py-4 text-center text-sm font-bold sm:py-3.5">Join the waitlist</a><a href="#waitlist" onClick={() => setWaitlistPersona('CREATOR')} style={{ color: '#ffffff' }} className="inline-flex w-full max-w-sm items-center justify-center rounded-xl border border-white/35 px-6 py-4 text-center text-sm font-bold sm:py-3.5">Creator access</a></div></div>
         </div>
       </section>
 
