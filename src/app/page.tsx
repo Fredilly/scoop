@@ -71,17 +71,10 @@ export default function Home() {
 
       <section
         id="top"
-        className="mx-auto w-full max-w-[1500px] px-5 pb-24 pt-10 sm:px-6 sm:pb-28 sm:pt-12 md:px-10 lg:min-h-[92vh] lg:px-16 lg:pb-32 lg:pt-14"
+        className="mx-auto w-full max-w-[1500px] px-5 pb-24 pt-6 sm:px-6 sm:pb-28 sm:pt-8 md:px-10 lg:min-h-[92vh] lg:px-16 lg:pb-32 lg:pt-10"
       >
         <div className="mx-auto max-w-[1260px] text-center">
-          <div className="mb-6 inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#1769FF] sm:mb-8 sm:text-xs sm:tracking-[0.24em]">
-            <span className="h-2 w-2 rounded-full bg-[#FF6A1A]" />
-            Private alpha
-          </div>
-
-          <img src={logo} alt="Scoop" className="mx-auto h-10 w-auto sm:h-11 md:h-12" />
-
-          <h1 className="mt-6 text-[clamp(2.6rem,7vw,5.75rem)] font-black leading-[0.9] tracking-[-0.065em] text-[#111318]">
+          <h1 className="text-[clamp(2.6rem,7vw,5.75rem)] font-black leading-[0.9] tracking-[-0.065em] text-[#111318]">
             SEE IT.{' '}
             <span className={`transition-colors duration-500 ${showPanel ? 'text-[#1769FF]' : 'text-[#111318]'}`}>
               SCOOP IT.
