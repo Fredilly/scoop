@@ -112,7 +112,7 @@ export default function Home() {
 
           <p className="mx-auto mt-8 max-w-[40rem] text-base leading-7 text-[#62666f] sm:mt-10 sm:text-lg md:text-xl md:leading-8">See something you want in a video? Point at it. Scoop helps identify the product and where to get it.</p>
           <div className="mx-auto mt-8 flex w-full max-w-sm flex-col items-center justify-center gap-3 sm:mt-10 sm:max-w-none sm:flex-row sm:flex-wrap sm:gap-4">
-            <a href="#waitlist" onClick={() => setWaitlistPersona('SHOPPER')} className="inline-flex w-full items-center justify-center rounded-xl bg-[#1769FF] px-7 py-4 text-sm font-bold text-white transition hover:bg-[#111318] sm:w-auto">Join the waitlist</a>
+            <a href="#waitlist" onClick={() => setWaitlistPersona('SHOPPER')} style={{ color: '#ffffff' }} className="inline-flex w-full items-center justify-center rounded-xl bg-[#1769FF] px-7 py-4 text-sm font-bold text-white transition hover:bg-[#111318] sm:w-auto">Join the waitlist</a>
             <a href="#waitlist" onClick={() => setWaitlistPersona('CREATOR')} className="inline-flex w-full items-center justify-center rounded-xl border border-[#dfe1e5] bg-white px-7 py-4 text-sm font-bold text-[#111318] transition hover:border-[#1769FF] hover:text-[#1769FF] sm:w-auto">I&apos;m a creator</a>
             <a href="#how" className="nav-link px-3 py-4 text-sm font-semibold">See how it works ↓</a>
           </div>
