@@ -1,15 +1,56 @@
-const logo = "https://assets.scoop.article6.org/brand/scoop-logo.png";
-const mark = "https://assets.scoop.article6.org/extension/scoop-extension-128.png";
-const hero = "https://assets.scoop.article6.org/website/hero/hero-scoop-visual-commerce-v1.png";
+'use client';
+
+import { useEffect, useRef, useState } from 'react';
+
+const logo = 'https://assets.scoop.article6.org/brand/scoop-logo.png';
+const mark = 'https://assets.scoop.article6.org/extension/scoop-extension-128.png';
+const hero = 'https://assets.scoop.article6.org/website/hero/hero-scoop-interactive-master.png';
 
 const steps = [
-  ["01", "SEE", "Something catches your eye."],
-  ["02", "POINT", "Click the thing you actually mean."],
-  ["03", "SCOOP", "Get the closest credible matches."],
-  ["04", "GO", "Choose where you want to buy it."],
-];
+  ['01', 'SEE', 'Something catches your eye.'],
+  ['02', 'POINT', 'Click the thing you actually mean.'],
+  ['03', 'SCOOP', 'Get the closest credible matches.'],
+  ['04', 'GO', 'Choose where you want to buy it.'],
+] as const;
+
+type DemoPhase = 'idle' | 'select' | 'resolve' | 'settled';
 
 export default function Home() {
+  const [demoPhase, setDemoPhase] = useState<DemoPhase>('idle');
+  const timeouts = useRef<number[]>([]);
+
+  const clearDemoTimers = () => {
+    timeouts.current.forEach((timeout) => window.clearTimeout(timeout));
+    timeouts.current = [];
+  };
+
+  const playDemo = () => {
+    clearDemoTimers();
+    setDemoPhase('idle');
+
+    timeouts.current.push(
+      window.setTimeout(() => setDemoPhase('select'), 80),
+      window.setTimeout(() => setDemoPhase('resolve'), 760),
+      window.setTimeout(() => setDemoPhase('settled'), 1700)
+    );
+  };
+
+  useEffect(() => {
+    const starter = window.setTimeout(() => setDemoPhase('select'), 550);
+    const resolver = window.setTimeout(() => setDemoPhase('resolve'), 1230);
+    const settler = window.setTimeout(() => setDemoPhase('settled'), 2170);
+
+    return () => {
+      window.clearTimeout(starter);
+      window.clearTimeout(resolver);
+      window.clearTimeout(settler);
+      timeouts.current.forEach((timeout) => window.clearTimeout(timeout));
+    };
+  }, []);
+
+  const isSelecting = demoPhase === 'select';
+  const isResolved = demoPhase === 'resolve' || demoPhase === 'settled';
+
   return (
     <main className="min-h-screen overflow-x-hidden bg-white text-[#111318]">
       <nav className="mx-auto flex w-full max-w-[1500px] items-center justify-between px-5 py-5 sm:px-6 sm:py-7 md:px-10 lg:px-16">
@@ -23,29 +64,75 @@ export default function Home() {
         </div>
       </nav>
 
-      <section id="top" className="mx-auto flex w-full max-w-[1500px] flex-col items-center px-5 pb-24 pt-12 sm:px-6 sm:pb-28 sm:pt-16 md:px-10 lg:min-h-[88vh] lg:justify-center lg:px-16 lg:pb-32 lg:pt-20">
-        <div className="mb-8 flex items-center gap-3 self-start text-[11px] font-semibold uppercase tracking-[0.22em] text-[#1769FF] sm:mb-10 sm:text-xs sm:tracking-[0.24em]">
-          <span className="h-2 w-2 rounded-full bg-[#FF6A1A]" />
-          Private alpha
-        </div>
+      <section id="top" className="mx-auto w-full max-w-[1500px] px-5 pb-24 pt-8 sm:px-6 sm:pb-28 sm:pt-10 md:px-10 lg:min-h-[92vh] lg:px-16 lg:pb-32 lg:pt-14">
+        <div className="mx-auto max-w-[1200px] text-center">
+          <div className="mb-6 inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#1769FF] sm:mb-8 sm:text-xs sm:tracking-[0.24em]">
+            <span className="h-2 w-2 rounded-full bg-[#FF6A1A]" />
+            Private alpha
+          </div>
 
-        <div className="w-full max-w-[1180px]">
-          <img
-            src={hero}
-            alt="Scoop identifying a denim jacket in a video and showing exact, likely, and similar purchase options"
-            className="block h-auto w-full"
-            loading="eager"
-            fetchPriority="high"
-          />
-        </div>
+          <img src={logo} alt="Scoop" className="mx-auto h-10 w-auto sm:h-11 md:h-12" />
 
-        <div className="mt-12 flex w-full max-w-[900px] flex-col items-center text-center sm:mt-14">
-          <p className="text-xl leading-[1.6] text-[#565a63] sm:text-2xl md:text-[1.65rem] md:leading-[1.55]">
+          <p className="mt-5 text-[clamp(2.35rem,7vw,5.5rem)] font-black leading-[0.94] tracking-[-0.06em] text-[#111318] sm:mt-6">
+            SEE IT.{' '}
+            <span className={`inline-block transition-colors duration-500 ${isResolved ? 'text-[#1769FF]' : 'text-[#111318]'}`}>
+              SCOOP IT.
+            </span>
+          </p>
+
+          <button
+            type="button"
+            aria-label="Replay the Scoop demo"
+            onClick={playDemo}
+            className="relative mt-7 block w-full cursor-pointer rounded-[2rem] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1769FF] focus-visible:ring-offset-4 sm:mt-9"
+          >
+            <img
+              src={hero}
+              alt="Scoop selecting a jacket in a video and showing purchase matches"
+              className={`mx-auto block h-auto w-full drop-shadow-[0_28px_90px_rgba(17,19,24,0.14)] transition-transform duration-700 motion-reduce:transition-none ${isResolved ? 'scale-[1.01]' : 'scale-100'}`}
+              loading="eager"
+              fetchPriority="high"
+            />
+
+            <div
+              className={`pointer-events-none absolute left-[21.5%] top-[20%] h-[48%] w-[18.5%] rounded-[1.4rem] transition-all duration-500 ${isSelecting || isResolved ? 'scale-100 opacity-100' : 'scale-[0.96] opacity-0'} ${isResolved ? 'bg-[#1769FF]/8' : 'bg-transparent'}`}
+              aria-hidden="true"
+            >
+              <span className="absolute left-0 top-0 h-5 w-5 border-l-[3px] border-t-[3px] border-[#1769FF] sm:h-6 sm:w-6" />
+              <span className="absolute right-0 top-0 h-5 w-5 border-r-[3px] border-t-[3px] border-[#1769FF] sm:h-6 sm:w-6" />
+              <span className="absolute bottom-0 left-0 h-5 w-5 border-b-[3px] border-l-[3px] border-[#1769FF] sm:h-6 sm:w-6" />
+              <span className="absolute bottom-0 right-0 h-5 w-5 border-b-[3px] border-r-[3px] border-[#1769FF] sm:h-6 sm:w-6" />
+            </div>
+
+            <div
+              className={`pointer-events-none absolute left-[62.5%] top-[28%] h-[45%] w-[25.5%] rounded-[1.6rem] transition-all duration-500 ${isResolved ? 'scale-100 opacity-100 shadow-[0_0_0_1px_rgba(23,105,255,0.18),0_0_36px_rgba(23,105,255,0.2)]' : 'translate-y-2 opacity-0'}`}
+              aria-hidden="true"
+            />
+
+            <div
+              className={`pointer-events-none absolute left-[33%] top-[59%] flex h-9 w-9 items-center justify-center rounded-full border border-[#111318]/12 bg-white/95 shadow-[0_10px_30px_rgba(17,19,24,0.18)] transition-all duration-500 sm:h-11 sm:w-11 ${isSelecting || isResolved ? 'translate-x-0 translate-y-0 opacity-100' : 'translate-x-8 translate-y-6 opacity-0'}`}
+              aria-hidden="true"
+            >
+              <span className="block h-3 w-3 rounded-full bg-[#1769FF] sm:h-3.5 sm:w-3.5" />
+            </div>
+          </button>
+
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-2.5 text-[10px] font-semibold uppercase tracking-[0.16em] sm:mt-6 sm:text-xs">
+            <span className={`rounded-full border px-3 py-2 transition-all duration-300 ${isSelecting || isResolved ? 'border-[#1769FF]/25 bg-[#1769FF]/8 text-[#1769FF]' : 'border-[#dfe1e5] text-[#80848d]'}`}>
+              click the item
+            </span>
+            <span className={`rounded-full border px-3 py-2 transition-all duration-300 ${isResolved ? 'border-[#1769FF]/25 bg-[#1769FF]/8 text-[#1769FF]' : 'border-[#dfe1e5] text-[#80848d]'}`}>
+              exact • likely • similar
+            </span>
+            <span className="rounded-full border border-[#dfe1e5] px-3 py-2 text-[#80848d]">tap to replay</span>
+          </div>
+
+          <p className="mx-auto mt-8 max-w-[44rem] text-lg leading-[1.6] text-[#565a63] sm:mt-10 sm:text-xl md:text-[1.45rem] md:leading-[1.6]">
             See something you want in a video? Point at it. Scoop helps identify the product and where to get it.
           </p>
 
-          <div className="mt-8 flex flex-col items-center gap-5 sm:mt-10 sm:flex-row sm:gap-6">
-            <a href="mailto:contact@article6.org?subject=Scoop%20alpha" className="inline-flex w-full items-center justify-center bg-[#111318] px-7 py-4 text-sm font-semibold text-white transition hover:bg-[#1769FF] sm:w-auto">Join the alpha</a>
+          <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:mt-10 sm:flex-row sm:flex-wrap sm:gap-5">
+            <a href="mailto:contact@article6.org?subject=Scoop%20alpha" className="inline-flex w-full items-center justify-center bg-[#111318] px-6 py-4 text-sm font-semibold text-white transition hover:bg-[#1769FF] sm:w-auto sm:px-7">Join the alpha</a>
             <a href="#how" className="nav-link text-sm font-semibold">See how it works ↓</a>
           </div>
         </div>
