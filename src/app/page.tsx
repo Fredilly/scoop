@@ -39,27 +39,31 @@ export default function Home() {
     setActiveItem(item);
     setDemoPhase('idle');
     timeouts.current.push(
-      window.setTimeout(() => setDemoPhase('selected'), 140),
-      window.setTimeout(() => setDemoPhase('resolved'), 920),
+      window.setTimeout(() => setDemoPhase('selected'), 120),
+      window.setTimeout(() => setDemoPhase('resolved'), 820),
     );
   };
 
   useEffect(() => {
-    const items: HeroItem[] = ['jacket', 'pants', 'vase'];
     const isMobile = window.matchMedia('(max-width: 767px)').matches;
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let nextItem = 1;
-    const starter = window.setTimeout(() => playDemo('jacket'), 450);
-    const cycle = isMobile && !reduceMotion
-      ? window.setInterval(() => {
-          playDemo(items[nextItem]);
-          nextItem = (nextItem + 1) % items.length;
-        }, 3800)
-      : undefined;
+    const items: HeroItem[] = ['jacket', 'pants', 'vase'];
+    let index = 0;
+    let cycleTimer: number | undefined;
+
+    const runNext = () => {
+      playDemo(items[index]);
+      index = (index + 1) % items.length;
+      if (isMobile && !reduceMotion) {
+        cycleTimer = window.setTimeout(runNext, 4200);
+      }
+    };
+
+    const starter = window.setTimeout(runNext, 450);
 
     return () => {
       window.clearTimeout(starter);
-      if (cycle !== undefined) window.clearInterval(cycle);
+      if (cycleTimer !== undefined) window.clearTimeout(cycleTimer);
       clearDemoTimers();
     };
   }, []);
@@ -68,11 +72,11 @@ export default function Home() {
   const showPanel = demoPhase === 'resolved';
   const selectedHero = activeItem === 'jacket' ? heroSelectedJacket : activeItem === 'pants' ? heroSelectedPants : heroSelectedVase;
   const selectedPanel = activeItem === 'jacket' ? heroPanelJacket : activeItem === 'pants' ? heroPanelPants : heroPanelVase;
-
-  const goToWaitlist = (persona: WaitlistPersona) => {
-    setWaitlistPersona(persona);
-    window.setTimeout(() => document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0);
-  };
+  const mobilePanelStyle = activeItem === 'pants'
+    ? { top: '4%', right: '2%', width: '40%', maxWidth: '210px' }
+    : activeItem === 'jacket'
+      ? { bottom: '3%', right: '2%', width: '40%', maxWidth: '210px' }
+      : { top: '12%', right: '2%', width: '40%', maxWidth: '210px' };
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-white text-[#111318]">
@@ -90,14 +94,15 @@ export default function Home() {
           <h1 className="mt-4 text-[clamp(2.6rem,7vw,5.75rem)] font-black leading-[0.9] tracking-[-0.065em] text-[#111318]">
             SEE IT. <span className={`transition-colors duration-500 ${showPanel ? 'text-[#1769FF]' : 'text-[#111318]'}`}>SCOOP IT.</span>
           </h1>
-          <p className="mx-auto mt-5 max-w-3xl text-base leading-7 text-[#686d76] sm:text-lg"><span className="sm:hidden">Watch Scoop identify the jacket, pants, and vase automatically.</span><span className="hidden sm:inline">Hover or tap the jacket, pants, or vase to see item-specific results.</span></p>
+          <p className="mx-auto mt-5 max-w-3xl text-base leading-7 text-[#686d76] sm:text-lg"><span className="sm:hidden">Watch Scoop cycle through the jacket, pants, and vase.</span><span className="hidden sm:inline">Hover or tap the jacket, pants, or vase to see item-specific results.</span></p>
 
           <div className="mt-10">
             <div className="mx-auto w-full max-w-[1180px]">
               <div className="relative isolate mx-auto w-full">
                 <img src={heroClean} alt="TV showing a woman in a denim jacket and cream pants inside a living room" className="mx-auto block h-auto w-full drop-shadow-[0_28px_90px_rgba(17,19,24,0.08)]" loading="eager" fetchPriority="high" />
                 <img src={selectedHero} alt="" aria-hidden="true" className={`pointer-events-none absolute inset-0 block h-full w-full transition-opacity duration-500 ${showSelection ? 'opacity-100' : 'opacity-0'}`} />
-                <img src={selectedPanel} alt="" aria-hidden="true" className={`pointer-events-none absolute right-[3%] top-[8%] block h-auto w-[48%] max-w-[240px] transition-all duration-500 sm:right-[1%] sm:top-[10%] sm:w-[42%] md:right-[-1%] md:top-[14%] md:w-[37%] md:max-w-[430px] ${showPanel ? 'translate-x-0 translate-y-0 opacity-100' : 'translate-x-3 translate-y-2 opacity-0 md:translate-x-8 md:translate-y-0'}`} />
+                <img src={selectedPanel} alt="" aria-hidden="true" style={mobilePanelStyle} className={`pointer-events-none absolute block h-auto transition-all duration-500 md:hidden ${showPanel ? 'translate-x-0 translate-y-0 opacity-100' : 'translate-x-2 translate-y-2 opacity-0'}`} />
+                <img src={selectedPanel} alt="" aria-hidden="true" className={`pointer-events-none absolute right-[-1%] top-[14%] hidden h-auto w-[37%] max-w-[430px] transition-all duration-500 md:block ${showPanel ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0'}`} />
                 <button type="button" aria-label="Show jacket results" onMouseEnter={() => playDemo('jacket')} onFocus={() => playDemo('jacket')} onClick={() => playDemo('jacket')} className="absolute left-[37%] top-[31%] h-[37%] w-[35%] rounded-[2rem] bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1769FF] focus-visible:ring-offset-2" />
                 <button type="button" aria-label="Show pants results" onMouseEnter={() => playDemo('pants')} onFocus={() => playDemo('pants')} onClick={() => playDemo('pants')} className="absolute left-[34%] top-[56%] h-[27%] w-[50%] rounded-[2rem] bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1769FF] focus-visible:ring-offset-2" />
                 <button type="button" aria-label="Show vase results" onMouseEnter={() => playDemo('vase')} onFocus={() => playDemo('vase')} onClick={() => playDemo('vase')} className="absolute left-[6%] top-[31%] h-[24%] w-[14%] rounded-[1.5rem] bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1769FF] focus-visible:ring-offset-2" />
@@ -107,8 +112,8 @@ export default function Home() {
 
           <p className="mx-auto mt-8 max-w-[40rem] text-base leading-7 text-[#62666f] sm:mt-10 sm:text-lg md:text-xl md:leading-8">See something you want in a video? Point at it. Scoop helps identify the product and where to get it.</p>
           <div className="mx-auto mt-8 flex w-full max-w-sm flex-col items-center justify-center gap-3 sm:mt-10 sm:max-w-none sm:flex-row sm:flex-wrap sm:gap-4">
-            <button type="button" onClick={() => goToWaitlist('SHOPPER')} className="inline-flex w-full items-center justify-center rounded-xl bg-[#1769FF] px-7 py-4 text-sm font-bold text-white transition hover:bg-[#111318] sm:w-auto">Join the waitlist</button>
-            <button type="button" onClick={() => goToWaitlist('CREATOR')} className="inline-flex w-full items-center justify-center rounded-xl border border-[#dfe1e5] bg-white px-7 py-4 text-sm font-bold text-[#111318] transition hover:border-[#1769FF] hover:text-[#1769FF] sm:w-auto">I&apos;m a creator</button>
+            <a href="#waitlist" onClick={() => setWaitlistPersona('SHOPPER')} className="inline-flex w-full items-center justify-center rounded-xl bg-[#1769FF] px-7 py-4 text-sm font-bold text-white transition hover:bg-[#111318] sm:w-auto">Join the waitlist</a>
+            <a href="#waitlist" onClick={() => setWaitlistPersona('CREATOR')} className="inline-flex w-full items-center justify-center rounded-xl border border-[#dfe1e5] bg-white px-7 py-4 text-sm font-bold text-[#111318] transition hover:border-[#1769FF] hover:text-[#1769FF] sm:w-auto">I&apos;m a creator</a>
             <a href="#how" className="nav-link px-3 py-4 text-sm font-semibold">See how it works ↓</a>
           </div>
         </div>
@@ -143,9 +148,9 @@ export default function Home() {
       </section>
 
       <section className="mx-auto w-full max-w-[1500px] px-5 pb-10 pt-24 sm:px-6 md:px-10 lg:px-16 lg:pt-32">
-        <div className="grid justify-items-center gap-10 bg-[#1769FF] px-6 py-10 text-center text-white sm:px-7 sm:py-12 md:px-12 md:py-16 lg:grid-cols-[1.2fr_.8fr] lg:justify-items-stretch lg:px-16 lg:py-20 lg:text-left">
+        <div className="mx-auto grid w-full max-w-[1320px] justify-items-center gap-10 bg-[#1769FF] px-6 py-10 text-center text-white sm:px-7 sm:py-12 md:px-12 md:py-16 lg:grid-cols-[1.2fr_.8fr] lg:justify-items-stretch lg:px-16 lg:py-20 lg:text-left">
           <div className="mx-auto w-full max-w-xl lg:mx-0 lg:max-w-none"><div className="text-xs font-semibold uppercase tracking-[0.22em] text-white/70">Private alpha</div><h2 className="mx-auto mt-5 max-w-lg text-[clamp(3rem,13vw,4.5rem)] font-black leading-[0.92] tracking-[-0.055em] lg:mx-0 lg:max-w-3xl lg:text-7xl">Want to Scoop something?</h2></div>
-          <div className="mx-auto w-full max-w-sm self-end justify-self-center lg:mx-0 lg:max-w-lg lg:justify-self-stretch"><p className="mx-auto max-w-lg text-lg leading-8 text-white/85 lg:mx-0">Scoop is still being built. Early testers will help us find what works, what misses, and what deserves to exist.</p><div className="mx-auto mt-8 flex w-full max-w-sm flex-col items-stretch justify-center gap-3 sm:flex-row lg:mx-0 lg:max-w-none lg:justify-start"><a href="#waitlist" onClick={() => setWaitlistPersona('SHOPPER')} className="inline-flex w-full items-center justify-center rounded-xl bg-white px-6 py-4 text-sm font-bold text-[#111318] transition hover:bg-[#111318] hover:text-white sm:w-auto sm:py-3.5">Join the waitlist</a><a href="#waitlist" onClick={() => setWaitlistPersona('CREATOR')} className="inline-flex w-full items-center justify-center rounded-xl border border-white/35 px-6 py-4 text-sm font-bold text-white transition hover:bg-white hover:text-[#111318] sm:w-auto sm:py-3.5">Creator access</a></div></div>
+          <div className="mx-auto w-full max-w-sm self-end justify-self-center lg:mx-0 lg:max-w-lg lg:justify-self-stretch"><p className="mx-auto max-w-lg text-lg leading-8 text-white/85 lg:mx-0">Scoop is still being built. Early testers will help us find what works, what misses, and what deserves to exist.</p><div className="mt-8 flex w-full flex-col items-stretch justify-center gap-3"><a href="#waitlist" onClick={() => setWaitlistPersona('SHOPPER')} style={{ color: '#111318' }} className="mx-auto inline-flex w-full max-w-sm items-center justify-center rounded-xl bg-white px-6 py-4 text-center text-sm font-bold sm:py-3.5">Join the waitlist</a><a href="#waitlist" onClick={() => setWaitlistPersona('CREATOR')} style={{ color: '#ffffff' }} className="mx-auto inline-flex w-full max-w-sm items-center justify-center rounded-xl border border-white/35 px-6 py-4 text-center text-sm font-bold sm:py-3.5">Creator access</a></div></div>
         </div>
       </section>
 
