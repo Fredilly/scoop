@@ -54,11 +54,11 @@ const details = [
 export default function Privacy() {
   return (
     <main className="min-h-screen bg-white text-[#111318]">
-      <nav className="mx-auto flex w-full max-w-[1180px] items-center justify-between px-5 py-6 sm:px-8 md:py-8">
-        <a href="/" aria-label="Scoop home">
-          <img src={logo} alt="Scoop" className="h-8 w-auto md:h-9" />
-        </a>
-        <a href="/" className="nav-link text-sm font-semibold text-[#545962]">Back home</a>
+      <nav className="mx-auto flex w-full max-w-[1500px] items-center justify-between px-5 py-5 sm:px-6 sm:py-7 md:px-10 lg:px-16">
+        <a href="/" aria-label="Scoop home"><img src={logo} alt="Scoop" className="h-8 w-auto md:h-10" /></a>
+        <div className="flex items-center gap-4 text-xs font-medium sm:gap-5 sm:text-sm md:gap-8">
+          <a href="/" className="nav-link">Back home</a>
+        </div>
       </nav>
 
       <section className="mx-auto w-full max-w-[1080px] px-5 pb-20 pt-12 sm:px-8 md:pb-28 md:pt-16">
