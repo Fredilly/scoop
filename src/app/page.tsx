@@ -23,27 +23,39 @@ export default function Home() {
         </div>
       </nav>
 
-      <section id="top" className="mx-auto grid w-full max-w-[1500px] gap-10 px-5 pb-20 pt-8 sm:px-6 sm:pb-24 sm:pt-12 md:px-10 lg:min-h-[88vh] lg:grid-cols-[0.92fr_1.08fr] lg:content-center lg:gap-14 lg:px-16 lg:pb-28 lg:pt-16">
+      <section id="top" className="mx-auto grid w-full max-w-[1500px] gap-14 px-5 pb-24 pt-10 sm:px-6 sm:pb-28 sm:pt-14 md:px-10 lg:min-h-[88vh] lg:grid-cols-[0.86fr_1.14fr] lg:content-center lg:gap-16 lg:px-16 lg:pb-32 lg:pt-20">
         <div className="self-center">
-          <div className="mb-6 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#1769FF] sm:mb-8 sm:text-xs sm:tracking-[0.24em]">
+          <div className="mb-8 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#1769FF] sm:mb-10 sm:text-xs sm:tracking-[0.24em]">
             <span className="h-2 w-2 rounded-full bg-[#FF6A1A]" />
             Private alpha
           </div>
-          <h1 className="max-w-[950px] text-[clamp(3.6rem,17vw,10.8rem)] font-black leading-[0.8] tracking-[-0.072em] sm:text-[clamp(4.8rem,12vw,10.8rem)] lg:text-[clamp(5rem,8.2vw,9rem)]">
-            SEE IT.<br />
-            <span className="text-[#1769FF]">SCOOP IT.</span>
+
+          <h1 className="max-w-[950px] text-[clamp(3.55rem,16.5vw,10.4rem)] font-black leading-[0.92] tracking-[-0.064em] sm:text-[clamp(4.8rem,11.5vw,10.4rem)] lg:text-[clamp(5rem,7.8vw,8.8rem)]">
+            <span className="block">SEE IT.</span>
+            <span className="mt-[0.06em] block text-[#1769FF]">
+              SC
+              <img
+                src={mark}
+                alt="o"
+                aria-hidden="true"
+                className="mx-[0.012em] inline-block h-[0.68em] w-[0.68em] object-contain align-[-0.035em]"
+              />
+              OP IT.
+            </span>
           </h1>
-          <p className="mt-7 max-w-xl text-lg leading-7 text-[#565a63] sm:mt-10 sm:text-xl sm:leading-8 md:text-2xl md:leading-9">
+
+          <p className="mt-10 max-w-[34rem] text-lg leading-[1.55] text-[#565a63] sm:mt-12 sm:text-xl md:text-[1.45rem] md:leading-[1.55]">
             See something you want in a video? Point at it. Scoop helps identify the product and where to get it.
           </p>
-          <div className="mt-8 flex flex-col gap-4 sm:mt-10 sm:flex-row sm:flex-wrap sm:items-center sm:gap-5">
-            <a href="mailto:contact@article6.org?subject=Scoop%20alpha" className="inline-flex w-full items-center justify-center bg-[#111318] px-6 py-4 text-sm font-semibold text-white transition hover:bg-[#1769FF] sm:w-auto sm:py-3.5">Join the alpha</a>
+
+          <div className="mt-10 flex flex-col gap-5 sm:mt-12 sm:flex-row sm:flex-wrap sm:items-center sm:gap-6">
+            <a href="mailto:contact@article6.org?subject=Scoop%20alpha" className="inline-flex w-full items-center justify-center bg-[#111318] px-7 py-4 text-sm font-semibold text-white transition hover:bg-[#1769FF] sm:w-auto">Join the alpha</a>
             <a href="#how" className="nav-link self-center text-sm font-semibold sm:self-auto">See how it works ↓</a>
           </div>
         </div>
 
-        <div className="relative self-center lg:pl-2">
-          <div className="overflow-hidden rounded-[22px] bg-white shadow-[0_24px_80px_rgba(17,19,24,0.10)] ring-1 ring-[#e8eaf0] sm:rounded-[28px]">
+        <div className="relative self-center lg:-mr-6 xl:-mr-10">
+          <div className="overflow-hidden rounded-[24px] bg-white shadow-[0_28px_90px_rgba(17,19,24,0.09)] sm:rounded-[30px] lg:scale-[1.045] xl:scale-[1.075]">
             <img
               src={hero}
               alt="Scoop identifying a denim jacket in a video and showing exact, likely, and similar purchase options"
