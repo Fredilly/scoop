@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from 'react';
 
 export type WaitlistPersona = 'CREATOR' | 'SHOPPER' | 'BRAND_RETAILER' | 'OTHER';
+export type CreatorPlatform = 'YOUTUBE' | 'TIKTOK' | 'INSTAGRAM' | 'OTHER';
 
 type WaitlistFormProps = {
   persona: WaitlistPersona;
@@ -12,6 +13,7 @@ type WaitlistFormProps = {
 export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormProps) {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [message, setMessage] = useState('');
+  const [creatorPlatform, setCreatorPlatform] = useState<CreatorPlatform>('YOUTUBE');
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -23,6 +25,7 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
       name: String(form.get('name') || ''),
       email: String(form.get('email') || ''),
       persona,
+      platform: persona === 'CREATOR' ? creatorPlatform : '',
       handle: String(form.get('handle') || ''),
       organization: String(form.get('organization') || ''),
       companyWebsite: String(form.get('companyWebsite') || ''),
@@ -43,6 +46,7 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
       setStatus('success');
       setMessage("You're on the list.");
       event.currentTarget.reset();
+      setCreatorPlatform('YOUTUBE');
     } catch (error) {
       setStatus('error');
       setMessage(error instanceof Error ? error.message : 'Could not join the waitlist.');
@@ -58,7 +62,7 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
             required
             name="name"
             autoComplete="name"
-            className="h-12 rounded-xl border border-[#dfe1e5] bg-white px-4 font-normal outline-none transition focus:border-[#1769FF] focus:ring-2 focus:ring-[#1769FF]/10"
+            className="h-12 rounded-xl border border-white/45 bg-white/35 px-4 font-normal outline-none backdrop-blur-xl transition focus:border-[#1769FF]/70 focus:bg-white/55 focus:ring-2 focus:ring-[#1769FF]/10"
           />
         </label>
         <label className="grid gap-2 text-left text-sm font-semibold">
@@ -68,7 +72,7 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
             type="email"
             name="email"
             autoComplete="email"
-            className="h-12 rounded-xl border border-[#dfe1e5] bg-white px-4 font-normal outline-none transition focus:border-[#1769FF] focus:ring-2 focus:ring-[#1769FF]/10"
+            className="h-12 rounded-xl border border-white/45 bg-white/35 px-4 font-normal outline-none backdrop-blur-xl transition focus:border-[#1769FF]/70 focus:bg-white/55 focus:ring-2 focus:ring-[#1769FF]/10"
           />
         </label>
       </div>
@@ -78,7 +82,7 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
         <select
           value={persona}
           onChange={(event) => onPersonaChange(event.target.value as WaitlistPersona)}
-          className="h-12 rounded-xl border border-[#dfe1e5] bg-white px-4 font-normal outline-none transition focus:border-[#1769FF] focus:ring-2 focus:ring-[#1769FF]/10"
+          className="h-12 rounded-xl border border-white/45 bg-white/35 px-4 font-normal outline-none backdrop-blur-xl transition focus:border-[#1769FF]/70 focus:bg-white/55 focus:ring-2 focus:ring-[#1769FF]/10"
         >
           <option value="CREATOR">Creator / Influencer</option>
           <option value="SHOPPER">Shopper</option>
@@ -88,14 +92,30 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
       </label>
 
       {persona === 'CREATOR' && (
-        <label className="grid gap-2 text-left text-sm font-semibold">
-          Main channel or handle <span className="font-normal text-[#7a7e87]">optional</span>
-          <input
-            name="handle"
-            placeholder="@yourhandle"
-            className="h-12 rounded-xl border border-[#dfe1e5] bg-white px-4 font-normal outline-none transition placeholder:text-[#a1a4aa] focus:border-[#1769FF] focus:ring-2 focus:ring-[#1769FF]/10"
-          />
-        </label>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <label className="grid gap-2 text-left text-sm font-semibold">
+            Main platform
+            <select
+              name="platform"
+              value={creatorPlatform}
+              onChange={(event) => setCreatorPlatform(event.target.value as CreatorPlatform)}
+              className="h-12 rounded-xl border border-white/45 bg-white/35 px-4 font-normal outline-none backdrop-blur-xl transition focus:border-[#1769FF]/70 focus:bg-white/55 focus:ring-2 focus:ring-[#1769FF]/10"
+            >
+              <option value="YOUTUBE">YouTube</option>
+              <option value="TIKTOK">TikTok</option>
+              <option value="INSTAGRAM">Instagram</option>
+              <option value="OTHER">Other</option>
+            </select>
+          </label>
+          <label className="grid gap-2 text-left text-sm font-semibold">
+            Channel or handle <span className="font-normal text-[#7a7e87]">optional</span>
+            <input
+              name="handle"
+              placeholder={creatorPlatform === 'YOUTUBE' ? 'Channel URL or @handle' : '@yourhandle'}
+              className="h-12 rounded-xl border border-white/45 bg-white/35 px-4 font-normal outline-none backdrop-blur-xl transition placeholder:text-[#8d929b] focus:border-[#1769FF]/70 focus:bg-white/55 focus:ring-2 focus:ring-[#1769FF]/10"
+            />
+          </label>
+        </div>
       )}
 
       {persona === 'BRAND_RETAILER' && (
@@ -104,7 +124,7 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
           <input
             name="organization"
             autoComplete="organization"
-            className="h-12 rounded-xl border border-[#dfe1e5] bg-white px-4 font-normal outline-none transition focus:border-[#1769FF] focus:ring-2 focus:ring-[#1769FF]/10"
+            className="h-12 rounded-xl border border-white/45 bg-white/35 px-4 font-normal outline-none backdrop-blur-xl transition focus:border-[#1769FF]/70 focus:bg-white/55 focus:ring-2 focus:ring-[#1769FF]/10"
           />
         </label>
       )}
@@ -117,7 +137,7 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
       <button
         type="submit"
         disabled={status === 'submitting' || status === 'success'}
-        className="mt-2 inline-flex h-12 items-center justify-center rounded-xl bg-[#1769FF] px-6 text-sm font-bold text-white transition hover:bg-[#111318] disabled:cursor-default disabled:opacity-60"
+        className="mt-2 inline-flex h-12 items-center justify-center rounded-xl bg-[#1769FF] px-6 text-sm font-bold text-white shadow-[0_10px_30px_rgba(23,105,255,0.25)] transition hover:bg-[#111318] disabled:cursor-default disabled:opacity-60"
       >
         {status === 'submitting' ? 'Joining…' : status === 'success' ? 'Joined' : 'Join the waitlist'}
       </button>
@@ -128,7 +148,7 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
         </p>
       )}
 
-      <p className="text-xs leading-5 text-[#858991]">
+      <p className="text-xs leading-5 text-[#737780]">
         We&apos;ll only use this to contact you about Scoop testing and launch access.
       </p>
     </form>
