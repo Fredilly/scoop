@@ -16,11 +16,21 @@ export default function Providers() {
         <p className="mt-10 max-w-2xl text-xl leading-8 text-zinc-600">Scoop may use multiple product, marketplace and search sources. No single provider decides what an object is.</p>
 
         <div className="mt-20 border-t border-zinc-200 pt-10">
-          <h2 className="text-4xl font-black">Etsy</h2>
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-zinc-600">Etsy is an optional commerce source for relevant categories. When Etsy product information is shown, Scoop links users back to the relevant Etsy listing.</p>
+          <h2 className="text-4xl font-black">eBay</h2>
+          <p className="mt-6 max-w-2xl text-lg leading-8 text-zinc-600">eBay is a broad marketplace source used to find relevant current and resale product listings across supported categories.</p>
         </div>
 
-        <div className="mt-20 bg-zinc-100 p-6 text-sm leading-6 text-zinc-600">The term &apos;Etsy&apos; is a trademark of Etsy, Inc. This application uses the Etsy API but is not endorsed or certified by Etsy, Inc.</div>
+        <div className="mt-20 border-t border-zinc-200 pt-10">
+          <h2 className="text-4xl font-black">Etsy</h2>
+          <p className="mt-6 max-w-2xl text-lg leading-8 text-zinc-600">Etsy is an optional commerce source for relevant fashion, accessory, jewelry, handmade and vintage categories. When Etsy product information is shown, Scoop links users back to the relevant Etsy listing.</p>
+        </div>
+
+        <div className="mt-20 border-t border-zinc-200 pt-10">
+          <h2 className="text-4xl font-black">Brave Search</h2>
+          <p className="mt-6 max-w-2xl text-lg leading-8 text-zinc-600">Brave Search is a fallback discovery source used to find relevant product and merchant pages on the open web when catalog providers are not sufficient.</p>
+        </div>
+
+        <div className="mt-20 bg-zinc-100 p-6 text-sm leading-6 text-zinc-600">The term &apos;Etsy&apos; is a trademark of Etsy, Inc. This application uses the Etsy API but is not endorsed or certified by Etsy, Inc. Other provider names and marks are the property of their respective owners. Their inclusion does not imply endorsement or sponsorship of Scoop.</div>
       </section>
     </main>
   );
