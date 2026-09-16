@@ -30,7 +30,7 @@ export default function Providers() {
           <p className="mt-6 max-w-2xl text-lg leading-8 text-zinc-600">Brave Search is a fallback discovery source used to find relevant product and merchant pages on the open web when catalog providers are not sufficient.</p>
         </div>
 
-        <div className="mt-20 bg-zinc-100 p-6 text-sm leading-6 text-zinc-600">The term &apos;Etsy&apos; is a trademark of Etsy, Inc. This application uses the Etsy API but is not endorsed or certified by Etsy, Inc.</div>
+        <div className="mt-20 bg-zinc-100 p-6 text-sm leading-6 text-zinc-600">The term &apos;Etsy&apos; is a trademark of Etsy, Inc. This application uses the Etsy API but is not endorsed or certified by Etsy, Inc. Other provider names and marks are the property of their respective owners. Their inclusion does not imply endorsement or sponsorship of Scoop.</div>
       </section>
     </main>
   );
