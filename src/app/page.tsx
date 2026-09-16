@@ -45,25 +45,40 @@ export default function Home() {
   };
 
   useEffect(() => {
-    const isMobile = window.matchMedia('(max-width: 767px)').matches;
+    const media = window.matchMedia('(max-width: 767px)');
     const items: HeroItem[] = ['jacket', 'pants', 'vase'];
     let index = 0;
+    let starter: number | undefined;
     let cycleTimer: number | undefined;
-    let stopped = false;
 
-    const runNext = () => {
-      if (stopped) return;
-      playDemo(items[index]);
-      index = (index + 1) % items.length;
-      if (isMobile) cycleTimer = window.setTimeout(runNext, 3400);
+    const stopCycle = () => {
+      if (starter !== undefined) window.clearTimeout(starter);
+      if (cycleTimer !== undefined) window.clearInterval(cycleTimer);
+      starter = undefined;
+      cycleTimer = undefined;
     };
 
-    const starter = window.setTimeout(runNext, 350);
+    const startCycle = () => {
+      stopCycle();
+      if (!media.matches) return;
+
+      index = 0;
+      starter = window.setTimeout(() => {
+        playDemo(items[index]);
+        index = (index + 1) % items.length;
+        cycleTimer = window.setInterval(() => {
+          playDemo(items[index]);
+          index = (index + 1) % items.length;
+        }, 3400);
+      }, 350);
+    };
+
+    startCycle();
+    media.addEventListener('change', startCycle);
 
     return () => {
-      stopped = true;
-      window.clearTimeout(starter);
-      if (cycleTimer !== undefined) window.clearTimeout(cycleTimer);
+      media.removeEventListener('change', startCycle);
+      stopCycle();
       clearDemoTimers();
     };
   }, []);
@@ -92,7 +107,7 @@ export default function Home() {
       <section id="top" className="mx-auto w-full max-w-[1500px] px-5 pb-24 pt-10 sm:px-6 sm:pb-28 sm:pt-12 md:px-10 lg:min-h-[92vh] lg:px-16 lg:pb-32 lg:pt-14">
         <div className="mx-auto max-w-[1260px] text-center">
           <h1 className="mt-4 text-[clamp(2.6rem,7vw,5.75rem)] font-black leading-[0.9] tracking-[-0.065em] text-[#111318]">
-            SEE IT. <span className={`transition-colors duration-500 ${showPanel ? 'text-[#1769FF]' : 'text-[#111318]'}`}>SCOOP IT.</span>
+            SEE IT. <span className={`text-[#1769FF] sm:transition-colors sm:duration-500 ${showPanel ? 'sm:text-[#1769FF]' : 'sm:text-[#111318]'}`}>SCOOP IT.</span>
           </h1>
           <p className="mx-auto mt-5 max-w-3xl text-base leading-7 text-[#686d76] sm:text-lg"><span className="sm:hidden">Watch Scoop cycle through the jacket, pants, and vase.</span><span className="hidden sm:inline">Hover or tap the jacket, pants, or vase to see item-specific results.</span></p>
 
