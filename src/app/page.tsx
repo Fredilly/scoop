@@ -138,28 +138,50 @@ export default function Home() {
         <p className="mx-auto max-w-[1050px] text-[clamp(2.8rem,7vw,6.25rem)] font-extrabold leading-[0.94] tracking-[-0.052em] md:mx-0"><span className="block">Don&apos;t screenshot it.</span><span className="block">Don&apos;t hunt through comments.</span><span className="mt-2 block text-[#1769FF]">Scoop it.</span></p>
       </section>
 
-      <section id="waitlist" className="scroll-mt-8 text-white">
-        <div className="founding-shell mx-auto w-full max-w-[1500px] px-5 py-24 sm:px-6 md:px-10 lg:px-16 lg:py-36">
-          <div className="founding-grid mx-auto grid w-full max-w-[1280px] gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-20">
-            <div className="mx-auto w-full max-w-xl text-center lg:mx-0 lg:text-left">
-              <div className="founding-eyebrow inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-[0.68rem] font-bold uppercase tracking-[0.24em] text-white/85 backdrop-blur-xl">
-                <span className="h-1.5 w-1.5 rounded-full bg-white shadow-[0_0_18px_rgba(255,255,255,0.9)]" />
-                Founding 100
-              </div>
-              <h2 className="mx-auto mt-7 max-w-[9ch] text-[clamp(3.5rem,9vw,7rem)] font-black leading-[0.88] tracking-[-0.065em] lg:mx-0">
-                Join the First 100.
-              </h2>
-              <p className="mx-auto mt-7 max-w-xl text-base leading-7 text-white/78 sm:text-lg sm:leading-8 lg:mx-0">
-                Be among the first to use Scoop in the wild. Help us make visual shopping faster, smarter, and more accurate.
-              </p>
-              <p className="mx-auto mt-7 max-w-xl text-sm font-semibold tracking-[-0.01em] text-white lg:mx-0 sm:text-base">
-                100 founding members. Private beta. Built with you.
-              </p>
-            </div>
+      <section id="waitlist" className="founding-stage scroll-mt-0">
+        <div className="founding-bg-mark" aria-hidden="true">
+          <img src={mark} alt="" />
+        </div>
 
-            <div className="founding-glass mx-auto w-full max-w-2xl rounded-[2rem] p-5 sm:p-8 md:p-10 lg:max-w-none">
-              <WaitlistForm persona={waitlistPersona} onPersonaChange={setWaitlistPersona} />
+        <img
+          src={heroPanelJacket}
+          alt=""
+          aria-hidden="true"
+          className="founding-float founding-float-jacket"
+        />
+        <img
+          src={heroPanelVase}
+          alt=""
+          aria-hidden="true"
+          className="founding-float founding-float-vase"
+        />
+
+        <div className="founding-layout">
+          <div className="founding-copy">
+            <div className="founding-eyebrow">Founding 100</div>
+            <h2>
+              Join the <span>First 100.</span>
+            </h2>
+            <p className="founding-subhead">
+              Be among the first to use Scoop in the wild. Help us make visual shopping faster, smarter, and more accurate.
+            </p>
+            <p className="founding-proof">100 founding members. Private beta. Built with you.</p>
+
+            <div className="founding-signature" aria-hidden="true">
+              <span>See it.</span>
+              <span>Find it.</span>
+              <span>Scoop it.</span>
             </div>
+          </div>
+
+          <div className="founding-glass">
+            <div className="founding-glass-shine" aria-hidden="true" />
+            <div className="founding-form-header">
+              <span>Private beta</span>
+              <h3>Join the First 100</h3>
+              <p>Tell us who you are. We’ll bring the first cohort in gradually.</p>
+            </div>
+            <WaitlistForm persona={waitlistPersona} onPersonaChange={setWaitlistPersona} />
           </div>
         </div>
       </section>

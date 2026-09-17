@@ -101,46 +101,46 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
   }
 
   const field =
-    'h-13 w-full rounded-2xl border border-white/28 bg-white/[0.08] px-4 text-[0.95rem] font-medium text-white outline-none shadow-[inset_0_1px_0_rgba(255,255,255,0.22)] backdrop-blur-2xl backdrop-saturate-150 transition placeholder:text-white/45 hover:bg-white/[0.11] focus:border-white/60 focus:bg-white/[0.13] focus:ring-4 focus:ring-white/10';
+    'h-13 w-full rounded-[1.15rem] border border-white/70 bg-white/44 px-4 text-[0.95rem] font-medium text-[#111318] outline-none shadow-[inset_0_1px_0_rgba(255,255,255,0.98),0_8px_24px_rgba(32,83,164,0.06)] backdrop-blur-2xl backdrop-saturate-150 transition placeholder:text-[#7d8796] hover:bg-white/56 focus:border-[#1769FF]/45 focus:bg-white/62 focus:ring-4 focus:ring-[#1769FF]/10';
 
   if (status === 'success') {
     return (
       <div className="grid min-h-[28rem] content-center gap-7">
         <div>
-          <div className="text-xs font-bold uppercase tracking-[0.22em] text-white/55">Founding 100</div>
-          <h3 className="mt-4 text-4xl font-black tracking-[-0.05em] text-white sm:text-5xl">You’re in.</h3>
-          <p className="mt-4 max-w-xl text-base leading-7 text-white/72">
+          <div className="text-xs font-bold uppercase tracking-[0.22em] text-[#718096]">Founding 100</div>
+          <h3 className="mt-4 text-4xl font-black tracking-[-0.05em] text-[#111318] sm:text-5xl">You’re in.</h3>
+          <p className="mt-4 max-w-xl text-base leading-7 text-[#5f6b7a]">
             We’re bringing the first 100 into Scoop in small groups. We’ll be in touch when your spot opens.
           </p>
         </div>
 
         {feedbackStatus !== 'success' ? (
           <form onSubmit={handleFeedback} className="grid gap-3">
-            <label className="grid gap-2 text-left text-sm font-semibold text-white">
+            <label className="grid gap-2 text-left text-sm font-semibold text-[#111318]">
               What made you want to try Scoop?
               <textarea
                 name="triggerForTrying"
                 rows={4}
                 placeholder="Optional. One sentence is perfect."
-                className="w-full resize-none rounded-2xl border border-white/28 bg-white/[0.08] px-4 py-3 text-[0.95rem] font-medium leading-6 text-white outline-none backdrop-blur-2xl transition placeholder:text-white/45 focus:border-white/60 focus:bg-white/[0.13] focus:ring-4 focus:ring-white/10"
+                className="w-full resize-none rounded-[1.15rem] border border-white/70 bg-white/44 px-4 py-3 text-[0.95rem] font-medium leading-6 text-[#111318] outline-none shadow-[inset_0_1px_0_rgba(255,255,255,0.98)] backdrop-blur-2xl transition placeholder:text-[#7d8796] focus:border-[#1769FF]/45 focus:bg-white/62 focus:ring-4 focus:ring-[#1769FF]/10"
               />
             </label>
             <div className="flex flex-wrap items-center gap-3">
               <button
                 type="submit"
                 disabled={feedbackStatus === 'submitting'}
-                className="inline-flex h-11 items-center justify-center rounded-xl border border-white/30 bg-white/10 px-5 text-sm font-bold text-white transition hover:bg-white/18 disabled:opacity-60"
+                className="inline-flex h-11 items-center justify-center rounded-xl border border-[#1769FF]/20 bg-white/48 px-5 text-sm font-bold text-[#1769FF] shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-xl transition hover:bg-white/70 disabled:opacity-60"
               >
                 {feedbackStatus === 'submitting' ? 'Saving…' : 'Share why →'}
               </button>
-              <span className="text-xs text-white/50">Optional</span>
+              <span className="text-xs text-[#7d8796]">Optional</span>
             </div>
             {feedbackStatus === 'error' && (
-              <p className="text-sm text-white/70" role="status">Your spot is saved. The optional answer did not save.</p>
+              <p className="text-sm text-[#5f6b7a]" role="status">Your spot is saved. The optional answer did not save.</p>
             )}
           </form>
         ) : (
-          <p className="text-sm font-semibold text-white/75" role="status">Thanks. That helps us build the right thing.</p>
+          <p className="text-sm font-semibold text-[#5f6b7a]" role="status">Thanks. That helps us build the right thing.</p>
         )}
       </div>
     );
@@ -149,18 +149,18 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
   return (
     <form onSubmit={handleSubmit} className="mx-auto grid w-full gap-6" noValidate>
       <div className="grid gap-4 sm:grid-cols-2">
-        <label className="grid gap-2 text-left text-sm font-semibold text-white">
+        <label className="grid gap-2 text-left text-sm font-semibold text-[#111318]">
           Name
           <input required name="name" autoComplete="name" placeholder="Your name" className={field} />
         </label>
-        <label className="grid gap-2 text-left text-sm font-semibold text-white">
+        <label className="grid gap-2 text-left text-sm font-semibold text-[#111318]">
           Email
           <input required type="email" name="email" autoComplete="email" placeholder="you@example.com" className={field} />
         </label>
       </div>
 
       <fieldset className="grid gap-3">
-        <legend className="mb-1 text-left text-sm font-semibold text-white">I’m joining as</legend>
+        <legend className="mb-1 text-left text-sm font-semibold text-[#111318]">I’m joining as</legend>
         <div className="grid gap-2 sm:grid-cols-2">
           {personas.map((item) => {
             const active = persona === item.value;
@@ -172,12 +172,12 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
                 onClick={() => onPersonaChange(item.value)}
                 className={`rounded-2xl border p-4 text-left transition ${
                   active
-                    ? 'border-white/70 bg-white text-[#111318] shadow-[0_14px_40px_rgba(6,28,72,0.18)]'
-                    : 'border-white/20 bg-white/[0.06] text-white hover:border-white/40 hover:bg-white/[0.10]'
+                    ? 'border-[#1769FF]/55 bg-white/72 text-[#111318] shadow-[inset_0_1px_0_rgba(255,255,255,1),0_12px_30px_rgba(23,105,255,0.10)]'
+                    : 'border-white/65 bg-white/32 text-[#111318] shadow-[inset_0_1px_0_rgba(255,255,255,0.88)] hover:border-[#1769FF]/28 hover:bg-white/52'
                 }`}
               >
                 <span className="block text-sm font-extrabold">{item.label}</span>
-                <span className={`mt-1 block text-xs leading-5 ${active ? 'text-[#5e6470]' : 'text-white/55'}`}>{item.detail}</span>
+                <span className={`mt-1 block text-xs leading-5 ${active ? 'text-[#5e6470]' : 'text-[#718096]'}`}>{item.detail}</span>
               </button>
             );
           })}
@@ -185,15 +185,15 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
       </fieldset>
 
       {persona === 'BRAND_RETAILER' && (
-        <label className="grid gap-2 text-left text-sm font-semibold text-white">
-          Brand or company <span className="font-normal text-white/50">optional</span>
+        <label className="grid gap-2 text-left text-sm font-semibold text-[#111318]">
+          Brand or company <span className="font-normal text-[#7d8796]">optional</span>
           <input name="organization" autoComplete="organization" placeholder="Company name" className={field} />
         </label>
       )}
 
       {showChannelFields && (
         <div className="grid gap-4 sm:grid-cols-2">
-          <label className="grid gap-2 text-left text-sm font-semibold text-white">
+          <label className="grid gap-2 text-left text-sm font-semibold text-[#111318]">
             Primary platform
             <select
               name="platform"
@@ -207,9 +207,9 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
               <option value="OTHER">Other</option>
             </select>
           </label>
-          <label className="grid gap-2 text-left text-sm font-semibold text-white">
+          <label className="grid gap-2 text-left text-sm font-semibold text-[#111318]">
             {persona === 'CREATOR' ? 'Channel URL or @handle' : 'Brand channel URL or @handle'}{' '}
-            <span className="font-normal text-white/50">optional</span>
+            <span className="font-normal text-[#7d8796]">optional</span>
             <input
               name="handle"
               placeholder={platform === 'YOUTUBE' ? 'youtube.com/@channel' : '@yourhandle'}
@@ -227,16 +227,16 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
       <button
         type="submit"
         disabled={status === 'submitting'}
-        className="mt-1 inline-flex h-14 w-full items-center justify-center rounded-2xl bg-white px-7 text-sm font-extrabold text-[#111318] shadow-[0_16px_48px_rgba(3,27,78,0.24)] transition hover:-translate-y-0.5 hover:shadow-[0_20px_54px_rgba(3,27,78,0.3)] disabled:translate-y-0 disabled:cursor-default disabled:opacity-60 sm:w-auto sm:justify-self-start"
+        className="mt-1 inline-flex h-14 w-full items-center justify-center rounded-[1.15rem] bg-[#1769FF] px-7 text-sm font-extrabold text-white shadow-[0_16px_38px_rgba(23,105,255,0.22)] transition hover:-translate-y-0.5 hover:bg-[#0f5fe9] hover:shadow-[0_20px_46px_rgba(23,105,255,0.28)] disabled:translate-y-0 disabled:cursor-default disabled:opacity-60 sm:w-auto sm:justify-self-start"
       >
         {status === 'submitting' ? 'Joining…' : 'Join the First 100 →'}
       </button>
 
       {message && (
-        <p className="text-sm text-white" role="status">{message}</p>
+        <p className="text-sm text-red-600" role="status">{message}</p>
       )}
 
-      <p className="text-xs leading-5 text-white/50">
+      <p className="text-xs leading-5 text-[#7d8796]">
         Private beta. We’ll only use this to contact you about Scoop testing and launch access.
       </p>
     </form>
