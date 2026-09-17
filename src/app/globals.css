@@ -141,13 +141,14 @@ a {
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: minmax(0, 0.92fr) minmax(520px, 1.08fr);
+  grid-template-columns: minmax(0, 1fr) minmax(420px, 560px);
   align-items: center;
-  gap: clamp(3rem, 6vw, 8rem);
-  min-height: 100svh;
-  width: min(100%, 1500px);
+  justify-content: space-between;
+  gap: clamp(2rem, 4vw, 5rem);
+  min-height: calc(100svh - 72px);
+  width: min(100%, 1240px);
   margin: 0 auto;
-  padding: clamp(4.5rem, 8vw, 8rem) clamp(1.5rem, 5vw, 5rem);
+  padding: clamp(2.5rem, 4vw, 4.5rem) clamp(1.25rem, 4vw, 4rem);
 }
 
 .founding-copy {
@@ -176,9 +177,9 @@ a {
 }
 
 .founding-copy h2 {
-  margin: 1.5rem 0 0;
-  max-width: 8.8ch;
-  font-size: clamp(4rem, 7.2vw, 7.3rem);
+  margin: 1.25rem 0 0;
+  max-width: 8.5ch;
+  font-size: clamp(3.2rem, 6vw, 5.8rem);
   font-weight: 900;
   line-height: .88;
   letter-spacing: -.068em;
@@ -209,21 +210,24 @@ a {
 .founding-signature {
   display: grid;
   width: fit-content;
-  margin: 4.25rem 0 0 7rem;
+  margin: 2.5rem 0 0 4.5rem;
   color: #1769ff;
-  font-size: 1.05rem;
-  font-style: italic;
-  line-height: 1.45;
+  font-family: var(--font-scoop-script), cursive;
+  font-size: 1.9rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: .01em;
   transform: rotate(-6deg);
-  opacity: .68;
+  opacity: .82;
 }
 
 .founding-signature span:nth-child(2) {
-  margin-left: 1.7rem;
+  margin-left: 1.15rem;
 }
 
 .founding-signature span:nth-child(3) {
-  margin-left: 3.4rem;
+  margin-left: 2.4rem;
 }
 
 .founding-bg-mark {
@@ -275,8 +279,11 @@ a {
   z-index: 3;
   overflow: hidden;
   border: 1px solid rgba(255,255,255,.82);
+  width: 100%;
+  max-width: 560px;
+  justify-self: end;
   border-radius: 2rem;
-  padding: clamp(1.5rem, 3vw, 2.7rem);
+  padding: clamp(1.2rem, 2vw, 1.8rem);
   background:
     linear-gradient(145deg, rgba(255,255,255,.62), rgba(255,255,255,.30));
   box-shadow:
@@ -330,7 +337,7 @@ a {
 }
 
 .founding-form-header {
-  margin-bottom: 1.65rem;
+  margin-bottom: 1.15rem;
 }
 
 .founding-form-header > span {
@@ -375,8 +382,9 @@ a {
   .founding-layout {
     grid-template-columns: 1fr;
     min-height: auto;
-    gap: 2.75rem;
-    padding: 5.5rem 1.25rem 4.5rem;
+    gap: 2rem;
+    width: min(100%, 680px);
+    padding: 4.5rem 1.25rem 3.5rem;
   }
 
   .founding-copy {
@@ -388,7 +396,7 @@ a {
     max-width: 8ch;
     margin-left: auto;
     margin-right: auto;
-    font-size: clamp(3.5rem, 17vw, 5.2rem);
+    font-size: clamp(2.9rem, 14vw, 4.5rem);
   }
 
   .founding-subhead,
@@ -398,7 +406,10 @@ a {
   }
 
   .founding-signature {
-    display: none;
+    display: grid;
+    margin: 1.8rem auto 0;
+    font-size: 1.55rem;
+    transform: rotate(-5deg);
   }
 
   .founding-bg-mark {
@@ -413,8 +424,10 @@ a {
   }
 
   .founding-glass {
+    max-width: 100%;
+    justify-self: stretch;
     border-radius: 1.65rem;
-    padding: 1.25rem;
+    padding: 1.1rem;
   }
 
   .founding-form-header {
