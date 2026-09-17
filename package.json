@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "preview:upload": "npx --yes wrangler@4.42.0 versions upload",
+    "deploy": "npx --yes wrangler@4.42.0 deploy"
   },
   "dependencies": {
     "next": "16.3.5",
