@@ -2,6 +2,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "scoop",
   "compatibility_date": "2026-09-14",
+  "preview_urls": true,
   "assets": {
     "directory": "./out"
   }
