@@ -93,109 +93,272 @@ a {
   position: relative;
   overflow: hidden;
   isolation: isolate;
+}
+
+.founding-stage {
+  min-height: 100svh;
+  color: #111318;
   background:
-    radial-gradient(circle at 22% 16%, rgba(103, 180, 255, 0.38), transparent 26%),
-    radial-gradient(circle at 82% 22%, rgba(65, 146, 255, 0.34), transparent 22%),
-    radial-gradient(circle at 68% 82%, rgba(9, 49, 145, 0.72), transparent 34%),
-    linear-gradient(145deg, #0c55e9 0%, #1769ff 43%, #0c4fd6 100%);
+    radial-gradient(circle at 15% 18%, rgba(255,255,255,0.96), transparent 25%),
+    radial-gradient(circle at 78% 22%, rgba(255,255,255,0.78), transparent 28%),
+    radial-gradient(circle at 50% 100%, rgba(126,188,255,0.28), transparent 34%),
+    linear-gradient(135deg, #f8fbff 0%, #eaf4ff 48%, #dcecff 100%);
 }
 
-#waitlist::before {
+.founding-stage::before,
+.founding-stage::after {
   content: "";
   position: absolute;
-  width: min(62vw, 58rem);
-  aspect-ratio: 1;
-  right: -10vw;
-  top: -14vw;
-  z-index: 0;
   pointer-events: none;
-  background: url("https://assets.scoop.article6.org/extension/scoop-extension-128.png") center / contain no-repeat;
-  opacity: 0.11;
-  filter: blur(1px) drop-shadow(0 30px 80px rgba(1, 27, 82, 0.24));
-  transform: rotate(-10deg) scale(1.3);
-}
-
-#waitlist::after {
-  content: "";
-  position: absolute;
-  inset: 0;
+  border-radius: 999px;
+  filter: blur(2px);
   z-index: 0;
-  pointer-events: none;
-  background:
-    linear-gradient(120deg, rgba(255,255,255,0.10), transparent 28%, transparent 68%, rgba(255,255,255,0.08)),
-    radial-gradient(circle at 50% -10%, rgba(255,255,255,0.20), transparent 38%);
-  mix-blend-mode: screen;
 }
 
-.founding-shell {
-  position: relative;
-  z-index: 1;
+.founding-stage::before {
+  width: 58vw;
+  height: 58vw;
+  max-width: 920px;
+  max-height: 920px;
+  left: 29%;
+  top: 5%;
+  border: 82px solid rgba(23, 105, 255, 0.11);
+  box-shadow:
+    0 0 120px rgba(23,105,255,0.08),
+    inset 0 0 90px rgba(255,255,255,0.38);
 }
 
-.founding-shell::before {
-  content: "";
-  position: absolute;
-  width: 26rem;
-  height: 26rem;
-  left: 3%;
+.founding-stage::after {
+  width: 34rem;
+  height: 34rem;
+  right: -10rem;
   bottom: -12rem;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.10);
-  filter: blur(70px);
+  background: radial-gradient(circle, rgba(255,255,255,0.62), rgba(91,157,255,0.12) 58%, transparent 72%);
+  filter: blur(18px);
+}
+
+.founding-layout {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(520px, 1.08fr);
+  align-items: center;
+  gap: clamp(3rem, 6vw, 8rem);
+  min-height: 100svh;
+  width: min(100%, 1500px);
+  margin: 0 auto;
+  padding: clamp(4.5rem, 8vw, 8rem) clamp(1.5rem, 5vw, 5rem);
+}
+
+.founding-copy {
+  position: relative;
+  z-index: 3;
+  max-width: 650px;
+}
+
+.founding-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: .65rem;
+  color: #1769ff;
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+}
+
+.founding-eyebrow::before {
+  content: "";
+  width: 1.75rem;
+  height: 1px;
+  background: currentColor;
+  opacity: .6;
+}
+
+.founding-copy h2 {
+  margin: 1.5rem 0 0;
+  max-width: 8.8ch;
+  font-size: clamp(4rem, 7.2vw, 7.3rem);
+  font-weight: 900;
+  line-height: .88;
+  letter-spacing: -.068em;
+  color: #111318;
+}
+
+.founding-copy h2 span {
+  color: #1769ff;
+}
+
+.founding-subhead {
+  max-width: 35rem;
+  margin: 2rem 0 0;
+  color: #5f6b7a;
+  font-size: clamp(1.05rem, 1.5vw, 1.28rem);
+  line-height: 1.62;
+}
+
+.founding-proof {
+  margin: 1.6rem 0 0;
+  color: #6b7788;
+  font-size: .72rem;
+  font-weight: 750;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+
+.founding-signature {
+  display: grid;
+  width: fit-content;
+  margin: 4.25rem 0 0 7rem;
+  color: #1769ff;
+  font-size: 1.05rem;
+  font-style: italic;
+  line-height: 1.45;
+  transform: rotate(-6deg);
+  opacity: .68;
+}
+
+.founding-signature span:nth-child(2) {
+  margin-left: 1.7rem;
+}
+
+.founding-signature span:nth-child(3) {
+  margin-left: 3.4rem;
+}
+
+.founding-bg-mark {
+  position: absolute;
+  z-index: 0;
+  left: 40%;
+  top: 13%;
+  width: min(46vw, 680px);
+  opacity: .045;
+  transform: rotate(-5deg);
+  filter: saturate(.8);
   pointer-events: none;
 }
 
-.founding-grid {
-  position: relative;
+.founding-bg-mark img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.founding-float {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+  filter:
+    drop-shadow(0 30px 55px rgba(45, 100, 175, .12))
+    saturate(.82);
+  opacity: .22;
+}
+
+.founding-float-jacket {
+  width: min(21vw, 310px);
+  left: 42%;
+  top: 22%;
+  transform: rotate(-7deg);
+}
+
+.founding-float-vase {
+  width: min(18vw, 270px);
+  left: 39%;
+  bottom: 10%;
+  transform: rotate(7deg);
+  opacity: .16;
 }
 
 .founding-glass {
   position: relative;
+  z-index: 3;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.28);
+  border: 1px solid rgba(255,255,255,.82);
+  border-radius: 2rem;
+  padding: clamp(1.5rem, 3vw, 2.7rem);
   background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.055));
+    linear-gradient(145deg, rgba(255,255,255,.62), rgba(255,255,255,.30));
   box-shadow:
-    0 32px 110px rgba(3, 28, 88, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.42),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(32px) saturate(160%);
-  -webkit-backdrop-filter: blur(32px) saturate(160%);
+    0 40px 95px rgba(59, 110, 179, .17),
+    0 8px 24px rgba(55, 91, 142, .08),
+    inset 0 1px 0 rgba(255,255,255,.98),
+    inset 0 -1px 0 rgba(255,255,255,.44);
+  backdrop-filter: blur(34px) saturate(148%);
+  -webkit-backdrop-filter: blur(34px) saturate(148%);
 }
 
 .founding-glass::before {
   content: "";
   position: absolute;
-  inset: 1px;
-  border-radius: inherit;
+  inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(118deg, rgba(255,255,255,0.38), transparent 18%, transparent 72%, rgba(255,255,255,0.10)),
-    radial-gradient(circle at 15% 0%, rgba(255,255,255,0.28), transparent 26%);
+    linear-gradient(125deg, rgba(255,255,255,.74) 0%, rgba(255,255,255,.18) 22%, transparent 46%),
+    radial-gradient(circle at 82% 8%, rgba(255,255,255,.64), transparent 24%);
   mix-blend-mode: screen;
+  opacity: .8;
 }
 
 .founding-glass::after {
   content: "";
   position: absolute;
-  width: 12rem;
-  height: 12rem;
-  right: -5rem;
-  bottom: -5rem;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.08);
-  filter: blur(22px);
+  width: 62%;
+  height: 24%;
+  right: -18%;
+  bottom: -10%;
+  border-radius: 999px;
+  background: rgba(23,105,255,.08);
+  filter: blur(30px);
   pointer-events: none;
 }
 
+.founding-glass-shine {
+  position: absolute;
+  inset: 1px;
+  border-radius: calc(2rem - 1px);
+  pointer-events: none;
+  border: 1px solid rgba(255,255,255,.38);
+  mask-image: linear-gradient(135deg, #000 0 30%, transparent 60%);
+}
+
+.founding-form-header,
 .founding-glass form,
 .founding-glass > div {
   position: relative;
-  z-index: 1;
+  z-index: 2;
+}
+
+.founding-form-header {
+  margin-bottom: 1.65rem;
+}
+
+.founding-form-header > span {
+  color: #1769ff;
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+
+.founding-form-header h3 {
+  margin: .55rem 0 0;
+  color: #111318;
+  font-size: clamp(1.8rem, 2.6vw, 2.65rem);
+  font-weight: 850;
+  letter-spacing: -.045em;
+}
+
+.founding-form-header p {
+  max-width: 36rem;
+  margin: .55rem 0 0;
+  color: #687587;
+  font-size: .95rem;
+  line-height: 1.55;
 }
 
 #waitlist select {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 #waitlist select option {
@@ -204,12 +367,60 @@ a {
 }
 
 #waitlist textarea {
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.20);
-  backdrop-filter: blur(24px) saturate(155%);
-  -webkit-backdrop-filter: blur(24px) saturate(155%);
+  backdrop-filter: blur(22px) saturate(145%);
+  -webkit-backdrop-filter: blur(22px) saturate(145%);
 }
 
 @media (max-width: 767px) {
+  .founding-layout {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    gap: 2.75rem;
+    padding: 5.5rem 1.25rem 4.5rem;
+  }
+
+  .founding-copy {
+    max-width: none;
+    text-align: center;
+  }
+
+  .founding-copy h2 {
+    max-width: 8ch;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: clamp(3.5rem, 17vw, 5.2rem);
+  }
+
+  .founding-subhead,
+  .founding-proof {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .founding-signature {
+    display: none;
+  }
+
+  .founding-bg-mark {
+    left: 35%;
+    top: 7%;
+    width: 76vw;
+    opacity: .035;
+  }
+
+  .founding-float {
+    display: none;
+  }
+
+  .founding-glass {
+    border-radius: 1.65rem;
+    padding: 1.25rem;
+  }
+
+  .founding-form-header {
+    text-align: left;
+  }
+
   /* Keep the mobile demo visible in the same viewport as the TV. */
   #top .relative.isolate > img:nth-of-type(2) {
     animation: scoop-mobile-selection 420ms ease 500ms forwards;
