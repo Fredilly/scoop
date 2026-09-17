@@ -28,6 +28,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${manrope.variable} ${geistMono.variable} antialiased`}>
+      <head>
+        <meta name="awin-verification" content="Awin" />
+      </head>
       <body>{children}</body>
     </html>
   );
