@@ -101,7 +101,7 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
   }
 
   const field =
-    'h-13 w-full rounded-[1.15rem] border border-white/70 bg-white/44 px-4 text-[0.95rem] font-medium text-[#111318] outline-none shadow-[inset_0_1px_0_rgba(255,255,255,0.98),0_8px_24px_rgba(32,83,164,0.06)] backdrop-blur-2xl backdrop-saturate-150 transition placeholder:text-[#7d8796] hover:bg-white/56 focus:border-[#1769FF]/45 focus:bg-white/62 focus:ring-4 focus:ring-[#1769FF]/10';
+    'h-12 w-full rounded-[1.15rem] border border-white/70 bg-white/44 px-4 text-[0.95rem] font-medium text-[#111318] outline-none shadow-[inset_0_1px_0_rgba(255,255,255,0.98),0_8px_24px_rgba(32,83,164,0.06)] backdrop-blur-2xl backdrop-saturate-150 transition placeholder:text-[#7d8796] hover:bg-white/56 focus:border-[#1769FF]/45 focus:bg-white/62 focus:ring-4 focus:ring-[#1769FF]/10';
 
   if (status === 'success') {
     return (
@@ -147,7 +147,7 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mx-auto grid w-full gap-6" noValidate>
+    <form onSubmit={handleSubmit} className="mx-auto grid w-full gap-4" noValidate>
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="grid gap-2 text-left text-sm font-semibold text-[#111318]">
           Name
@@ -170,7 +170,7 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
                 type="button"
                 aria-pressed={active}
                 onClick={() => onPersonaChange(item.value)}
-                className={`rounded-2xl border p-4 text-left transition ${
+                className={`rounded-2xl border p-3.5 text-left transition ${
                   active
                     ? 'border-[#1769FF]/55 bg-white/72 text-[#111318] shadow-[inset_0_1px_0_rgba(255,255,255,1),0_12px_30px_rgba(23,105,255,0.10)]'
                     : 'border-white/65 bg-white/32 text-[#111318] shadow-[inset_0_1px_0_rgba(255,255,255,0.88)] hover:border-[#1769FF]/28 hover:bg-white/52'
@@ -227,7 +227,7 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
       <button
         type="submit"
         disabled={status === 'submitting'}
-        className="mt-1 inline-flex h-14 w-full items-center justify-center rounded-[1.15rem] bg-[#1769FF] px-7 text-sm font-extrabold text-white shadow-[0_16px_38px_rgba(23,105,255,0.22)] transition hover:-translate-y-0.5 hover:bg-[#0f5fe9] hover:shadow-[0_20px_46px_rgba(23,105,255,0.28)] disabled:translate-y-0 disabled:cursor-default disabled:opacity-60 sm:w-auto sm:justify-self-start"
+        className="mt-1 inline-flex h-12 w-full items-center justify-center rounded-[1.15rem] bg-[#1769FF] px-7 text-sm font-extrabold text-white shadow-[0_16px_38px_rgba(23,105,255,0.22)] transition hover:-translate-y-0.5 hover:bg-[#0f5fe9] hover:shadow-[0_20px_46px_rgba(23,105,255,0.28)] disabled:translate-y-0 disabled:cursor-default disabled:opacity-60 sm:w-auto sm:justify-self-start"
       >
         {status === 'submitting' ? 'Joining…' : 'Join the First 100 →'}
       </button>
