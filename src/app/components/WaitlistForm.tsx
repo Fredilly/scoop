@@ -233,7 +233,7 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
       </button>
 
       {message && (
-        <p className="text-sm text-white" role="status">{message}</p>
+        <p className="text-sm text-red-600" role="status">{message}</p>
       )}
 
       <p className="text-xs leading-5 text-[#7d8796]">
