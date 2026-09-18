@@ -12,6 +12,7 @@ const heroSelectedPants = 'https://assets.scoop.article6.org/website/hero/hero-p
 const heroPanelPants = 'https://assets.scoop.article6.org/website/hero/hero-pants-results-panel.png';
 const heroSelectedVase = 'https://assets.scoop.article6.org/website/hero/hero-vase-selected-tv.png';
 const heroPanelVase = 'https://assets.scoop.article6.org/website/hero/hero-vase-results-panel.png?v=3';
+const foundingFocus = 'https://assets.scoop.article6.org/website/founding-100/sneaker-jacket-focus.png';
 
 const steps = [
   ['01', 'SEE', 'Spot something you actually want in the video.'],
@@ -142,19 +143,8 @@ export default function Home() {
         <div className="founding-bg-mark" aria-hidden="true">
           <img src={mark} alt="" />
         </div>
-
-        <img
-          src={heroPanelJacket}
-          alt=""
-          aria-hidden="true"
-          className="founding-float founding-float-jacket"
-        />
-        <img
-          src={heroPanelVase}
-          alt=""
-          aria-hidden="true"
-          className="founding-float founding-float-vase"
-        />
+        <div className="founding-orbit founding-orbit-a" aria-hidden="true" />
+        <div className="founding-orbit founding-orbit-b" aria-hidden="true" />
 
         <div className="founding-layout">
           <div className="founding-copy">
@@ -167,6 +157,12 @@ export default function Home() {
             </p>
             <p className="founding-proof">100 founding members. Private beta. Built with you.</p>
 
+            <div className="founding-object-stage" aria-hidden="true">
+              <div className="founding-object founding-object-primary founding-object-focus">
+                <img src={foundingFocus} alt="" />
+              </div>
+            </div>
+
             <div className="founding-signature" aria-hidden="true">
               <span>See it.</span>
               <span>Find it.</span>
@@ -176,6 +172,7 @@ export default function Home() {
 
           <div className="founding-glass">
             <div className="founding-glass-shine" aria-hidden="true" />
+            <div className="founding-glass-glint" aria-hidden="true" />
             <div className="founding-form-header">
               <span>Private beta</span>
               <h3>Join the First 100</h3>
