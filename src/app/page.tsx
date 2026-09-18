@@ -143,6 +143,8 @@ export default function Home() {
         <div className="founding-bg-mark" aria-hidden="true">
           <img src={mark} alt="" />
         </div>
+        <div className="founding-orbit founding-orbit-a" aria-hidden="true" />
+        <div className="founding-orbit founding-orbit-b" aria-hidden="true" />
 
         <div className="founding-layout">
           <div className="founding-copy">
