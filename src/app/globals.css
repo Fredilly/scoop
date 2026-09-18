@@ -248,30 +248,118 @@ a {
   height: auto;
 }
 
-.founding-float {
+.founding-object-stage {
+  position: relative;
+  width: min(100%, 520px);
+  height: clamp(170px, 20vw, 250px);
+  margin-top: 2.35rem;
+}
+
+.founding-object {
   position: absolute;
-  z-index: 1;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.82);
+  background: rgba(255,255,255,.28);
+  box-shadow:
+    0 24px 60px rgba(61, 108, 168, .11),
+    inset 0 1px 0 rgba(255,255,255,.94);
+  backdrop-filter: blur(18px) saturate(130%);
+  -webkit-backdrop-filter: blur(18px) saturate(130%);
+}
+
+.founding-object img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: saturate(.82) contrast(.98) brightness(1.04);
+}
+
+.founding-object::after {
+  content: "";
+  position: absolute;
+  inset: 0;
   pointer-events: none;
-  user-select: none;
-  filter:
-    drop-shadow(0 30px 55px rgba(45, 100, 175, .12))
-    saturate(.82);
-  opacity: .22;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.18), transparent 34%),
+    linear-gradient(115deg, rgba(255,255,255,.22), transparent 44%);
+  mix-blend-mode: screen;
 }
 
-.founding-float-jacket {
-  width: min(21vw, 310px);
-  left: 42%;
-  top: 22%;
-  transform: rotate(-7deg);
+.founding-object-primary {
+  left: 0;
+  top: 0;
+  width: 72%;
+  height: 100%;
+  border-radius: 1.5rem;
+  transform: rotate(-2.4deg);
+  opacity: .84;
 }
 
-.founding-float-vase {
-  width: min(18vw, 270px);
-  left: 39%;
-  bottom: 10%;
-  transform: rotate(7deg);
-  opacity: .16;
+.founding-object-secondary {
+  right: 1%;
+  top: 18%;
+  width: 38%;
+  height: 64%;
+  border-radius: 1.25rem;
+  transform: rotate(3.5deg);
+  opacity: .58;
+  filter: blur(.15px);
+}
+
+.founding-target {
+  position: absolute;
+  pointer-events: none;
+  width: 56px;
+  height: 56px;
+}
+
+.founding-target-jacket {
+  left: 45%;
+  top: 39%;
+}
+
+.founding-target-vase {
+  left: 23%;
+  top: 36%;
+  transform: scale(.78);
+}
+
+.founding-target span {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: #1769ff;
+  border-style: solid;
+  filter: drop-shadow(0 2px 4px rgba(255,255,255,.65));
+}
+
+.founding-target span:nth-child(1) {
+  left: 0;
+  top: 0;
+  border-width: 2px 0 0 2px;
+  border-radius: 6px 0 0 0;
+}
+
+.founding-target span:nth-child(2) {
+  right: 0;
+  top: 0;
+  border-width: 2px 2px 0 0;
+  border-radius: 0 6px 0 0;
+}
+
+.founding-target span:nth-child(3) {
+  left: 0;
+  bottom: 0;
+  border-width: 0 0 2px 2px;
+  border-radius: 0 0 0 6px;
+}
+
+.founding-target span:nth-child(4) {
+  right: 0;
+  bottom: 0;
+  border-width: 0 2px 2px 0;
+  border-radius: 0 0 6px 0;
 }
 
 .founding-glass {
@@ -285,14 +373,15 @@ a {
   border-radius: 2rem;
   padding: clamp(1.2rem, 2vw, 1.8rem);
   background:
-    linear-gradient(145deg, rgba(255,255,255,.62), rgba(255,255,255,.30));
+    linear-gradient(145deg, rgba(255,255,255,.70), rgba(255,255,255,.30) 48%, rgba(216,235,255,.28));
   box-shadow:
-    0 40px 95px rgba(59, 110, 179, .17),
-    0 8px 24px rgba(55, 91, 142, .08),
-    inset 0 1px 0 rgba(255,255,255,.98),
-    inset 0 -1px 0 rgba(255,255,255,.44);
-  backdrop-filter: blur(34px) saturate(148%);
-  -webkit-backdrop-filter: blur(34px) saturate(148%);
+    0 34px 80px rgba(54, 103, 170, .15),
+    0 10px 26px rgba(55, 91, 142, .07),
+    inset 0 1px 0 rgba(255,255,255,1),
+    inset 1px 0 0 rgba(255,255,255,.58),
+    inset 0 -1px 0 rgba(116,173,255,.22);
+  backdrop-filter: blur(40px) saturate(165%);
+  -webkit-backdrop-filter: blur(40px) saturate(165%);
 }
 
 .founding-glass::before {
@@ -301,10 +390,10 @@ a {
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(125deg, rgba(255,255,255,.74) 0%, rgba(255,255,255,.18) 22%, transparent 46%),
-    radial-gradient(circle at 82% 8%, rgba(255,255,255,.64), transparent 24%);
+    linear-gradient(122deg, rgba(255,255,255,.92) 0%, rgba(255,255,255,.26) 18%, transparent 42%),
+    radial-gradient(circle at 82% 8%, rgba(255,255,255,.78), transparent 22%);
   mix-blend-mode: screen;
-  opacity: .8;
+  opacity: .9;
 }
 
 .founding-glass::after {
@@ -325,8 +414,22 @@ a {
   inset: 1px;
   border-radius: calc(2rem - 1px);
   pointer-events: none;
-  border: 1px solid rgba(255,255,255,.38);
-  mask-image: linear-gradient(135deg, #000 0 30%, transparent 60%);
+  border: 1px solid rgba(255,255,255,.50);
+  mask-image: linear-gradient(135deg, #000 0 34%, transparent 64%);
+}
+
+.founding-glass-glint {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  width: 72%;
+  height: 180%;
+  left: -42%;
+  top: -46%;
+  transform: rotate(21deg);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.34), transparent);
+  filter: blur(10px);
+  opacity: .44;
 }
 
 .founding-form-header,
@@ -407,7 +510,7 @@ a {
 
   .founding-signature {
     display: grid;
-    margin: 1.8rem auto 0;
+    margin: 1.3rem auto 0;
     font-size: 1.55rem;
     transform: rotate(-5deg);
   }
@@ -419,8 +522,27 @@ a {
     opacity: .035;
   }
 
-  .founding-float {
+  .founding-object-stage {
+    width: min(100%, 520px);
+    height: 180px;
+    margin: 1.8rem auto .2rem;
+  }
+
+  .founding-object-primary {
+    left: 2%;
+    width: 78%;
+    border-radius: 1.25rem;
+    opacity: .78;
+  }
+
+  .founding-object-secondary {
     display: none;
+  }
+
+  .founding-target-jacket {
+    left: 46%;
+    top: 38%;
+    transform: scale(.86);
   }
 
   .founding-glass {
