@@ -250,100 +250,35 @@ a {
 
 .founding-object-stage {
   position: relative;
-  width: min(100%, 420px);
-  height: clamp(140px, 16vw, 205px);
-  margin-top: 1.9rem;
+  width: min(100%, 540px);
+  aspect-ratio: 3 / 2;
+  margin-top: 1.7rem;
 }
 
 .founding-object {
   position: absolute;
-  overflow: hidden;
-  border: 1px solid rgba(255,255,255,.82);
-  background: rgba(255,255,255,.28);
-  box-shadow:
-    0 24px 60px rgba(61, 108, 168, .11),
-    inset 0 1px 0 rgba(255,255,255,.94);
-  backdrop-filter: blur(18px) saturate(130%);
-  -webkit-backdrop-filter: blur(18px) saturate(130%);
+  inset: 0;
+  overflow: visible;
+  background: transparent;
 }
 
 .founding-object img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: contain;
-  display: block;
-  filter: saturate(.94) contrast(1) brightness(1.02);
-}
-
-.founding-object::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.18), transparent 34%),
-    linear-gradient(115deg, rgba(255,255,255,.22), transparent 44%);
-  mix-blend-mode: screen;
+  filter: drop-shadow(0 24px 42px rgba(54, 103, 170, .12));
 }
 
 .founding-object-primary {
-  left: 0;
-  top: 0;
   width: 100%;
   height: 100%;
-  border-radius: 1.45rem;
-  transform: rotate(-1.4deg);
-  opacity: .94;
+  opacity: .9;
+  transform: translateZ(0);
 }
 
-.founding-target {
-  position: absolute;
-  pointer-events: none;
-  width: 56px;
-  height: 56px;
-}
-
-.founding-target-sneaker {
-  left: 58%;
-  top: 38%;
-  transform: scale(.88);
-}
-
-.founding-target span {
-  position: absolute;
-  width: 18px;
-  height: 18px;
-  border-color: #1769ff;
-  border-style: solid;
-  filter: drop-shadow(0 2px 4px rgba(255,255,255,.65));
-}
-
-.founding-target span:nth-child(1) {
-  left: 0;
-  top: 0;
-  border-width: 2px 0 0 2px;
-  border-radius: 6px 0 0 0;
-}
-
-.founding-target span:nth-child(2) {
-  right: 0;
-  top: 0;
-  border-width: 2px 2px 0 0;
-  border-radius: 0 6px 0 0;
-}
-
-.founding-target span:nth-child(3) {
-  left: 0;
-  bottom: 0;
-  border-width: 0 0 2px 2px;
-  border-radius: 0 0 0 6px;
-}
-
-.founding-target span:nth-child(4) {
-  right: 0;
-  bottom: 0;
-  border-width: 0 2px 2px 0;
-  border-radius: 0 0 6px 0;
+.founding-object-focus {
+  mix-blend-mode: normal;
 }
 
 .founding-glass {
@@ -507,22 +442,15 @@ a {
   }
 
   .founding-object-stage {
-    width: min(100%, 320px);
-    height: 150px;
-    margin: 1.45rem auto .15rem;
+    width: min(100%, 360px);
+    aspect-ratio: 3 / 2;
+    margin: 1.15rem auto 0;
   }
 
   .founding-object-primary {
-    left: 0;
     width: 100%;
-    border-radius: 1.2rem;
+    height: 100%;
     opacity: .92;
-  }
-
-  .founding-target-sneaker {
-    left: 57%;
-    top: 36%;
-    transform: scale(.78);
   }
 
   .founding-glass {
