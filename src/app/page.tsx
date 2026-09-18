@@ -12,6 +12,7 @@ const heroSelectedPants = 'https://assets.scoop.article6.org/website/hero/hero-p
 const heroPanelPants = 'https://assets.scoop.article6.org/website/hero/hero-pants-results-panel.png';
 const heroSelectedVase = 'https://assets.scoop.article6.org/website/hero/hero-vase-selected-tv.png';
 const heroPanelVase = 'https://assets.scoop.article6.org/website/hero/hero-vase-results-panel.png?v=3';
+const foundingFocus = 'https://assets.scoop.article6.org/website/founding-100/sneaker-jacket-focus.png';
 
 const steps = [
   ['01', 'SEE', 'Spot something you actually want in the video.'],
@@ -155,14 +156,8 @@ export default function Home() {
             <p className="founding-proof">100 founding members. Private beta. Built with you.</p>
 
             <div className="founding-object-stage" aria-hidden="true">
-              <div className="founding-object founding-object-primary founding-object-sneaker">
-                <img src="/founding-100/sneaker.webp" alt="" />
-                <div className="founding-target founding-target-sneaker">
-                  <span />
-                  <span />
-                  <span />
-                  <span />
-                </div>
+              <div className="founding-object founding-object-primary founding-object-focus">
+                <img src={foundingFocus} alt="" />
               </div>
             </div>
 
