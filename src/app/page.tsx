@@ -143,19 +143,6 @@ export default function Home() {
           <img src={mark} alt="" />
         </div>
 
-        <img
-          src={heroPanelJacket}
-          alt=""
-          aria-hidden="true"
-          className="founding-float founding-float-jacket"
-        />
-        <img
-          src={heroPanelVase}
-          alt=""
-          aria-hidden="true"
-          className="founding-float founding-float-vase"
-        />
-
         <div className="founding-layout">
           <div className="founding-copy">
             <div className="founding-eyebrow">Founding 100</div>
@@ -167,6 +154,27 @@ export default function Home() {
             </p>
             <p className="founding-proof">100 founding members. Private beta. Built with you.</p>
 
+            <div className="founding-object-stage" aria-hidden="true">
+              <div className="founding-object founding-object-primary">
+                <img src={heroSelectedJacket} alt="" />
+                <div className="founding-target founding-target-jacket">
+                  <span />
+                  <span />
+                  <span />
+                  <span />
+                </div>
+              </div>
+              <div className="founding-object founding-object-secondary">
+                <img src={heroSelectedVase} alt="" />
+                <div className="founding-target founding-target-vase">
+                  <span />
+                  <span />
+                  <span />
+                  <span />
+                </div>
+              </div>
+            </div>
+
             <div className="founding-signature" aria-hidden="true">
               <span>See it.</span>
               <span>Find it.</span>
@@ -176,6 +184,7 @@ export default function Home() {
 
           <div className="founding-glass">
             <div className="founding-glass-shine" aria-hidden="true" />
+            <div className="founding-glass-glint" aria-hidden="true" />
             <div className="founding-form-header">
               <span>Private beta</span>
               <h3>Join the First 100</h3>
