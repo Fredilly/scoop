@@ -141,12 +141,12 @@ a {
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(420px, 560px);
+  grid-template-columns: minmax(0, 1fr) minmax(400px, 540px);
   align-items: center;
   justify-content: space-between;
-  gap: clamp(2rem, 4vw, 5rem);
+  gap: clamp(1.75rem, 3vw, 4rem);
   min-height: calc(100svh - 72px);
-  width: min(100%, 1240px);
+  width: min(100%, 1180px);
   margin: 0 auto;
   padding: clamp(2.5rem, 4vw, 4.5rem) clamp(1.25rem, 4vw, 4rem);
 }
@@ -250,9 +250,9 @@ a {
 
 .founding-object-stage {
   position: relative;
-  width: min(100%, 520px);
-  height: clamp(170px, 20vw, 250px);
-  margin-top: 2.35rem;
+  width: min(100%, 420px);
+  height: clamp(140px, 16vw, 205px);
+  margin-top: 1.9rem;
 }
 
 .founding-object {
@@ -270,9 +270,9 @@ a {
 .founding-object img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
-  filter: saturate(.82) contrast(.98) brightness(1.04);
+  filter: saturate(.94) contrast(1) brightness(1.02);
 }
 
 .founding-object::after {
@@ -289,22 +289,11 @@ a {
 .founding-object-primary {
   left: 0;
   top: 0;
-  width: 72%;
+  width: 100%;
   height: 100%;
-  border-radius: 1.5rem;
-  transform: rotate(-2.4deg);
-  opacity: .84;
-}
-
-.founding-object-secondary {
-  right: 1%;
-  top: 18%;
-  width: 38%;
-  height: 64%;
-  border-radius: 1.25rem;
-  transform: rotate(3.5deg);
-  opacity: .58;
-  filter: blur(.15px);
+  border-radius: 1.45rem;
+  transform: rotate(-1.4deg);
+  opacity: .94;
 }
 
 .founding-target {
@@ -314,15 +303,10 @@ a {
   height: 56px;
 }
 
-.founding-target-jacket {
-  left: 45%;
-  top: 39%;
-}
-
-.founding-target-vase {
-  left: 23%;
-  top: 36%;
-  transform: scale(.78);
+.founding-target-sneaker {
+  left: 58%;
+  top: 38%;
+  transform: scale(.88);
 }
 
 .founding-target span {
@@ -523,26 +507,22 @@ a {
   }
 
   .founding-object-stage {
-    width: min(100%, 520px);
-    height: 180px;
-    margin: 1.8rem auto .2rem;
+    width: min(100%, 320px);
+    height: 150px;
+    margin: 1.45rem auto .15rem;
   }
 
   .founding-object-primary {
-    left: 2%;
-    width: 78%;
-    border-radius: 1.25rem;
-    opacity: .78;
+    left: 0;
+    width: 100%;
+    border-radius: 1.2rem;
+    opacity: .92;
   }
 
-  .founding-object-secondary {
-    display: none;
-  }
-
-  .founding-target-jacket {
-    left: 46%;
-    top: 38%;
-    transform: scale(.86);
+  .founding-target-sneaker {
+    left: 57%;
+    top: 36%;
+    transform: scale(.78);
   }
 
   .founding-glass {
