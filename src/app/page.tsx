@@ -155,18 +155,9 @@ export default function Home() {
             <p className="founding-proof">100 founding members. Private beta. Built with you.</p>
 
             <div className="founding-object-stage" aria-hidden="true">
-              <div className="founding-object founding-object-primary">
-                <img src={heroSelectedJacket} alt="" />
-                <div className="founding-target founding-target-jacket">
-                  <span />
-                  <span />
-                  <span />
-                  <span />
-                </div>
-              </div>
-              <div className="founding-object founding-object-secondary">
-                <img src={heroSelectedVase} alt="" />
-                <div className="founding-target founding-target-vase">
+              <div className="founding-object founding-object-primary founding-object-sneaker">
+                <img src="/founding-100/sneaker.webp" alt="" />
+                <div className="founding-target founding-target-sneaker">
                   <span />
                   <span />
                   <span />
