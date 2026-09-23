@@ -1,9 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function AlphaClient({ code }: { code: string }) {
+export default function AlphaClient() {
+  const [code, setCode] = useState("");
   const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    setCode(new URLSearchParams(window.location.search).get("code") ?? "");
+  }, []);
   const downloadUrl = process.env.NEXT_PUBLIC_ALPHA_EXTENSION_URL || "";
 
   async function copyCode() {

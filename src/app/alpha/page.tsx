@@ -7,7 +7,8 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default async function AlphaPage({ searchParams }: { searchParams: Promise<{ code?: string }> }) {
-  const params = await searchParams;
-  return <AlphaClient code={typeof params.code === "string" ? params.code : ""} />;
+// Keep this route statically exportable for Cloudflare assets hosting.
+// The invite code is read from the URL in the client after hydration.
+export default function AlphaPage() {
+  return <AlphaClient />;
 }
