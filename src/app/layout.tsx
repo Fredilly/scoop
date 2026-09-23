@@ -30,7 +30,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${manrope.variable} ${geistMono.variable} ${caveat.variable} antialiased`}>
       <head>
-        <meta name="awin-verification" content="Awin" />
+        <meta name="verification" content="f1577d03ea48681de6213e9cfd9e139f" />
       </head>
       <body>{children}</body>
     </html>
