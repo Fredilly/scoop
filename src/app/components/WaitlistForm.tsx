@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type FormEvent } from 'react';
+import { useEffect, useState } from 'react';
 
 export type WaitlistPersona = 'CREATOR' | 'SHOPPER' | 'BRAND_RETAILER' | 'DEVELOPER' | 'OTHER';
 export type CreatorPlatform = 'YOUTUBE' | 'TIKTOK' | 'INSTAGRAM' | 'OTHER';
@@ -19,86 +19,15 @@ const personas: Array<{ value: WaitlistPersona; label: string; detail: string }>
 
 export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormProps) {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
-  const [message, setMessage] = useState('');
   const [platform, setPlatform] = useState<CreatorPlatform>('YOUTUBE');
-  const [submitted, setSubmitted] = useState<{ name: string; email: string } | null>(null);
-  const [feedbackStatus, setFeedbackStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
 
   const showChannelFields = persona === 'CREATOR' || persona === 'BRAND_RETAILER';
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const formElement = event.currentTarget;
-    const form = new FormData(formElement);
-    setStatus('submitting');
-    setMessage('');
-
-    const name = String(form.get('name') || '');
-    const email = String(form.get('email') || '');
-    const payload = {
-      name,
-      email,
-      persona,
-      platform: showChannelFields ? platform : '',
-      handle: String(form.get('handle') || ''),
-      organization: String(form.get('organization') || ''),
-      companyWebsite: String(form.get('companyWebsite') || ''),
-      source: 'scoop_site',
-      sourcePage: 'homepage',
-      campaign: 'founding_100',
-    };
-
-    try {
-      const response = await fetch('https://api.vcl.article6.org/alpha/waitlist', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      const data = await response.json().catch(() => ({}));
-      if (!response.ok) throw new Error(data?.error || 'Could not join the waitlist.');
-
-      setSubmitted({ name, email });
-      setStatus('success');
-      setMessage('');
-      formElement.reset();
-      setPlatform('YOUTUBE');
-    } catch (error) {
-      setStatus('error');
-      setMessage(error instanceof Error ? error.message : 'Could not join the waitlist.');
-    }
-  }
-
-  async function handleFeedback(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (!submitted) return;
-
-    const form = new FormData(event.currentTarget);
-    const trigger = String(form.get('triggerForTrying') || '').trim();
-    if (!trigger) return;
-
-    setFeedbackStatus('submitting');
-
-    try {
-      const response = await fetch('https://api.vcl.article6.org/alpha/waitlist', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          feedbackOnly: 'true',
-          name: submitted.name,
-          email: submitted.email,
-          persona,
-          triggerForTrying: trigger,
-          source: 'scoop_site',
-          sourcePage: 'homepage',
-          campaign: 'founding_100',
-        }),
-      });
-      if (!response.ok) throw new Error('Could not save your answer.');
-      setFeedbackStatus('success');
-    } catch {
-      setFeedbackStatus('error');
-    }
-  }
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('joined') === '1') setStatus('success');
+    else if (params.get('join_error') === '1') setStatus('error');
+  }, []);
 
   const field =
     'h-12 w-full rounded-[1.15rem] border border-white/70 bg-white/44 px-4 text-[0.95rem] font-medium text-[#111318] outline-none shadow-[inset_0_1px_0_rgba(255,255,255,0.98),0_8px_24px_rgba(32,83,164,0.06)] backdrop-blur-2xl backdrop-saturate-150 transition placeholder:text-[#7d8796] hover:bg-white/56 focus:border-[#1769FF]/45 focus:bg-white/62 focus:ring-4 focus:ring-[#1769FF]/10';
@@ -113,41 +42,24 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
             We’re bringing the first 100 into Scoop in small groups. We’ll be in touch when your spot opens.
           </p>
         </div>
-
-        {feedbackStatus !== 'success' ? (
-          <form onSubmit={handleFeedback} className="grid gap-3">
-            <label className="grid gap-2 text-left text-sm font-semibold text-[#111318]">
-              What made you want to try Scoop?
-              <textarea
-                name="triggerForTrying"
-                rows={4}
-                placeholder="Optional. One sentence is perfect."
-                className="w-full resize-none rounded-[1.15rem] border border-white/70 bg-white/44 px-4 py-3 text-[0.95rem] font-medium leading-6 text-[#111318] outline-none shadow-[inset_0_1px_0_rgba(255,255,255,0.98)] backdrop-blur-2xl transition placeholder:text-[#7d8796] focus:border-[#1769FF]/45 focus:bg-white/62 focus:ring-4 focus:ring-[#1769FF]/10"
-              />
-            </label>
-            <div className="flex flex-wrap items-center gap-3">
-              <button
-                type="submit"
-                disabled={feedbackStatus === 'submitting'}
-                className="inline-flex h-11 items-center justify-center rounded-xl border border-[#1769FF]/20 bg-white/48 px-5 text-sm font-bold text-[#1769FF] shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-xl transition hover:bg-white/70 disabled:opacity-60"
-              >
-                {feedbackStatus === 'submitting' ? 'Saving…' : 'Share why →'}
-              </button>
-              <span className="text-xs text-[#7d8796]">Optional</span>
-            </div>
-            {feedbackStatus === 'error' && (
-              <p className="text-sm text-[#5f6b7a]" role="status">Your spot is saved. The optional answer did not save.</p>
-            )}
-          </form>
-        ) : (
-          <p className="text-sm font-semibold text-[#5f6b7a]" role="status">Thanks. That helps us build the right thing.</p>
-        )}
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mx-auto grid w-full gap-4" noValidate>
+    <form
+      action="https://article6.org/api/scoop-waitlist"
+      method="post"
+      acceptCharset="UTF-8"
+      onSubmit={() => setStatus('submitting')}
+      className="mx-auto grid w-full gap-4"
+    >
+      <input type="hidden" name="persona" value={persona} />
+      <input type="hidden" name="source" value="scoop_site" />
+      <input type="hidden" name="sourcePage" value="homepage" />
+      <input type="hidden" name="campaign" value="founding_100" />
+      {!showChannelFields && <input type="hidden" name="platform" value="" />}
+
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="grid gap-2 text-left text-sm font-semibold text-[#111318]">
           Name
@@ -232,8 +144,8 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
         {status === 'submitting' ? 'Joining…' : 'Join the First 100 →'}
       </button>
 
-      {message && (
-        <p className="text-sm text-red-600" role="status">{message}</p>
+      {status === 'error' && (
+        <p className="text-sm text-red-600" role="status">Could not join the waitlist. Please try again.</p>
       )}
 
       <p className="text-xs leading-5 text-[#7d8796]">
