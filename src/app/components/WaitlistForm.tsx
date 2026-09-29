@@ -34,13 +34,23 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
 
   if (status === 'success') {
     return (
-      <div className="grid min-h-[28rem] content-center gap-7">
-        <div>
-          <div className="text-xs font-bold uppercase tracking-[0.22em] text-[#718096]">Founding 100</div>
-          <h3 className="mt-4 text-4xl font-black tracking-[-0.05em] text-[#111318] sm:text-5xl">You’re in.</h3>
-          <p className="mt-4 max-w-xl text-base leading-7 text-[#5f6b7a]">
-            We’re bringing the first 100 into Scoop in small groups. We’ll be in touch when your spot opens.
+      <div className="grid min-h-[32rem] content-center">
+        <div className="rounded-[2rem] border border-[#1769FF]/20 bg-white/66 p-7 shadow-[0_28px_80px_rgba(23,105,255,0.16)] backdrop-blur-2xl sm:p-10">
+          <div className="inline-flex rounded-full bg-[#1769FF] px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-white">
+            Founding 100 confirmed
+          </div>
+          <h3 className="mt-6 text-5xl font-black leading-[0.92] tracking-[-0.065em] text-[#111318] sm:text-7xl">
+            You’re in.
+          </h3>
+          <p className="mt-6 max-w-xl text-lg font-semibold leading-8 text-[#303846] sm:text-xl">
+            Your application is confirmed.
           </p>
+          <p className="mt-3 max-w-xl text-base leading-7 text-[#5f6b7a]">
+            Check your inbox for confirmation. We’re opening Scoop in small groups. If your spot opens, you’ll get a separate personal invite with the install link.
+          </p>
+          <div className="mt-7 border-t border-[#1769FF]/15 pt-5 text-sm font-bold text-[#1769FF]">
+            See it. Scoop it.
+          </div>
         </div>
       </div>
     );
