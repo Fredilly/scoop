@@ -49,7 +49,7 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
     };
 
     try {
-      const response = await fetch('https://article6.org/api/scoop-waitlist', {
+      const response = await fetch('/api/founding-100', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -79,7 +79,7 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
     setFeedbackStatus('submitting');
 
     try {
-      const response = await fetch('https://article6.org/api/scoop-waitlist', {
+      const response = await fetch('/api/founding-100', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
