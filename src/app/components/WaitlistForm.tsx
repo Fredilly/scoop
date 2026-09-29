@@ -49,10 +49,10 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
     };
 
     try {
-      const response = await fetch('https://article6.org/api/scoop-waitlist', {
+      const response = await fetch('https://api.vcl.article6.org/alpha/waitlist', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-        body: new URLSearchParams(Object.entries(payload).map(([key, value]) => [key, String(value)])),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
       });
       const data = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(data?.error || 'Could not join the waitlist.');
@@ -79,10 +79,10 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
     setFeedbackStatus('submitting');
 
     try {
-      const response = await fetch('https://article6.org/api/scoop-waitlist', {
+      const response = await fetch('https://api.vcl.article6.org/alpha/waitlist', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-        body: new URLSearchParams(Object.entries({
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
           feedbackOnly: 'true',
           name: submitted.name,
           email: submitted.email,
@@ -91,7 +91,7 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
           source: 'scoop_site',
           sourcePage: 'homepage',
           campaign: 'founding_100',
-        }).map(([key, value]) => [key, String(value)])),
+        }),
       });
       if (!response.ok) throw new Error('Could not save your answer.');
       setFeedbackStatus('success');
