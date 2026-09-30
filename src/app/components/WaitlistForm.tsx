@@ -24,9 +24,14 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
   const showChannelFields = persona === 'CREATOR' || persona === 'BRAND_RETAILER';
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    if (params.get('joined') === '1') setStatus('success');
-    else if (params.get('join_error') === '1') setStatus('error');
+    function handleMessage(event: MessageEvent) {
+      if (event.origin !== 'https://scoop.article6.org') return;
+      if (event.data?.type !== 'SCOOP_WAITLIST_RESULT') return;
+      setStatus(event.data.ok ? 'success' : 'error');
+    }
+
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
   }, []);
 
   const field =
@@ -70,13 +75,16 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
   }
 
   return (
-    <form
-      action="https://article6.org/api/scoop-waitlist"
-      method="post"
-      acceptCharset="UTF-8"
-      onSubmit={() => setStatus('submitting')}
-      className="mx-auto grid w-full gap-4"
-    >
+    <>
+      <iframe name="scoop-waitlist-submit" className="hidden" title="" aria-hidden="true" />
+      <form
+        action="https://article6.org/api/scoop-waitlist"
+        method="post"
+        target="scoop-waitlist-submit"
+        acceptCharset="UTF-8"
+        onSubmit={() => setStatus('submitting')}
+        className="mx-auto grid w-full gap-4"
+      >
       <input type="hidden" name="persona" value={persona} />
       <input type="hidden" name="source" value="scoop_site" />
       <input type="hidden" name="sourcePage" value="homepage" />
@@ -174,6 +182,7 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
       <p className="text-xs leading-5 text-[#7d8796]">
         Private beta. We’ll only use this to contact you about Scoop testing and launch access.
       </p>
-    </form>
+      </form>
+    </>
   );
 }
