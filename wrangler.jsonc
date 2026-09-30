@@ -1,9 +1,13 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "scoop",
-  "compatibility_date": "2026-09-14",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-09-30",
   "preview_urls": true,
   "assets": {
-    "directory": "./out"
+    "directory": "./out",
+    "run_worker_first": [
+      "/api/*"
+    ]
   }
 }
