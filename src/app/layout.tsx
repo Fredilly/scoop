@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Caveat, Manrope, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -32,7 +33,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         <meta name="verification" content="f1577d03ea48681de6213e9cfd9e139f" />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Script
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon='{"token":"1feae9a914394fff9bf7c5d349cd5c4b"}'
+          strategy="afterInteractive"
+        />
+      </body>
     </html>
   );
 }
