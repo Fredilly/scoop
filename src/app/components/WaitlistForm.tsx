@@ -19,6 +19,7 @@ const personas: Array<{ value: WaitlistPersona; label: string; detail: string }>
 
 export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormProps) {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('Could not join the waitlist. Please try again.');
   const [platform, setPlatform] = useState<CreatorPlatform>('YOUTUBE');
 
   const showChannelFields = persona === 'CREATOR' || persona === 'BRAND_RETAILER';
@@ -28,6 +29,7 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
     const formElement = event.currentTarget;
     const form = new FormData(formElement);
 
+    setErrorMessage('Could not join the waitlist. Please try again.');
     setStatus('submitting');
 
     const payload = {
@@ -51,10 +53,11 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
       });
       const data = await response.json().catch(() => ({}));
       if (!response.ok) {
-        throw new Error(typeof data?.error === 'string' ? data.error : 'Could not join the waitlist.');
+        throw new Error(typeof data?.error === 'string' ? data.error : 'Could not join the waitlist. Please try again.');
       }
       setStatus('success');
-    } catch {
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : 'Could not join the waitlist. Please try again.');
       setStatus('error');
     }
   }
@@ -190,7 +193,7 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
       </button>
 
       {status === 'error' && (
-        <p className="text-sm text-red-600" role="status">Could not join the waitlist. Please try again.</p>
+        <p className="text-sm text-red-600" role="status">{errorMessage}</p>
       )}
 
       <p className="text-xs leading-5 text-[#7d8796]">
