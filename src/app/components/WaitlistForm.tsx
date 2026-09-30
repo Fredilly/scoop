@@ -29,20 +29,12 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
     else if (params.get('join_error') === '1') setStatus('error');
   }, []);
 
-  useEffect(() => {
-    if (status !== 'success') return;
-    const timer = window.setTimeout(() => {
-      document.getElementById('founding-success')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }, 80);
-    return () => window.clearTimeout(timer);
-  }, [status]);
-
   const field =
     'h-12 w-full rounded-[1.15rem] border border-white/70 bg-white/44 px-4 text-[0.95rem] font-medium text-[#111318] outline-none shadow-[inset_0_1px_0_rgba(255,255,255,0.98),0_8px_24px_rgba(32,83,164,0.06)] backdrop-blur-2xl backdrop-saturate-150 transition placeholder:text-[#7d8796] hover:bg-white/56 focus:border-[#1769FF]/45 focus:bg-white/62 focus:ring-4 focus:ring-[#1769FF]/10';
 
   if (status === 'success') {
     return (
-      <div id="founding-success" className="relative grid min-h-[32rem] scroll-mt-24 content-center overflow-hidden">
+      <div className="relative grid min-h-[32rem] content-center overflow-hidden">
         <div className="founding-confetti" aria-hidden="true">
           {Array.from({ length: 18 }, (_, index) => (
             <span
