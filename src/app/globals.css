@@ -92,6 +92,7 @@ a {
 #waitlist {
   position: relative;
   overflow: hidden;
+  overflow-anchor: none;
   isolation: isolate;
 }
 
