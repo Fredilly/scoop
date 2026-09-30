@@ -601,3 +601,47 @@ a {
     transition-duration: 0.01ms !important;
   }
 }
+
+
+.founding-confetti {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.founding-confetti-piece {
+  position: absolute;
+  top: -1.5rem;
+  width: .55rem;
+  height: 1rem;
+  border-radius: .18rem;
+  background: #1769ff;
+  opacity: 0;
+  animation-name: founding-confetti-fall;
+  animation-timing-function: cubic-bezier(.2,.75,.25,1);
+  animation-fill-mode: forwards;
+}
+
+.founding-confetti-piece:nth-child(3n + 2) {
+  background: #ff6a1a;
+}
+
+.founding-confetti-piece:nth-child(3n) {
+  background: #111318;
+}
+
+@keyframes founding-confetti-fall {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -1rem, 0) rotate(0deg);
+  }
+  12% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(1.5rem, 34rem, 0) rotate(540deg);
+  }
+}
