@@ -9,7 +9,12 @@ export default function AlphaClient() {
   useEffect(() => {
     setCode(new URLSearchParams(window.location.search).get("code") ?? "");
   }, []);
-  const downloadUrl = process.env.NEXT_PUBLIC_ALPHA_EXTENSION_URL || "";
+  const downloadUrl =
+    process.env.NEXT_PUBLIC_ALPHA_EXTENSION_URL ||
+    "https://github.com/Fredilly/VCL/releases/latest/download/scoop-extension.zip";
+
+  const maskedCode =
+    code.length > 14 ? `${code.slice(0, 7)}…${code.slice(-5)}` : code;
 
   async function copyCode() {
     if (!code) return;
@@ -30,7 +35,7 @@ export default function AlphaClient() {
 
         <section style={{marginTop:48,padding:"28px",border:"1px solid #e5e7eb",borderRadius:24}}>
           <h2 style={{fontSize:22,margin:"0 0 10px"}}>Install Scoop</h2>
-          <p style={{lineHeight:1.6,color:"#4b5563"}}>Alpha supports Chrome and Brave. Your personal invite activates up to two browser installs.</p>
+          <p style={{lineHeight:1.6,color:"#4b5563"}}>Alpha supports Chrome and Brave on macOS and Windows. Your personal invite activates up to two browser installs.</p>
           {downloadUrl ? (
             <a href={downloadUrl} style={{display:"inline-block",marginTop:12,padding:"14px 20px",borderRadius:999,background:"#1769FF",color:"#fff",fontWeight:800,textDecoration:"none"}}>Download Scoop →</a>
           ) : (
@@ -41,7 +46,7 @@ export default function AlphaClient() {
         {code ? (
           <section style={{marginTop:22,padding:"28px",border:"1px solid #dbeafe",background:"#f8fbff",borderRadius:24}}>
             <div style={{fontSize:13,fontWeight:800,color:"#1769FF"}}>YOUR PERSONAL INVITE CODE</div>
-            <code style={{display:"block",margin:"14px 0",padding:"14px",borderRadius:12,background:"#fff",border:"1px solid #e5e7eb",overflowWrap:"anywhere",fontSize:12}}>{code}</code>
+            <code style={{display:"block",margin:"14px 0",padding:"14px",borderRadius:12,background:"#fff",border:"1px solid #e5e7eb",overflowWrap:"anywhere",fontSize:12}}>{maskedCode}</code>
             <button onClick={copyCode} style={{border:0,borderRadius:999,padding:"12px 18px",fontWeight:800,cursor:"pointer",background:"#111318",color:"#fff"}}>{copied ? "Copied" : "Copy invite code"}</button>
             <p style={{margin:"14px 0 0",fontSize:14,color:"#6b7280"}}>When Scoop asks for your invite on first use, paste this code. Please don’t forward it.</p>
           </section>
@@ -52,7 +57,7 @@ export default function AlphaClient() {
         <section style={{marginTop:38}}>
           <h2 style={{fontSize:22}}>Install in 30 seconds</h2>
           <ol style={{paddingLeft:22,lineHeight:1.9,color:"#374151"}}>
-            <li>Unzip the Scoop download.</li>
+            <li>Download and unzip Scoop.</li>
             <li>Open <b>chrome://extensions</b> or <b>brave://extensions</b>.</li>
             <li>Turn on <b>Developer mode</b>.</li>
             <li>Choose <b>Load unpacked</b> and select the unzipped Scoop folder.</li>
