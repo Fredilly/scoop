@@ -1,4 +1,4 @@
-const WAITLIST_UPSTREAM = 'https://article6.org/api/scoop-waitlist';
+const WAITLIST_UPSTREAM = 'https://www.article6.org/api/scoop-waitlist';
 
 function json(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), {
