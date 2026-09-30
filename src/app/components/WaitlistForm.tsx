@@ -34,8 +34,21 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
 
   if (status === 'success') {
     return (
-      <div className="grid min-h-[32rem] content-center">
-        <div className="rounded-[2rem] border border-[#1769FF]/20 bg-white/66 p-7 shadow-[0_28px_80px_rgba(23,105,255,0.16)] backdrop-blur-2xl sm:p-10">
+      <div className="relative grid min-h-[32rem] content-center overflow-hidden">
+        <div className="founding-confetti" aria-hidden="true">
+          {Array.from({ length: 18 }, (_, index) => (
+            <span
+              key={index}
+              className="founding-confetti-piece"
+              style={{
+                left: `${6 + ((index * 37) % 88)}%`,
+                animationDelay: `${(index % 6) * 90}ms`,
+                animationDuration: `${950 + (index % 5) * 110}ms`,
+              }}
+            />
+          ))}
+        </div>
+        <div className="relative z-10 rounded-[2rem] border border-[#1769FF]/20 bg-white/66 p-7 shadow-[0_28px_80px_rgba(23,105,255,0.16)] backdrop-blur-2xl sm:p-10">
           <div className="inline-flex rounded-full bg-[#1769FF] px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-white">
             Founding 100 confirmed
           </div>
