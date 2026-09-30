@@ -29,13 +29,34 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
     else if (params.get('join_error') === '1') setStatus('error');
   }, []);
 
+  useEffect(() => {
+    if (status !== 'success') return;
+    const timer = window.setTimeout(() => {
+      document.getElementById('founding-success')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 80);
+    return () => window.clearTimeout(timer);
+  }, [status]);
+
   const field =
     'h-12 w-full rounded-[1.15rem] border border-white/70 bg-white/44 px-4 text-[0.95rem] font-medium text-[#111318] outline-none shadow-[inset_0_1px_0_rgba(255,255,255,0.98),0_8px_24px_rgba(32,83,164,0.06)] backdrop-blur-2xl backdrop-saturate-150 transition placeholder:text-[#7d8796] hover:bg-white/56 focus:border-[#1769FF]/45 focus:bg-white/62 focus:ring-4 focus:ring-[#1769FF]/10';
 
   if (status === 'success') {
     return (
-      <div className="grid min-h-[32rem] content-center">
-        <div className="rounded-[2rem] border border-[#1769FF]/20 bg-white/66 p-7 shadow-[0_28px_80px_rgba(23,105,255,0.16)] backdrop-blur-2xl sm:p-10">
+      <div id="founding-success" className="relative grid min-h-[32rem] scroll-mt-24 content-center overflow-hidden">
+        <div className="founding-confetti" aria-hidden="true">
+          {Array.from({ length: 18 }, (_, index) => (
+            <span
+              key={index}
+              className="founding-confetti-piece"
+              style={{
+                left: `${6 + ((index * 37) % 88)}%`,
+                animationDelay: `${(index % 6) * 90}ms`,
+                animationDuration: `${950 + (index % 5) * 110}ms`,
+              }}
+            />
+          ))}
+        </div>
+        <div className="relative z-10 rounded-[2rem] border border-[#1769FF]/20 bg-white/66 p-7 shadow-[0_28px_80px_rgba(23,105,255,0.16)] backdrop-blur-2xl sm:p-10">
           <div className="inline-flex rounded-full bg-[#1769FF] px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-white">
             Founding 100 confirmed
           </div>
