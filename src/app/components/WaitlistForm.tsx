@@ -3,7 +3,6 @@
 import { useState, type FormEvent } from 'react';
 
 export type WaitlistPersona = 'CREATOR' | 'SHOPPER' | 'BRAND_RETAILER' | 'DEVELOPER' | 'OTHER';
-export type CreatorPlatform = 'YOUTUBE' | 'TIKTOK' | 'INSTAGRAM' | 'OTHER';
 
 type WaitlistFormProps = {
   persona: WaitlistPersona;
@@ -20,9 +19,7 @@ const personas: Array<{ value: WaitlistPersona; label: string; detail: string }>
 export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormProps) {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('Could not join the waitlist. Please try again.');
-  const [platform, setPlatform] = useState<CreatorPlatform>('YOUTUBE');
-
-  const showChannelFields = persona === 'CREATOR' || persona === 'BRAND_RETAILER';
+  const emphasizeSocials = persona === 'CREATOR' || persona === 'BRAND_RETAILER';
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -36,8 +33,9 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
       name: String(form.get('name') || ''),
       email: String(form.get('email') || ''),
       persona,
-      platform: showChannelFields ? platform : '',
-      handle: String(form.get('handle') || ''),
+      youtubeUrl: String(form.get('youtubeUrl') || ''),
+      instagramUrl: String(form.get('instagramUrl') || ''),
+      tiktokUrl: String(form.get('tiktokUrl') || ''),
       organization: String(form.get('organization') || ''),
       companyWebsite: String(form.get('companyWebsite') || ''),
       source: 'scoop_site',
@@ -151,33 +149,57 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
         </label>
       )}
 
-      {showChannelFields && (
-        <div className="grid gap-4 sm:grid-cols-2">
+      <details
+        key={persona}
+        open={emphasizeSocials}
+        className="group rounded-[1.35rem] border border-white/65 bg-white/28 px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] open:bg-white/36"
+      >
+        <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-left text-sm font-semibold text-[#111318] [&::-webkit-details-marker]:hidden">
+          <span>
+            Social profiles <span className="font-normal text-[#7d8796]">optional</span>
+          </span>
+          <span className="text-xs font-bold text-[#1769FF] group-open:hidden">Add</span>
+          <span className="hidden text-xs font-bold text-[#1769FF] group-open:inline">Hide</span>
+        </summary>
+        <p className="mt-2 text-left text-xs leading-5 text-[#7d8796]">
+          Add any you use. One is enough; all three are welcome.
+        </p>
+        <div className="mt-3 grid gap-3 lg:grid-cols-3">
           <label className="grid gap-2 text-left text-sm font-semibold text-[#111318]">
-            Primary platform
-            <select
-              name="platform"
-              value={platform}
-              onChange={(event) => setPlatform(event.target.value as CreatorPlatform)}
+            YouTube
+            <input
+              name="youtubeUrl"
+              inputMode="url"
+              autoCapitalize="none"
+              autoCorrect="off"
+              placeholder="youtube.com/@channel"
               className={field}
-            >
-              <option value="YOUTUBE">YouTube</option>
-              <option value="TIKTOK">TikTok</option>
-              <option value="INSTAGRAM">Instagram</option>
-              <option value="OTHER">Other</option>
-            </select>
+            />
           </label>
           <label className="grid gap-2 text-left text-sm font-semibold text-[#111318]">
-            {persona === 'CREATOR' ? 'Channel URL or @handle' : 'Brand channel URL or @handle'}{' '}
-            <span className="font-normal text-[#7d8796]">optional</span>
+            Instagram
             <input
-              name="handle"
-              placeholder={platform === 'YOUTUBE' ? 'youtube.com/@channel' : '@yourhandle'}
+              name="instagramUrl"
+              inputMode="url"
+              autoCapitalize="none"
+              autoCorrect="off"
+              placeholder="@handle or profile URL"
+              className={field}
+            />
+          </label>
+          <label className="grid gap-2 text-left text-sm font-semibold text-[#111318]">
+            TikTok
+            <input
+              name="tiktokUrl"
+              inputMode="url"
+              autoCapitalize="none"
+              autoCorrect="off"
+              placeholder="@handle or profile URL"
               className={field}
             />
           </label>
         </div>
-      )}
+      </details>
 
       <label className="sr-only" aria-hidden="true">
         Company website
