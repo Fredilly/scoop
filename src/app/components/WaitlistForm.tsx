@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState, type FormEvent } from 'react';
 
 export type WaitlistPersona = 'CREATOR' | 'SHOPPER' | 'BRAND_RETAILER' | 'DEVELOPER' | 'OTHER';
 export type CreatorPlatform = 'YOUTUBE' | 'TIKTOK' | 'INSTAGRAM' | 'OTHER';
@@ -23,11 +23,41 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
 
   const showChannelFields = persona === 'CREATOR' || persona === 'BRAND_RETAILER';
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    if (params.get('joined') === '1') setStatus('success');
-    else if (params.get('join_error') === '1') setStatus('error');
-  }, []);
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formElement = event.currentTarget;
+    const form = new FormData(formElement);
+
+    setStatus('submitting');
+
+    const payload = {
+      name: String(form.get('name') || ''),
+      email: String(form.get('email') || ''),
+      persona,
+      platform: showChannelFields ? platform : '',
+      handle: String(form.get('handle') || ''),
+      organization: String(form.get('organization') || ''),
+      companyWebsite: String(form.get('companyWebsite') || ''),
+      source: 'scoop_site',
+      sourcePage: 'homepage',
+      campaign: 'founding_100',
+    };
+
+    try {
+      const response = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(typeof data?.error === 'string' ? data.error : 'Could not join the waitlist.');
+      }
+      setStatus('success');
+    } catch {
+      setStatus('error');
+    }
+  }
 
   const field =
     'h-12 w-full rounded-[1.15rem] border border-white/70 bg-white/44 px-4 text-[0.95rem] font-medium text-[#111318] outline-none shadow-[inset_0_1px_0_rgba(255,255,255,0.98),0_8px_24px_rgba(32,83,164,0.06)] backdrop-blur-2xl backdrop-saturate-150 transition placeholder:text-[#7d8796] hover:bg-white/56 focus:border-[#1769FF]/45 focus:bg-white/62 focus:ring-4 focus:ring-[#1769FF]/10';
@@ -71,17 +101,9 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
 
   return (
     <form
-      action="https://article6.org/api/scoop-waitlist"
-      method="post"
-      acceptCharset="UTF-8"
-      onSubmit={() => setStatus('submitting')}
+      onSubmit={handleSubmit}
       className="mx-auto grid w-full gap-4"
     >
-      <input type="hidden" name="persona" value={persona} />
-      <input type="hidden" name="source" value="scoop_site" />
-      <input type="hidden" name="sourcePage" value="homepage" />
-      <input type="hidden" name="campaign" value="founding_100" />
-      {!showChannelFields && <input type="hidden" name="platform" value="" />}
 
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="grid gap-2 text-left text-sm font-semibold text-[#111318]">
