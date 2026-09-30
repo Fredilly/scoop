@@ -7,11 +7,13 @@ export default function AlphaClient() {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    setCode(new URLSearchParams(window.location.search).get("code") ?? "");
+    const inviteCode = new URLSearchParams(window.location.search).get("code") ?? "";
+    setCode(inviteCode);
+    if (inviteCode) window.history.replaceState(null, "", "/alpha");
   }, []);
   const downloadUrl =
     process.env.NEXT_PUBLIC_ALPHA_EXTENSION_URL ||
-    "https://github.com/Fredilly/VCL/releases/latest/download/scoop-extension.zip";
+    "/download/scoop-extension.zip";
 
   const maskedCode =
     code.length > 14 ? `${code.slice(0, 7)}…${code.slice(-5)}` : code;
