@@ -53,6 +53,8 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
       if (!response.ok) {
         throw new Error(typeof data?.error === 'string' ? data.error : 'Could not join the waitlist. Please try again.');
       }
+      const metaWindow = window as typeof window & { fbq?: (...args: unknown[]) => void };
+      metaWindow.fbq?.('track', 'Lead');
       setStatus('success');
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : 'Could not join the waitlist. Please try again.');
