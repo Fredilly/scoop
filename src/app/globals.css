@@ -526,11 +526,11 @@ a {
   }
 
   /* Keep the mobile demo visible in the same viewport as the TV. */
-  #top .relative.isolate > img:nth-of-type(2) {
+  .hero-layer-selected {
     animation: scoop-mobile-selection 420ms ease 500ms forwards;
   }
 
-  #top .relative.isolate > img:nth-of-type(3) {
+  .hero-layer-panel-mobile {
     top: 8% !important;
     right: 2% !important;
     bottom: auto !important;
