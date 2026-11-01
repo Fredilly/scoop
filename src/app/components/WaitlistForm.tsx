@@ -63,51 +63,28 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
   }
 
   const field =
-    'h-12 w-full rounded-[1.15rem] border border-white/70 bg-white/44 px-4 text-[0.95rem] font-medium text-[#111318] outline-none shadow-[inset_0_1px_0_rgba(255,255,255,0.98),0_8px_24px_rgba(32,83,164,0.06)] backdrop-blur-2xl backdrop-saturate-150 transition placeholder:text-[#7d8796] hover:bg-white/56 focus:border-[#1769FF]/45 focus:bg-white/62 focus:ring-4 focus:ring-[#1769FF]/10';
+    'h-12 w-full rounded-xl border border-[#d9dde3] bg-white px-4 text-[0.95rem] font-medium text-[#111318] outline-none transition placeholder:text-[#8a919c] hover:border-[#b9bfc8] focus:border-[#1769FF] focus:ring-4 focus:ring-[#1769FF]/10';
 
   if (status === 'success') {
     return (
-      <div className="relative grid min-h-[32rem] content-center overflow-hidden">
-        <div className="founding-confetti" aria-hidden="true">
-          {Array.from({ length: 18 }, (_, index) => (
-            <span
-              key={index}
-              className="founding-confetti-piece"
-              style={{
-                left: `${6 + ((index * 37) % 88)}%`,
-                animationDelay: `${(index % 6) * 90}ms`,
-                animationDuration: `${950 + (index % 5) * 110}ms`,
-              }}
-            />
-          ))}
-        </div>
-        <div className="relative z-10 rounded-[2rem] border border-[#1769FF]/20 bg-white/66 p-7 shadow-[0_28px_80px_rgba(23,105,255,0.16)] backdrop-blur-2xl sm:p-10">
-          <div className="inline-flex rounded-full bg-[#1769FF] px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-white">
-            Founding 100 confirmed
-          </div>
-          <h3 className="mt-6 text-5xl font-black leading-[0.92] tracking-[-0.065em] text-[#111318] sm:text-7xl">
-            You’re in.
-          </h3>
-          <p className="mt-6 max-w-xl text-lg font-semibold leading-8 text-[#303846] sm:text-xl">
-            Your application is confirmed.
-          </p>
-          <p className="mt-3 max-w-xl text-base leading-7 text-[#5f6b7a]">
-            Check your inbox for confirmation. We’re opening Scoop in small groups. If your spot opens, you’ll get a separate personal invite with the install link.
-          </p>
-          <div className="mt-7 border-t border-[#1769FF]/15 pt-5 text-sm font-bold text-[#1769FF]">
-            See it. Scoop it.
-          </div>
-        </div>
+      <div className="grid min-h-[20rem] content-center gap-4 py-6" role="status">
+        <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#1769FF] text-white" aria-hidden="true">
+          <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M5 12.5l4.5 4.5L19 7.5" />
+          </svg>
+        </span>
+        <p className="text-sm font-semibold text-[#1769FF]">Founding 100 confirmed</p>
+        <h3 className="text-4xl font-semibold leading-[1] tracking-[-0.04em] text-[#111318] sm:text-5xl">You’re in.</h3>
+        <p className="max-w-xl text-lg font-medium leading-7 text-[#303846]">Your application is confirmed.</p>
+        <p className="max-w-xl text-base leading-7 text-[#62666f]">
+          Check your inbox for confirmation. We’re opening Scoop in small groups. If your spot opens, you’ll get a separate personal invite with the install link.
+        </p>
       </div>
     );
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="mx-auto grid w-full gap-4"
-    >
-
+    <form onSubmit={handleSubmit} className="mx-auto grid w-full gap-5">
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="grid gap-2 text-left text-sm font-semibold text-[#111318]">
           Name
@@ -119,34 +96,31 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
         </label>
       </div>
 
-      <fieldset className="grid gap-3">
-        <legend className="mb-1 text-left text-sm font-semibold text-[#111318]">I’m joining as</legend>
+      <fieldset className="grid gap-2 border-0 p-0">
+        <legend className="mb-2 p-0 text-left text-sm font-semibold text-[#111318]">I’m joining as</legend>
         <div className="grid gap-2 sm:grid-cols-2">
-          {personas.map((item) => {
-            const active = persona === item.value;
-            return (
-              <button
-                key={item.value}
-                type="button"
-                aria-pressed={active}
-                onClick={() => onPersonaChange(item.value)}
-                className={`rounded-2xl border p-3.5 text-left transition ${
-                  active
-                    ? 'border-[#1769FF]/55 bg-white/72 text-[#111318] shadow-[inset_0_1px_0_rgba(255,255,255,1),0_12px_30px_rgba(23,105,255,0.10)]'
-                    : 'border-white/65 bg-white/32 text-[#111318] shadow-[inset_0_1px_0_rgba(255,255,255,0.88)] hover:border-[#1769FF]/28 hover:bg-white/52'
-                }`}
-              >
-                <span className="block text-sm font-extrabold">{item.label}</span>
-                <span className={`mt-1 block text-xs leading-5 ${active ? 'text-[#5e6470]' : 'text-[#718096]'}`}>{item.detail}</span>
-              </button>
-            );
-          })}
+          {personas.map((item) => (
+            <label key={item.value} className="relative block cursor-pointer">
+              <input
+                type="radio"
+                name="persona-choice"
+                value={item.value}
+                checked={persona === item.value}
+                onChange={() => onPersonaChange(item.value)}
+                className="peer sr-only"
+              />
+              <span className="block rounded-xl border border-[#d9dde3] bg-white p-3.5 text-left transition hover:border-[#b9bfc8] peer-checked:border-[#1769FF] peer-checked:ring-4 peer-checked:ring-[#1769FF]/10 peer-focus-visible:ring-2 peer-focus-visible:ring-[#1769FF]">
+                <span className="block text-sm font-semibold text-[#111318]">{item.label}</span>
+                <span className="mt-1 block text-xs leading-5 text-[#62666f]">{item.detail}</span>
+              </span>
+            </label>
+          ))}
         </div>
       </fieldset>
 
       {persona === 'BRAND_RETAILER' && (
         <label className="grid gap-2 text-left text-sm font-semibold text-[#111318]">
-          Brand or company <span className="font-normal text-[#7d8796]">optional</span>
+          Brand or company <span className="font-normal text-[#62666f]">optional</span>
           <input name="organization" autoComplete="organization" placeholder="Company name" className={field} />
         </label>
       )}
@@ -154,16 +128,16 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
       <details
         key={persona}
         open={emphasizeSocials}
-        className="group rounded-[1.35rem] border border-white/65 bg-white/28 px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] open:bg-white/36"
+        className="group rounded-xl border border-[#d9dde3] bg-white px-4 py-3"
       >
         <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-left text-sm font-semibold text-[#111318] [&::-webkit-details-marker]:hidden">
           <span>
-            Social profiles <span className="font-normal text-[#7d8796]">optional</span>
+            Social profiles <span className="font-normal text-[#62666f]">optional</span>
           </span>
-          <span className="text-xs font-bold text-[#1769FF] group-open:hidden">Add</span>
-          <span className="hidden text-xs font-bold text-[#1769FF] group-open:inline">Hide</span>
+          <span className="text-xs font-semibold text-[#1769FF] group-open:hidden">Add</span>
+          <span className="hidden text-xs font-semibold text-[#1769FF] group-open:inline">Hide</span>
         </summary>
-        <p className="mt-2 text-left text-xs leading-5 text-[#7d8796]">
+        <p className="mt-2 text-left text-xs leading-5 text-[#62666f]">
           Add any you use. One is enough; all three are welcome.
         </p>
         <div className="mt-3 grid gap-3 lg:grid-cols-3">
@@ -211,16 +185,16 @@ export default function WaitlistForm({ persona, onPersonaChange }: WaitlistFormP
       <button
         type="submit"
         disabled={status === 'submitting'}
-        className="mt-1 inline-flex h-12 w-full items-center justify-center rounded-[1.15rem] bg-[#1769FF] px-7 text-sm font-extrabold text-white shadow-[0_16px_38px_rgba(23,105,255,0.22)] transition hover:-translate-y-0.5 hover:bg-[#0f5fe9] hover:shadow-[0_20px_46px_rgba(23,105,255,0.28)] disabled:translate-y-0 disabled:cursor-default disabled:opacity-60 sm:w-auto sm:justify-self-start"
+        className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-[#1769FF] px-7 text-sm font-semibold text-white transition hover:bg-[#111318] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1769FF] disabled:cursor-default disabled:opacity-60 sm:w-auto sm:justify-self-start"
       >
-        {status === 'submitting' ? 'Joining…' : 'Join the First 100 →'}
+        {status === 'submitting' ? 'Joining…' : 'Join the First 100'}
       </button>
 
       {status === 'error' && (
-        <p className="text-sm text-red-600" role="status">{errorMessage}</p>
+        <p className="text-sm text-red-600" role="alert">{errorMessage}</p>
       )}
 
-      <p className="text-xs leading-5 text-[#7d8796]">
+      <p className="text-xs leading-5 text-[#62666f]">
         Private beta. We’ll only use this to contact you about Scoop testing and launch access.
       </p>
     </form>
