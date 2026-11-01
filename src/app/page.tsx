@@ -24,11 +24,19 @@ const steps = [
 type DemoPhase = 'idle' | 'selected' | 'resolved';
 type HeroItem = 'jacket' | 'pants' | 'vase';
 
+// Same boxes as the hover targets over the TV, so the scan covers the item being picked.
+const heroScanBox: Record<HeroItem, { left: string; top: string; width: string; height: string }> = {
+  jacket: { left: '37%', top: '31%', width: '35%', height: '37%' },
+  pants: { left: '34%', top: '56%', width: '50%', height: '27%' },
+  vase: { left: '6%', top: '31%', width: '14%', height: '24%' },
+};
+
 export default function Home() {
   const [demoPhase, setDemoPhase] = useState<DemoPhase>('idle');
   const [activeItem, setActiveItem] = useState<HeroItem>('jacket');
   const [waitlistPersona, setWaitlistPersona] = useState<WaitlistPersona>('CREATOR');
   const timeouts = useRef<number[]>([]);
+  const statementRef = useRef<HTMLElement>(null);
 
   const clearDemoTimers = () => {
     timeouts.current.forEach((timeout) => window.clearTimeout(timeout));
@@ -84,6 +92,24 @@ export default function Home() {
     };
   }, []);
 
+  // Strike-through reveal. Without JS or IntersectionObserver the section is
+  // never "armed", so it simply shows its finished state.
+  useEffect(() => {
+    const node = statementRef.current;
+    if (!node || typeof IntersectionObserver === 'undefined') return;
+    node.dataset.armed = 'true';
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) return;
+        node.dataset.in = 'true';
+        observer.disconnect();
+      },
+      { threshold: 0.35 },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
   const showSelection = demoPhase === 'selected' || demoPhase === 'resolved';
   const showPanel = demoPhase === 'resolved';
   const selectedHero = activeItem === 'jacket' ? heroSelectedJacket : activeItem === 'pants' ? heroSelectedPants : heroSelectedVase;
@@ -115,10 +141,12 @@ export default function Home() {
           <div className="mt-10">
             <div className="mx-auto w-full max-w-[1180px]">
               <div className="relative isolate mx-auto w-full">
+                <div className="hero-glow" data-on={showPanel} aria-hidden="true" />
                 <img src={heroClean} alt="TV showing a woman in a denim jacket and cream pants inside a living room" className="mx-auto block h-auto w-full drop-shadow-[0_28px_90px_rgba(17,19,24,0.08)]" loading="eager" fetchPriority="high" />
                 <img src={selectedHero} alt="" aria-hidden="true" className={`pointer-events-none absolute inset-0 block h-full w-full transition-opacity duration-500 ${showSelection ? 'opacity-100' : 'opacity-0'}`} />
                 <img src={selectedPanel} alt="" aria-hidden="true" style={mobilePanelStyle} className={`pointer-events-none absolute block h-auto transition-all duration-500 md:hidden ${showPanel ? 'translate-x-0 translate-y-0 opacity-100' : 'translate-x-2 translate-y-2 opacity-0'}`} />
                 <img src={selectedPanel} alt="" aria-hidden="true" className={`pointer-events-none absolute right-[-1%] top-[14%] hidden h-auto w-[37%] max-w-[430px] transition-all duration-500 md:block ${showPanel ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0'}`} />
+                {demoPhase === 'selected' && <div className="hero-scan" style={heroScanBox[activeItem]} aria-hidden="true" />}
                 <button type="button" aria-label="Show jacket results" onMouseEnter={() => playDemo('jacket')} onFocus={() => playDemo('jacket')} onClick={() => playDemo('jacket')} className="absolute left-[37%] top-[31%] h-[37%] w-[35%] rounded-[2rem] bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1769FF] focus-visible:ring-offset-2" />
                 <button type="button" aria-label="Show pants results" onMouseEnter={() => playDemo('pants')} onFocus={() => playDemo('pants')} onClick={() => playDemo('pants')} className="absolute left-[34%] top-[56%] h-[27%] w-[50%] rounded-[2rem] bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1769FF] focus-visible:ring-offset-2" />
                 <button type="button" aria-label="Show vase results" onMouseEnter={() => playDemo('vase')} onFocus={() => playDemo('vase')} onClick={() => playDemo('vase')} className="absolute left-[6%] top-[31%] h-[24%] w-[14%] rounded-[1.5rem] bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1769FF] focus-visible:ring-offset-2" />
@@ -128,15 +156,21 @@ export default function Home() {
 
           <p className="mx-auto mt-8 max-w-[40rem] text-base leading-7 text-[#62666f] sm:mt-10 sm:text-lg md:text-xl md:leading-8">See something you want in a video? Point at it. Scoop helps identify the product and where to get it.</p>
           <div className="mx-auto mt-8 flex w-full max-w-sm flex-col items-center justify-center gap-3 sm:mt-10 sm:max-w-none sm:flex-row sm:flex-wrap sm:gap-4">
-            <a href="#waitlist" onClick={() => setWaitlistPersona('SHOPPER')} style={{ color: '#ffffff' }} className="inline-flex w-full items-center justify-center rounded-xl bg-[#1769FF] px-7 py-4 text-sm font-bold text-white transition hover:bg-[#111318] sm:w-auto">Join the First 100</a>
+            <a href="#waitlist" onClick={() => setWaitlistPersona('SHOPPER')} style={{ color: '#ffffff' }} className="inline-flex w-full items-center justify-center rounded-xl bg-[#1769FF] px-7 py-4 text-sm font-bold text-white shadow-[0_10px_28px_rgba(23,105,255,0.28)] transition hover:-translate-y-0.5 hover:bg-[#111318] hover:shadow-[0_14px_34px_rgba(17,19,24,0.28)] sm:w-auto">Join the First 100</a>
             <a href="#waitlist" onClick={() => setWaitlistPersona('CREATOR')} className="inline-flex w-full items-center justify-center rounded-xl border border-[#dfe1e5] bg-white px-7 py-4 text-sm font-bold text-[#111318] transition hover:border-[#1769FF] hover:text-[#1769FF] sm:w-auto">I&apos;m a creator</a>
             <a href="#how" className="nav-link px-3 py-4 text-sm font-semibold">See how it works ↓</a>
           </div>
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-[1500px] px-5 py-24 text-center sm:px-6 md:px-10 md:text-left lg:px-16 lg:py-36">
-        <p className="mx-auto max-w-[1050px] text-[clamp(2.8rem,7vw,6.25rem)] font-extrabold leading-[0.94] tracking-[-0.052em] md:mx-0"><span className="block">Don&apos;t screenshot it.</span><span className="block">Don&apos;t hunt through comments.</span><span className="mt-2 block text-[#1769FF]">Scoop it.</span></p>
+      <section ref={statementRef} className="statement" aria-label="Why Scoop">
+        <div className="statement-inner">
+          <p className="statement-text">
+            <span className="statement-line"><span className="statement-struck">Don&apos;t screenshot it.</span></span>
+            <span className="statement-line"><span className="statement-struck">Don&apos;t hunt through comments.</span></span>
+            <span className="statement-go">Scoop it.</span>
+          </p>
+        </div>
       </section>
 
       <section id="waitlist" className="founding-stage scroll-mt-0">

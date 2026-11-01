@@ -646,3 +646,139 @@ a {
     transform: translate3d(1.5rem, 34rem, 0) rotate(540deg);
   }
 }
+
+/* ------------------------------------------------------------------ */
+/* Hero: glow behind the TV, plus a scan sweep while an item is picked */
+/* ------------------------------------------------------------------ */
+
+.hero-glow {
+  position: absolute;
+  z-index: -1;
+  inset: 6% 1% -7%;
+  border-radius: 2rem;
+  pointer-events: none;
+  /* A blurred slab the size of the TV, so light spills past every edge. */
+  background: rgba(23, 105, 255, 0.55);
+  filter: blur(48px);
+  opacity: 0.2;
+  transform: scale(0.96);
+  transition: opacity 900ms ease, transform 900ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.hero-glow[data-on="true"] {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Mounted only during the "selected" phase (about 700ms), so it ends with the demo.
+   Position and size come from the item's box (inline style in page.tsx). */
+.hero-scan {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  pointer-events: none;
+  background: rgba(23, 105, 255, 0.06);
+}
+
+.hero-scan::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -30%;
+  width: 30%;
+  background: linear-gradient(
+    90deg,
+    rgba(23, 105, 255, 0),
+    rgba(23, 105, 255, 0.2) 70%,
+    rgba(110, 168, 255, 0.55) 97%,
+    rgba(23, 105, 255, 0)
+  );
+  animation: scoop-scan 700ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes scoop-scan {
+  to { left: 100%; }
+}
+
+/* ------------------------------------------------------------------ */
+/* Statement band: the two things you do today get struck through      */
+/* ------------------------------------------------------------------ */
+
+.statement {
+  background: #1769ff;
+  color: #ffffff;
+  overflow: hidden;
+}
+
+.statement-inner {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: clamp(5rem, 10vw, 9rem) clamp(1.25rem, 4vw, 4rem);
+  text-align: center;
+}
+
+.statement-text {
+  margin: 0 auto;
+  max-width: 1100px;
+  font-size: clamp(2.8rem, 7vw, 6.25rem);
+  font-weight: 800;
+  line-height: 0.98;
+  letter-spacing: -0.052em;
+}
+
+.statement-line {
+  display: block;
+}
+
+/* The bar is a background (not a pseudo-element) so every wrapped line gets its own. */
+.statement-struck {
+  color: rgba(255, 255, 255, 0.78);
+  background-image: linear-gradient(#ffffff, #ffffff);
+  background-repeat: no-repeat;
+  background-position: 0 56%;
+  background-size: 100% max(0.07em, 3px);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  transition: background-size 700ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.statement-line:nth-child(2) .statement-struck {
+  transition-delay: 450ms;
+}
+
+.statement-go {
+  display: block;
+  margin-top: 0.12em;
+  font-size: 1.15em;
+  line-height: 0.92;
+  color: #ffffff;
+  transition: opacity 600ms ease 1000ms, transform 700ms cubic-bezier(0.2, 0.8, 0.2, 1) 1000ms;
+}
+
+/* Hidden only once JS has armed the section and until it scrolls into view. */
+.statement[data-armed="true"]:not([data-in="true"]) .statement-struck {
+  background-size: 0% max(0.07em, 3px);
+}
+
+.statement[data-armed="true"]:not([data-in="true"]) .statement-go {
+  opacity: 0;
+  transform: translateY(0.25em);
+}
+
+@media (min-width: 768px) {
+  .statement-inner {
+    text-align: left;
+  }
+
+  .statement-text {
+    margin: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .statement-struck,
+  .statement-go {
+    transition-delay: 0s !important;
+  }
+}
