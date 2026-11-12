@@ -30,6 +30,22 @@ const details = [
     body: 'Scoop is not designed to continuously inspect playback, build a browsing-history profile, keep full videos, or maintain a persistent archive of frames from what you watch.',
   },
   {
+    title: 'Product learning and retained data',
+    body: 'To make later searches more accurate and avoid repeating expensive analysis, Scoop stores derived product descriptions, visual attributes, identity hypotheses, matching evidence, confidence labels and product references. Records may also contain the selected video or content identifier, timestamp, pseudonymous session identifier, feedback, merchant-click information and performance metrics. These derived records can remain after the analysis session; they are not a continuous browsing log.',
+  },
+  {
+    title: 'Third-party processing',
+    body: 'When you request a search, selected frame images or visual crops and derived product descriptions may be sent through our Cloudflare service to configured AI processing providers such as OpenRouter, Google Gemini or other enabled vision services for recognition and verification. Product searches may also involve catalog, marketplace and search providers, including eBay, Etsy, SerpAPI or Brave, depending on availability. These services process the data needed to provide the requested result under their own applicable terms.',
+  },
+  {
+    title: 'Access credentials and usage',
+    body: 'The extension keeps a pseudonymous installation identifier and alpha access token in local browser storage. If an administrator signs in, it also stores an administrator session token. Scoop processes selections, feedback and outgoing shopping clicks to deliver the service, prevent abuse, troubleshoot errors and understand which results are useful. It does not use this information for creditworthiness or lending.',
+  },
+  {
+    title: 'Retention and deletion requests',
+    body: 'Frames are not intentionally retained as a general viewing archive by Scoop, but derived product, matching, telemetry and feedback records may persist in operational storage. AI providers and hosting services may have their own processing and retention practices. To ask about access or deletion of information associated with your use of Scoop, email contact@article6.org; we will review requests subject to technical, security and legal limitations. Specific retention schedules are being established for this alpha.',
+  },
+  {
     title: 'Operational data',
     body: 'Operational telemetry may include request IDs, timing, provider status and errors needed to keep the service reliable. Sensitive frame content is not logged by default.',
   },
@@ -133,10 +149,10 @@ export default function Privacy() {
 
           <div className="mt-10 flex flex-col gap-4 text-sm leading-6 text-[#7b8089] sm:flex-row sm:items-end sm:justify-between">
             <div className="max-w-2xl">
-              <p>This page describes the intended privacy behavior of the current Scoop alpha. If the product changes, this page should change with it rather than silently widening what Scoop collects.</p>
+              <p>This page describes current Scoop alpha processing and retention practices. We will update these disclosures as providers, retention periods, and product behavior change.</p>
               <p className="mt-3">Questions: <a className="font-semibold text-[#111318] underline decoration-[#1769FF]/40 underline-offset-4" href="mailto:contact@article6.org">contact@article6.org</a></p>
             </div>
-            <p className="shrink-0">Updated September 15, 2026</p>
+            <p className="shrink-0">Updated November 12, 2026</p>
           </div>
         </div>
       </section>
