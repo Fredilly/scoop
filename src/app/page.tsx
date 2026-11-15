@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import WaitlistForm, { type WaitlistPersona } from './components/WaitlistForm';
 
 const logo = 'https://assets.scoop.article6.org/brand/scoop-logo.png';
 const mark = 'https://assets.scoop.article6.org/extension/scoop-extension-128.png';
@@ -12,7 +11,6 @@ const heroSelectedPants = 'https://assets.scoop.article6.org/website/hero/hero-p
 const heroPanelPants = 'https://assets.scoop.article6.org/website/hero/hero-pants-results-panel.png';
 const heroSelectedVase = 'https://assets.scoop.article6.org/website/hero/hero-vase-selected-tv.png';
 const heroPanelVase = 'https://assets.scoop.article6.org/website/hero/hero-vase-results-panel.png?v=3';
-const foundingFocus = 'https://assets.scoop.article6.org/website/founding-100/sneaker-jacket-focus.png';
 
 const steps = [
   ['01', 'SEE', 'Spot something you actually want in the video.'],
@@ -34,7 +32,6 @@ const heroScanBox: Record<HeroItem, { left: string; top: string; width: string; 
 export default function Home() {
   const [demoPhase, setDemoPhase] = useState<DemoPhase>('idle');
   const [activeItem, setActiveItem] = useState<HeroItem>('jacket');
-  const [waitlistPersona, setWaitlistPersona] = useState<WaitlistPersona>('CREATOR');
   const timeouts = useRef<number[]>([]);
   const statementRef = useRef<HTMLElement>(null);
 
@@ -156,8 +153,7 @@ export default function Home() {
 
           <p className="mx-auto mt-8 max-w-[40rem] text-base leading-7 text-[#62666f] sm:mt-10 sm:text-lg md:text-xl md:leading-8">See something you want in a video? Point at it. Scoop helps identify the product and where to get it.</p>
           <div className="mx-auto mt-8 flex w-full max-w-sm flex-col items-center justify-center gap-3 sm:mt-10 sm:max-w-none sm:flex-row sm:flex-wrap sm:gap-4">
-            <a href="#waitlist" onClick={() => setWaitlistPersona('SHOPPER')} style={{ color: '#ffffff' }} className="inline-flex w-full items-center justify-center rounded-xl bg-[#1769FF] px-7 py-4 text-sm font-bold text-white shadow-[0_10px_28px_rgba(23,105,255,0.28)] transition hover:-translate-y-0.5 hover:bg-[#111318] hover:shadow-[0_14px_34px_rgba(17,19,24,0.28)] sm:w-auto">Join the First 100</a>
-            <a href="#waitlist" onClick={() => setWaitlistPersona('CREATOR')} className="inline-flex w-full items-center justify-center rounded-xl border border-[#dfe1e5] bg-white px-7 py-4 text-sm font-bold text-[#111318] transition hover:border-[#1769FF] hover:text-[#1769FF] sm:w-auto">I&apos;m a creator</a>
+            <a href="https://chromewebstore.google.com/detail/scoop/gdbpfmjgjjbbabeffiipioffpeehddmk" target="_blank" rel="noopener noreferrer" style={{ color: '#ffffff' }} className="inline-flex w-full items-center justify-center rounded-xl bg-[#1769FF] px-7 py-4 text-sm font-bold text-white shadow-[0_10px_28px_rgba(23,105,255,0.28)] transition hover:-translate-y-0.5 hover:bg-[#111318] hover:shadow-[0_14px_34px_rgba(17,19,24,0.28)] sm:w-auto">Get Scoop for Chrome ↗</a>
             <a href="#how" className="nav-link px-3 py-4 text-sm font-semibold">See how it works ↓</a>
           </div>
         </div>
@@ -170,50 +166,6 @@ export default function Home() {
             <span className="statement-line"><span className="statement-struck">Don&apos;t hunt through comments.</span></span>
             <span className="statement-go">Scoop it.</span>
           </p>
-        </div>
-      </section>
-
-      <section id="waitlist" className="founding-stage scroll-mt-0">
-        <div className="founding-bg-mark" aria-hidden="true">
-          <img src={mark} alt="" />
-        </div>
-        <div className="founding-orbit founding-orbit-a" aria-hidden="true" />
-        <div className="founding-orbit founding-orbit-b" aria-hidden="true" />
-
-        <div className="founding-layout">
-          <div className="founding-copy">
-            <div className="founding-eyebrow">Founding 100</div>
-            <h2>
-              Join the <span>First 100.</span>
-            </h2>
-            <p className="founding-subhead">
-              Be among the first to use Scoop in the wild. Help us make visual shopping faster, smarter, and more accurate.
-            </p>
-            <p className="founding-proof">100 founding members. Private beta. Built with you.</p>
-
-            <div className="founding-object-stage" aria-hidden="true">
-              <div className="founding-object founding-object-primary founding-object-focus">
-                <img src={foundingFocus} alt="" />
-              </div>
-            </div>
-
-            <div className="founding-signature" aria-hidden="true">
-              <span>See it.</span>
-              <span>Find it.</span>
-              <span>Scoop it.</span>
-            </div>
-          </div>
-
-          <div className="founding-glass">
-            <div className="founding-glass-shine" aria-hidden="true" />
-            <div className="founding-glass-glint" aria-hidden="true" />
-            <div className="founding-form-header">
-              <span>Private beta</span>
-              <h3>Join the First 100</h3>
-              <p>Tell us who you are. We’ll bring the first cohort in gradually.</p>
-            </div>
-            <WaitlistForm persona={waitlistPersona} onPersonaChange={setWaitlistPersona} />
-          </div>
         </div>
       </section>
 
@@ -231,8 +183,8 @@ export default function Home() {
 
       <section className="w-full px-0 pb-10 pt-24 sm:px-6 md:px-10 lg:mx-auto lg:max-w-[1500px] lg:px-16 lg:pt-32">
         <div className="mx-auto flex w-[calc(100%-2rem)] max-w-[1320px] flex-col items-center gap-10 bg-[#1769FF] px-6 py-10 text-center text-white sm:w-full sm:px-7 sm:py-12 md:px-12 md:py-16 lg:grid lg:grid-cols-[1.2fr_.8fr] lg:items-end lg:justify-items-stretch lg:px-16 lg:py-20 lg:text-left">
-          <div className="mx-auto flex w-full max-w-xl flex-col items-center lg:mx-0 lg:max-w-none lg:items-start"><div className="text-xs font-semibold uppercase tracking-[0.22em] text-white/70">Private alpha</div><h2 className="mx-auto mt-5 max-w-[8ch] text-[clamp(3rem,13vw,4.5rem)] font-black leading-[0.92] tracking-[-0.055em] lg:mx-0 lg:max-w-3xl lg:text-7xl">Want to Scoop something?</h2></div>
-          <div className="mx-auto flex w-full max-w-sm flex-col items-center lg:mx-0 lg:max-w-lg lg:items-start"><p className="mx-auto max-w-lg text-lg leading-8 text-white/85 lg:mx-0">Scoop is still being built. Early testers will help us find what works, what misses, and what deserves to exist.</p><div className="mt-8 flex w-full flex-col items-center justify-center gap-3"><a href="#waitlist" onClick={() => setWaitlistPersona('SHOPPER')} style={{ color: '#111318' }} className="inline-flex w-full max-w-sm items-center justify-center rounded-xl bg-white px-6 py-4 text-center text-sm font-bold sm:py-3.5">Join the First 100</a><a href="#waitlist" onClick={() => setWaitlistPersona('CREATOR')} style={{ color: '#ffffff' }} className="inline-flex w-full max-w-sm items-center justify-center rounded-xl border border-white/35 px-6 py-4 text-center text-sm font-bold sm:py-3.5">Creator access →</a></div></div>
+          <div className="mx-auto flex w-full max-w-xl flex-col items-center lg:mx-0 lg:max-w-none lg:items-start"><div className="text-xs font-semibold uppercase tracking-[0.22em] text-white/70">Available for Chrome</div><h2 className="mx-auto mt-5 max-w-[8ch] text-[clamp(3rem,13vw,4.5rem)] font-black leading-[0.92] tracking-[-0.055em] lg:mx-0 lg:max-w-3xl lg:text-7xl">Want to Scoop something?</h2></div>
+          <div className="mx-auto flex w-full max-w-sm flex-col items-center lg:mx-0 lg:max-w-lg lg:items-start"><p className="mx-auto max-w-lg text-lg leading-8 text-white/85 lg:mx-0">Install the extension from the Chrome Web Store. Scoop is evolving, and your feedback helps improve product matches.</p><div className="mt-8 flex w-full flex-col items-center justify-center gap-3"><a href="https://chromewebstore.google.com/detail/scoop/gdbpfmjgjjbbabeffiipioffpeehddmk" target="_blank" rel="noopener noreferrer" style={{ color: '#111318' }} className="inline-flex w-full max-w-sm items-center justify-center rounded-xl bg-white px-6 py-4 text-center text-sm font-bold sm:py-3.5">Get Scoop for Chrome ↗</a></div></div>
         </div>
       </section>
 
